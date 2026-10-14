@@ -133,6 +133,16 @@ export default function Footer({ onNavigate }) {
             </button>
           </div>
         </div>
+
+        {/* Footer Bottom Bar matching reference */}
+        <div style={{ marginTop: '48px', paddingTop: '24px', borderTop: '1px solid #F1F5F9', textAlign: 'center' }}>
+          <p style={{ margin: 0, fontSize: '13px', color: '#64748B', fontWeight: '500' }}>
+            © 2025 ADC Experts | All Rights Reserved
+          </p>
+          <p style={{ margin: '6px 0 0', fontSize: '12px', color: '#94A3B8' }}>
+            Powered by <strong style={{ color: '#0F172A', fontWeight: '700' }}>koodz</strong>
+          </p>
+        </div>
       </div>
     </footer>
   );

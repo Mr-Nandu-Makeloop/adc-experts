@@ -13,6 +13,7 @@ import FaqPage from './pages/FaqPage';
 import ContactPage from './pages/ContactPage';
 import TermsPage from './pages/TermsPage';
 import MembershipAccessPage from './pages/MembershipAccessPage';
+import MembershipPage from './pages/MembershipPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
 // SINGLE COMMON PLACEHOLDER IMAGE used across the entire platform
@@ -28,7 +29,7 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
-      if (['home', 'about', 'facilities', 'faq', 'contact', 'terms', 'membership-access', 'privacy-policy'].includes(hash)) {
+      if (['home', 'about', 'facilities', 'faq', 'contact', 'terms', 'membership', 'membership-access', 'privacy-policy'].includes(hash)) {
         setActivePage(hash);
       }
     };
@@ -114,6 +115,13 @@ export default function App() {
 
         {activePage === 'terms' && (
           <TermsPage 
+            onOpenModal={openModal} 
+          />
+        )}
+
+        {activePage === 'membership' && (
+          <MembershipPage 
+            onNavigate={navigateTo}
             onOpenModal={openModal} 
           />
         )}

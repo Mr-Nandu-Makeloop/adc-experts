@@ -61,7 +61,7 @@ export default function HomePage({ commonImage, onNavigate, onOpenModal }) {
                 <button 
                   type="button" 
                   className="btn btn-primary"
-                  onClick={() => onOpenModal('Become a Member — Just A$10/week')}
+                  onClick={() => onNavigate('membership')}
                 >
                   Become a Member — Just A$10/week
                 </button>
@@ -169,7 +169,7 @@ export default function HomePage({ commonImage, onNavigate, onOpenModal }) {
                 type="button" 
                 className="btn btn-primary"
                 style={{ width: '100%' }}
-                onClick={() => onOpenModal('Become a Member — A$10/week')}
+                onClick={() => onNavigate('membership')}
               >
                 Become a Member
               </button>
@@ -467,7 +467,7 @@ export default function HomePage({ commonImage, onNavigate, onOpenModal }) {
             <button 
               type="button" 
               className="btn btn-primary"
-              onClick={() => onOpenModal('Join ADC Experts — A$10/week')}
+              onClick={() => onNavigate('membership')}
             >
               Join ADC Experts
             </button>
@@ -572,7 +572,7 @@ export default function HomePage({ commonImage, onNavigate, onOpenModal }) {
                 <button 
                   type="button" 
                   className="btn btn-primary"
-                  onClick={() => onOpenModal('Become a Member — A$10/week')}
+                  onClick={() => onNavigate('membership')}
                 >
                   Become a Member
                 </button>

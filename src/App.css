@@ -1573,3 +1573,393 @@
   display: inline-block;
   margin-bottom: 14px;
 }
+
+
+/* ==========================================================================
+   MEMBERSHIP PAGE DESIGN STYLES (MATCHING REFERENCE /membership.png)
+   ========================================================================== */
+
+.membership-design-page {
+  background-color: #FFFFFF;
+  color: #111827;
+  overflow-x: hidden;
+}
+
+.member-eyebrow {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.text-terracotta {
+  color: var(--color-primary) !important;
+}
+
+.btn-terracotta {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 200ms ease;
+  box-shadow: 0 4px 14px rgba(163, 56, 23, 0.22);
+}
+
+.btn-terracotta:hover {
+  background-color: #8a2f13;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(163, 56, 23, 0.32);
+}
+
+/* 1. Hero Section */
+.member-hero-section {
+  padding: 72px 0 88px;
+  background-color: #FFFFFF;
+}
+
+.member-hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.member-hero-title {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #111827;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.member-hero-desc {
+  font-size: 17.5px;
+  line-height: 1.65;
+  color: #374151;
+  max-width: 520px;
+  margin-bottom: 28px;
+}
+
+.member-price-highlight {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+.member-hero-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-hero-img {
+  width: 100%;
+  max-width: 540px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Section Title */
+.member-section-title {
+  font-size: 40px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.02em;
+  margin-bottom: 56px;
+}
+
+/* 2. Benefits Grid (6 Cards) */
+.member-benefits-section {
+  padding: 80px 0 100px;
+  background-color: #FFFFFF;
+}
+
+.member-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 48px;
+  row-gap: 56px;
+}
+
+.member-benefit-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.benefit-card-img-wrap {
+  width: 100%;
+  max-width: 360px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.benefit-card-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.benefit-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+}
+
+.benefit-card-text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: #222222;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+/* 3. Membership Made Simple */
+.member-simple-section {
+  padding: 80px 0 100px;
+  background-color: #FFFFFF;
+}
+
+.member-simple-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.member-simple-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-simple-img {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.member-simple-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.member-price-callout {
+  font-size: 46px;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.member-commitment-sub {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 28px;
+}
+
+.member-bullet-list {
+  list-style-type: disc;
+  padding-left: 24px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.member-bullet-list li {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.55;
+}
+
+/* 4. How Your Membership Works */
+.member-steps-section {
+  padding: 80px 0 100px;
+  background-color: #FFFFFF;
+}
+
+.member-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.member-step-card {
+  background-color: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 38px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 200ms ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.member-step-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 24px rgba(163, 56, 23, 0.09);
+  transform: translateY(-3px);
+}
+
+.member-step-icon {
+  color: var(--color-primary);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.member-step-title {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--color-primary);
+  margin-bottom: 14px;
+}
+
+.member-step-desc {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #374151;
+  margin: 0;
+}
+
+/* 5. Active Member Benefit Perth */
+.member-perth-section {
+  padding: 80px 0 110px;
+  background-color: #FFFFFF;
+}
+
+.member-perth-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.member-perth-title {
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #111827;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.member-perth-desc {
+  font-size: 16.5px;
+  line-height: 1.65;
+  color: #374151;
+  max-width: 540px;
+  margin-bottom: 24px;
+}
+
+.member-perth-seal-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-seal-img {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 28px rgba(163, 56, 23, 0.12));
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .member-hero-title {
+    font-size: 42px;
+  }
+  .member-section-title,
+  .member-simple-title,
+  .member-perth-title {
+    font-size: 34px;
+  }
+  .member-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 32px;
+    row-gap: 44px;
+  }
+  .member-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .member-hero-section,
+  .member-benefits-section,
+  .member-simple-section,
+  .member-steps-section,
+  .member-perth-section {
+    padding: 56px 0;
+  }
+  .member-hero-grid,
+  .member-simple-grid,
+  .member-perth-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: left;
+  }
+  .member-hero-title {
+    font-size: 34px;
+  }
+  .member-section-title,
+  .member-simple-title,
+  .member-perth-title {
+    font-size: 28px;
+    margin-bottom: 36px;
+  }
+  .member-price-highlight,
+  .member-price-callout {
+    font-size: 34px;
+  }
+  .member-benefits-grid,
+  .member-steps-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .benefit-card-img-wrap {
+    height: auto;
+  }
+  .member-seal-img {
+    max-width: 320px;
+  }
+}

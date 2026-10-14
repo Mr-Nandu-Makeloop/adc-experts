@@ -25,7 +25,7 @@ export default function Header({ activePage, onNavigate, onOpenModal }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isMembershipActive = activePage === 'terms' || activePage === 'membership-access';
+  const isMembershipActive = activePage === 'membership' || activePage === 'terms' || activePage === 'membership-access';
 
   return (
     <header className="header" role="banner">
@@ -118,6 +118,29 @@ export default function Header({ activePage, onNavigate, onOpenModal }) {
                   type="button"
                   role="menuitem"
                   className="dropdown-item"
+                  onClick={() => handleNav('membership')}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: '12px 16px',
+                    fontSize: '14px',
+                    fontWeight: activePage === 'membership' ? '700' : '600',
+                    color: activePage === 'membership' ? 'var(--color-primary)' : 'var(--color-text)',
+                    backgroundColor: activePage === 'membership' ? 'var(--color-primary-light)' : 'transparent',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 150ms ease'
+                  }}
+                >
+                  ADC Experts Membership
+                </button>
+
+                <button
+                  type="button"
+                  role="menuitem"
+                  className="dropdown-item"
                   onClick={() => handleNav('terms')}
                   style={{
                     display: 'block',
@@ -131,6 +154,7 @@ export default function Header({ activePage, onNavigate, onOpenModal }) {
                     borderRadius: '8px',
                     border: 'none',
                     cursor: 'pointer',
+                    marginTop: '4px',
                     transition: 'all 150ms ease'
                   }}
                 >
@@ -257,6 +281,22 @@ export default function Header({ activePage, onNavigate, onOpenModal }) {
 
             {mobileMembershipOpen && (
               <div style={{ paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '10px', marginBottom: '14px' }}>
+                <button
+                  type="button"
+                  style={{
+                    textAlign: 'left',
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '15px',
+                    fontWeight: activePage === 'membership' ? '700' : '600',
+                    color: activePage === 'membership' ? 'var(--color-primary)' : 'rgba(0,0,0,0.85)',
+                    cursor: 'pointer',
+                    padding: '6px 0'
+                  }}
+                  onClick={() => handleNav('membership')}
+                >
+                  ADC Experts Membership
+                </button>
                 <button
                   type="button"
                   style={{
