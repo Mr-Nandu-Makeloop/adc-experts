@@ -1,7 +1,7 @@
 import React from 'react';
 import logoImg from '../assets/logo.jpg';
 
-export default function Footer({ onNavigate }) {
+export default function Footer({ onNavigate, onOpenHelpModal }) {
   const handleNav = (page) => {
     onNavigate(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -84,7 +84,10 @@ export default function Footer({ onNavigate }) {
             <button 
               type="button" 
               className="footer-bold-link"
-              onClick={() => handleNav('membership-access')}
+              onClick={() => {
+                if (onOpenHelpModal) onOpenHelpModal();
+                else handleNav('membership-access');
+              }}
             >
               Membership Access / Help
             </button>
@@ -138,9 +141,6 @@ export default function Footer({ onNavigate }) {
         <div style={{ marginTop: '48px', paddingTop: '24px', borderTop: '1px solid #F1F5F9', textAlign: 'center' }}>
           <p style={{ margin: 0, fontSize: '13px', color: '#64748B', fontWeight: '500' }}>
             © 2025 ADC Experts | All Rights Reserved
-          </p>
-          <p style={{ margin: '6px 0 0', fontSize: '12px', color: '#94A3B8' }}>
-            Powered by <strong style={{ color: '#0F172A', fontWeight: '700' }}>koodz</strong>
           </p>
         </div>
       </div>

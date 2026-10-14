@@ -1,160 +1,182 @@
 import React, { useState } from 'react';
+import faqImg from '../assets/faq.png';
 
-const FAQ_DATA = [
-  {
-    category: 'Part 1 Written',
-    q: 'What is the format and duration of the ADC Part 1 Written Examination?',
-    a: 'The Part 1 Written Examination consists of four scenario-based multiple-choice test papers administered over two consecutive days. It assesses clinical knowledge, diagnosis, pharmacology, radiology, ethics, and Australian infection prevention protocols.'
-  },
-  {
-    category: 'Part 1 Written',
-    q: 'Can candidates complete the Part 1 theory preparation online from overseas?',
-    a: 'Yes, our Part 1 Written Comprehensive masterclass is available entirely online with live weekly webinars, recorded video lectures, scenario breakdowns, and interactive timed question bank modules accessible anywhere in the world.'
-  },
-  {
-    category: 'Part 1 Written',
-    q: 'How frequently are mock examinations conducted during the Part 1 course?',
-    a: 'Candidates sit full-length timed mock examinations at the midpoint and end of the program, receiving detailed percentile breakdowns, question rationales, and targeted revision roadmaps.'
-  },
-  {
-    category: 'Part 2 Clinical',
-    q: 'What procedures are assessed in the ADC Part 2 Practical Examination?',
-    a: 'Part 2 assesses clinical dexterity on phantom heads across core restorative competencies: Class II amalgam preparations, Class II composite preparations and restorations, full ceramic or metal-ceramic crown preparations, and endodontic access cavity preparations.'
-  },
-  {
-    category: 'Part 2 Clinical',
-    q: 'How many hours of hands-on phantom head training are recommended?',
-    a: 'Most overseas dentists require between 250 and 350 dedicated bench hours to overcome indirect mirror vision fatigue, develop neuromuscular muscle memory, and consistently achieve tolerances within 0.2mm to 0.4mm.'
-  },
-  {
-    category: 'Part 2 Clinical',
-    q: 'Do your phantom heads match the official Australian testing center models?',
-    a: 'Yes. Our Melbourne simulation benches utilize authentic KaVo and Frasaco manikins equipped with ANA-4 jaw typodonts, authentic rubber dam units, and dental turbines configured to the exact water pressure and speed of the testing center.'
-  },
-  {
-    category: 'OSCE & Communication',
-    q: 'What is evaluated in the OSCE clinical communication stations?',
-    a: 'The OSCE evaluates candidate ability to explain diagnoses, obtain informed consent, manage medical emergencies, de-escalate anxious or dissatisfied patients, and uphold Australian cross-infection and health records regulations.'
-  },
-  {
-    category: 'OSCE & Communication',
-    q: 'Do you conduct live simulated patient interactions with actors?',
-    a: 'Yes. Our OSCE workshops feature trained roleplay actors and experienced examiner observers who run realistic 10-minute station circuits followed by structured oral debriefs and rubric scoring.'
-  },
-  {
-    category: 'Facilities & Booking',
-    q: 'What are the simulation lab access hours for enrolled students?',
-    a: 'Enrolled candidates have laboratory access 7 days a week between 8:30 AM and 7:00 PM AEST. Bench slots can be booked in 4.5-hour blocks through the candidate membership portal.'
-  },
-  {
-    category: 'Facilities & Booking',
-    q: 'Are consumables such as typodont replacement teeth included in the course fee?',
-    a: 'All enrollment packages include an initial comprehensive toolkit with typodont jaws, replacement preparation teeth, burs, hand instruments, and restorative materials. Extra teeth can be purchased at cost at our on-site dispensary.'
-  },
-  {
-    category: 'Visas & Registration',
-    q: 'Can overseas dentists obtain assistance with visa scheduling and accommodation?',
-    a: 'While we are an independent educational academy and do not issue student visas, we provide confirmed enrollment letters and flexible module scheduling that align with Australian visitor and short-stay training visas.'
-  },
-  {
-    category: 'Visas & Registration',
-    q: 'What happens after passing both ADC Part 1 and Part 2 examinations?',
-    a: 'Passing the ADC examinations allows you to receive an Australian Dental Council Certificate, fulfilling the examination requirement to apply for general registration with the Dental Board of Australia (Ahpra).'
-  }
-];
-
-export default function FaqPage({ onNavigate, onOpenModal }) {
-  const [selectedCategory, setSelectedCategory] = useState('All');
+export default function FaqPage({ onNavigate }) {
   const [openIndex, setOpenIndex] = useState(0);
 
-  const categories = ['All', 'Part 1 Written', 'Part 2 Clinical', 'OSCE & Communication', 'Facilities & Booking', 'Visas & Registration'];
-
-  const filteredFaqs = selectedCategory === 'All' 
-    ? FAQ_DATA 
-    : FAQ_DATA.filter(item => item.category === selectedCategory);
+  const FAQS = [
+    {
+      q: 'What does the ADC Part 2 exam include?',
+      a: (
+        <>
+          <p style={{ marginBottom: '12px' }}>
+            The ADC Part 2 exam is conducted over 2 days and typically includes:
+          </p>
+          <ul className="faq-custom-bullets">
+            <li><span className="faq-arrow-icon">➤</span> Technical tasks (6 procedures performed in a simulated clinical setup)</li>
+            <li><span className="faq-arrow-icon">➤</span> OSCE role-play scenarios (communication-based stations)</li>
+            <li><span className="faq-arrow-icon">➤</span> Skill-based tasks (e.g. rubber dam placement, radiography, etc.)</li>
+          </ul>
+          <p style={{ marginTop: '14px', marginBottom: 0 }}>
+            Our training is designed to cover all three components comprehensively, aligned with current ADC exam formats.
+          </p>
+        </>
+      )
+    },
+    {
+      q: 'Do you cover all sections of the exam in your training?',
+      a: (
+        <>
+          <p style={{ marginBottom: '12px' }}>
+            Yes. Our program ensures you are fully prepared for:
+          </p>
+          <ul className="faq-custom-bullets">
+            <li><span className="faq-arrow-icon">➤</span> Technical procedures</li>
+            <li><span className="faq-arrow-icon">➤</span> OSCE communication scenarios</li>
+            <li><span className="faq-arrow-icon">➤</span> Skill-based stations</li>
+          </ul>
+          <p style={{ marginTop: '14px', marginBottom: 0 }}>
+            Everything is taught and practiced in line with real exam expectations and Australian standards.
+          </p>
+        </>
+      )
+    },
+    {
+      q: 'Is the training conducted onsite?',
+      a: (
+        <p style={{ margin: 0 }}>
+          Yes, we offer onsite training in Perth, along with online components where applicable. This allows candidates to experience real exam-like setups and hands-on practice.
+        </p>
+      )
+    },
+    {
+      q: 'Are all equipment and materials provided?',
+      a: (
+        <>
+          <p style={{ marginBottom: '12px' }}>
+            Yes. We provide all equipment and materials required for training, set up to closely reflect the ADC exam environment.
+          </p>
+          <p style={{ margin: 0 }}>
+            We also provide one set of teeth, and any additional teeth will need to be arranged by the candidate.
+          </p>
+        </>
+      )
+    },
+    {
+      q: 'Will I get hands-on practice?',
+      a: (
+        <>
+          <p style={{ marginBottom: '12px' }}>
+            Absolutely. Candidates are given ample opportunity to practice procedures, not just observe.
+          </p>
+          <p style={{ margin: 0 }}>
+            Our approach focuses on learning by doing, supported by continuous guidance and corrections.
+          </p>
+        </>
+      )
+    },
+    {
+      q: 'Will I receive feedback on my performance?',
+      a: (
+        <>
+          <p style={{ marginBottom: '12px' }}>
+            Yes. You will receive detailed, personalized feedback on:
+          </p>
+          <ul className="faq-custom-bullets">
+            <li><span className="faq-arrow-icon">➤</span> Technical work</li>
+            <li><span className="faq-arrow-icon">➤</span> Communication (OSCE)</li>
+            <li><span className="faq-arrow-icon">➤</span> Clinical reasoning and structure</li>
+          </ul>
+          <p style={{ marginTop: '14px', marginBottom: 0 }}>
+            All feedback is provided by a practicing Australian dentist, aligned with ADC examiner expectations.
+          </p>
+        </>
+      )
+    },
+    {
+      q: 'Do you provide real exam-style simulation?',
+      a: (
+        <>
+          <p style={{ marginBottom: '12px' }}>
+            Yes. Our sessions are designed to closely replicate the ADC exam, including:
+          </p>
+          <ul className="faq-custom-bullets">
+            <li><span className="faq-arrow-icon">➤</span> Setup</li>
+            <li><span className="faq-arrow-icon">➤</span> Timing</li>
+            <li><span className="faq-arrow-icon">➤</span> Assessment style</li>
+            <li><span className="faq-arrow-icon">➤</span> Examiner expectations</li>
+          </ul>
+          <p style={{ marginTop: '14px', marginBottom: 0 }}>
+            So, you walk into your exam already knowing what to expect.
+          </p>
+        </>
+      )
+    },
+    {
+      q: 'Is this course worth the investment?',
+      a: (
+        <p style={{ margin: 0 }}>
+          We understand that preparing for ADC is a significant investment. Our focus is to provide structured guidance, real exam exposure, and expert feedback, ensuring your preparation is efficient, focused, and aligned with success.
+        </p>
+      )
+    }
+  ];
 
   return (
-    <div className="faq-page">
+    <div className="faq-design-page">
       {/* ------------------------------------------------------------------
-          PAGE HEADER
+          1. HERO HEADER WITH FAQ IMAGE
           ------------------------------------------------------------------ */}
-      <section className="section page-header-section" style={{ paddingBottom: '32px' }}>
+      <section className="faq-hero-section">
         <div className="container">
-          <div style={{ maxWidth: '820px' }}>
-            <span className="text-eyebrow">CANDIDATE INFORMATION</span>
-            <h1 style={{ marginBottom: '20px' }}>
-              Frequently Asked Questions
-            </h1>
-            <p className="text-lead">
-              Clear, transparent answers regarding course structure, laboratory access, assessment criteria, and overseas candidate requirements for the Australian Dental Council examination pathway.
-            </p>
+          <div className="faq-hero-grid">
+            <div className="faq-hero-content">
+              <span className="member-eyebrow">ADC EXPERTS – FAQS</span>
+              <h1 className="faq-hero-title">
+                Frequently Asked <span className="text-terracotta">Questions</span>
+              </h1>
+              <p className="faq-hero-desc">
+                Clear, transparent answers about our ADC Part 2 training, clinical simulation in Perth, materials, dentist feedback, and hands-on preparation.
+              </p>
+            </div>
+
+            <div className="faq-hero-media">
+              <img 
+                src={faqImg} 
+                alt="ADC Experts Dentist with questions illustration" 
+                className="faq-hero-img" 
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* ------------------------------------------------------------------
-          CATEGORY FILTER BAR
+          2. ACCORDION FAQ ITEMS
           ------------------------------------------------------------------ */}
-      <section style={{ paddingBottom: '32px' }}>
+      <section className="faq-list-section">
         <div className="container">
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => { setSelectedCategory(cat); setOpenIndex(0); }}
-                style={{
-                  padding: '8px 18px',
-                  borderRadius: '9999px',
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  border: selectedCategory === cat ? '1px solid var(--color-primary)' : '1px solid var(--color-border)',
-                  backgroundColor: selectedCategory === cat ? 'var(--color-primary)' : '#FFFFFF',
-                  color: selectedCategory === cat ? '#FFFFFF' : 'var(--color-text)',
-                  transition: 'all 200ms ease'
-                }}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------
-          FAQ ACCORDIONS
-          ------------------------------------------------------------------ */}
-      <section className="section" style={{ paddingTop: '10px', paddingBottom: '80px' }}>
-        <div className="container">
-          <div className="faq-grid" style={{ gridTemplateColumns: '1fr', maxWidth: '880px', margin: '0 auto' }}>
-            {filteredFaqs.map((item, idx) => {
+          <div className="faq-accordions-wrapper">
+            {FAQS.map((item, idx) => {
               const isOpen = openIndex === idx;
               return (
-                <div key={idx} className={`faq-item ${isOpen ? 'open' : ''}`}>
+                <div key={idx} className={`faq-card-item ${isOpen ? 'open' : ''}`}>
                   <button 
                     type="button" 
-                    className="faq-question"
+                    className="faq-trigger"
                     aria-expanded={isOpen}
                     onClick={() => setOpenIndex(isOpen ? -1 : idx)}
                   >
-                    <span>{item.q}</span>
-                    <span className="faq-icon" aria-hidden="true">+</span>
+                    <span className="faq-trigger-num">0{idx + 1}.</span>
+                    <span className="faq-trigger-question">{item.q}</span>
+                    <span className="faq-trigger-icon" aria-hidden="true">
+                      {isOpen ? '−' : '+'}
+                    </span>
                   </button>
+
                   {isOpen && (
-                    <div className="faq-answer">
-                      <span style={{ 
-                        display: 'inline-block', 
-                        fontSize: '11px', 
-                        fontWeight: 700, 
-                        color: 'var(--color-primary)', 
-                        textTransform: 'uppercase', 
-                        letterSpacing: '0.08em', 
-                        marginBottom: '8px' 
-                      }}>
-                        {item.category}
-                      </span>
-                      <p>{item.a}</p>
+                    <div className="faq-collapsible-answer">
+                      {item.a}
                     </div>
                   )}
                 </div>
@@ -162,36 +184,25 @@ export default function FaqPage({ onNavigate, onOpenModal }) {
             })}
           </div>
 
-          {/* Still Have Questions Box */}
-          <div style={{ 
-            maxWidth: '880px', 
-            margin: '60px auto 0', 
-            padding: '40px', 
-            borderRadius: '16px', 
-            border: '1px solid var(--color-border)', 
-            backgroundColor: 'rgba(82, 103, 115, 0.05)',
-            textAlign: 'center'
-          }}>
-            <h3 style={{ fontSize: '22px', marginBottom: '12px' }}>
-              Have a Specific Question Not Covered Here?
-            </h3>
-            <p style={{ color: 'rgba(0,0,0,0.7)', fontSize: '15px', maxWidth: '580px', margin: '0 auto 24px' }}>
-              Our academic advisory team is available to discuss your specific BDS graduation timeline, prior attempts, and optimal bench scheduling.
+          {/* ------------------------------------------------------------------
+              3. STILL HAVE QUESTIONS? (Matching user uploaded design)
+              ------------------------------------------------------------------ */}
+          <div className="faq-still-box">
+            <h2 className="faq-still-title">Still have Questions?</h2>
+            <p className="faq-still-desc">
+              Every candidate’s journey is different, and we’re here to guide you.
             </p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            <p className="faq-still-callout">
+              <span className="faq-hand-emoji" role="img" aria-label="hand pointing right">👉</span>
+              Book a call with us to discuss your preparation and find the right course for you.
+            </p>
+            <div style={{ marginTop: '28px' }}>
               <button 
                 type="button" 
-                className="btn btn-primary"
-                onClick={() => onOpenModal('Request Advisor Consultation')}
-              >
-                Speak with an Advisor
-              </button>
-              <button 
-                type="button" 
-                className="btn btn-secondary"
+                className="btn-terracotta"
                 onClick={() => onNavigate('contact')}
               >
-                Contact Admissions Team
+                Contact us
               </button>
             </div>
           </div>
@@ -200,4 +211,3 @@ export default function FaqPage({ onNavigate, onOpenModal }) {
     </div>
   );
 }
-

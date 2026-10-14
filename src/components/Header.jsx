@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import logoImg from '../assets/logo.jpg';
 
-export default function Header({ activePage, onNavigate, onOpenModal }) {
+export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelpModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMembershipOpen, setMobileMembershipOpen] = useState(false);
@@ -165,16 +165,20 @@ export default function Header({ activePage, onNavigate, onOpenModal }) {
                   type="button"
                   role="menuitem"
                   className="dropdown-item"
-                  onClick={() => handleNav('membership-access')}
+                  onClick={() => {
+                    setDropdownOpen(false);
+                    if (onOpenHelpModal) onOpenHelpModal();
+                    else handleNav('membership-access');
+                  }}
                   style={{
                     display: 'block',
                     width: '100%',
                     textAlign: 'left',
                     padding: '12px 16px',
                     fontSize: '14px',
-                    fontWeight: activePage === 'membership-access' ? '700' : '600',
-                    color: activePage === 'membership-access' ? 'var(--color-primary)' : 'var(--color-text)',
-                    backgroundColor: activePage === 'membership-access' ? 'var(--color-primary-light)' : 'transparent',
+                    fontWeight: '600',
+                    color: 'var(--color-text)',
+                    backgroundColor: 'transparent',
                     borderRadius: '8px',
                     border: 'none',
                     cursor: 'pointer',
@@ -320,12 +324,16 @@ export default function Header({ activePage, onNavigate, onOpenModal }) {
                     background: 'none',
                     border: 'none',
                     fontSize: '15px',
-                    fontWeight: activePage === 'membership-access' ? '700' : '600',
-                    color: activePage === 'membership-access' ? 'var(--color-primary)' : 'rgba(0,0,0,0.85)',
+                    fontWeight: '600',
+                    color: 'rgba(0,0,0,0.85)',
                     cursor: 'pointer',
                     padding: '6px 0'
                   }}
-                  onClick={() => handleNav('membership-access')}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (onOpenHelpModal) onOpenHelpModal();
+                    else handleNav('membership-access');
+                  }}
                 >
                   Membership Access / Help
                 </button>
