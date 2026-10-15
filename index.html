@@ -30,6 +30,11 @@
           var popup = document.createElement("div");
           popup.id = "adc-membership-popup";
 
+          var stripeUrl = "%VITE_STRIPE_MEMBERSHIP_URL%";
+          if (!stripeUrl || stripeUrl.indexOf("%") === 0) {
+            stripeUrl = "https://buy.stripe.com/test_adc_membership_a10_week";
+          }
+
           popup.innerHTML = `
       <style>
         #adc-membership-popup {
@@ -256,7 +261,7 @@
           </div>
 
           <a
-            href="https://buy.stripe.com/fZu00lc8obKqanHdY21wY00"
+            href="${stripeUrl}"
             class="adc-join-btn"
             target="_blank"
             rel="noopener noreferrer"
