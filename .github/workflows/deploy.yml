@@ -27,21 +27,43 @@ jobs:
 
       - name: Build site
         env:
-          VITE_STRIPE_MEMBERSHIP_URL: ${{ secrets.VITE_STRIPE_MEMBERSHIP_URL || vars.VITE_STRIPE_MEMBERSHIP_URL || 'https://buy.stripe.com/test_adc_membership_a10_week' }}
+          VITE_STRIPE_MEMBERSHIP_URL: ${{ secrets.VITE_STRIPE_MEMBERSHIP_URL || 'https://buy.stripe.com/test_adc_membership_a10_week' }}
         run: npm run build
+
+      - name: Determine AWS Region
+        id: set-region
+        run: |
+          REGION="${{ secrets.AWS_REGION }}"
+          if [ -z "$REGION" ]; then
+            REGION="us-east-1"
+          fi
+          echo "region=$REGION" >> "$GITHUB_OUTPUT"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION || 'us-east-1' }}
+          aws-region: ${{ steps.set-region.outputs.region }}
 
       - name: Sync build files to S3 bucket
+        env:
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
         run: |
-          aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} --delete
+          if [ -z "$S3_BUCKET_NAME" ]; then
+            echo "::error::S3_BUCKET_NAME secret is not set in GitHub repository secrets!"
+            exit 1
+          fi
+          echo "Syncing dist/ to s3://$S3_BUCKET_NAME..."
+          aws s3 sync dist/ s3://$S3_BUCKET_NAME --delete
 
       - name: Invalidate CloudFront cache
-        if: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID != '' }}
+        env:
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+          if [ -n "$CLOUDFRONT_DISTRIBUTION_ID" ]; then
+            echo "Invalidating CloudFront distribution $CLOUDFRONT_DISTRIBUTION_ID..."
+            aws cloudfront create-invalidation --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" --paths "/*"
+          else
+            echo "CLOUDFRONT_DISTRIBUTION_ID secret not set, skipping invalidation."
+          fi
