@@ -3,9 +3,9 @@ import React from 'react';
 export default function TermsPage({ onOpenModal }) {
   return (
     <div className="membership-terms-page">
-      <div className="container" style={{ padding: '72px 24px 96px', maxWidth: '920px', margin: '0 auto' }}>
+      <div className="container" style={{ padding: '24px 24px 64px', maxWidth: '920px', margin: '0 auto' }}>
         {/* Page Header */}
-        <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <h1 
             style={{ 
               fontSize: '34px', 

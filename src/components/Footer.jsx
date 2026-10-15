@@ -1,5 +1,5 @@
 import React from 'react';
-import logoImg from '../assets/logo.jpg';
+import logoImg from '../assets/logo.png';
 
 export default function Footer({ onNavigate, onOpenHelpModal }) {
   const handleNav = (page) => {
@@ -8,8 +8,21 @@ export default function Footer({ onNavigate, onOpenHelpModal }) {
   };
 
   return (
-    <footer className="footer-custom" role="contentinfo" style={{ backgroundColor: '#FFFFFF', borderTop: '3px solid #A33817' }}>
-      <div className="container" style={{ padding: '48px 24px 56px' }}>
+    <footer className="footer-custom" role="contentinfo" style={{ backgroundColor: '#FFFFFF' }}>
+      {/* Body / Footer separation line with container margins on both sides */}
+      <div className="container" style={{ padding: '0 24px' }}>
+        <div 
+          className="footer-separation-line" 
+          style={{ 
+            height: '3px', 
+            backgroundColor: '#A33817', 
+            width: '100%', 
+            borderRadius: '2px', 
+            marginBottom: '48px' 
+          }} 
+        />
+      </div>
+      <div className="container" style={{ padding: '0 24px 56px' }}>
         <div className="footer-custom-grid">
           {/* Left Column: Logo + Address + Email */}
           <div className="footer-brand-section">
@@ -101,6 +114,13 @@ export default function Footer({ onNavigate, onOpenHelpModal }) {
               onClick={() => handleNav('facilities')}
             >
               Facilities
+            </button>
+            <button 
+              type="button" 
+              className="footer-bold-link"
+              onClick={() => handleNav('gallery')}
+            >
+              Gallery
             </button>
             <button 
               type="button" 

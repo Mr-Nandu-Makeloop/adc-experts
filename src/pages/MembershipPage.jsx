@@ -8,8 +8,9 @@ import cardChair from '../assets/member-card-chair.png';
 import cardMentoring from '../assets/member-card-mentoring.png';
 import memberSimpleImg from '../assets/member-simple.png';
 import membershipSeal from '../assets/membership-seal.png';
+import { openStripeCheckout } from '../config/stripe';
 
-export default function MembershipPage({ onOpenModal }) {
+export default function MembershipPage({ _onOpenModal }) {
   const BENEFIT_CARDS = [
     {
       img: cardPart1,
@@ -143,7 +144,7 @@ export default function MembershipPage({ onOpenModal }) {
                 <button 
                   type="button" 
                   className="btn-terracotta"
-                  onClick={() => onOpenModal('ADC Experts Membership — A$10/week')}
+                  onClick={(e) => openStripeCheckout(e)}
                 >
                   Join Membership →
                 </button>
@@ -221,7 +222,7 @@ export default function MembershipPage({ onOpenModal }) {
                 <button 
                   type="button" 
                   className="btn-terracotta"
-                  onClick={() => onOpenModal('Join Membership — A$10/week')}
+                  onClick={(e) => openStripeCheckout(e)}
                 >
                   Join for A$10/week →
                 </button>
@@ -285,7 +286,7 @@ export default function MembershipPage({ onOpenModal }) {
                 <button 
                   type="button" 
                   className="btn-terracotta"
-                  onClick={() => onOpenModal('ADC Experts Membership — Perth Study Access')}
+                  onClick={(e) => openStripeCheckout(e)}
                 >
                   Join Membership →
                 </button>

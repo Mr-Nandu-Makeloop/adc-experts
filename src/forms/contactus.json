@@ -1,0 +1,812 @@
+{
+  "$ref": "project-775ab81e-c03b-11f0-b3f4-2a3502c42683/pages/682a3882-8686-453e-91ba-e46f96b0029c/briks/604cb06e-81d6-4877-90d1-4dd3761c5224/brik-604cb06e-81d6-4877-90d1-4dd3761c5224.json",
+  "data": [
+    {
+      "id": "52189fda-a4f6-11f1-bf05-f6014a890f1a",
+      "style": {
+        "blur": 0,
+        "font": { "size": "", "color": "primary", "style": "", "family": "" },
+        "width": "",
+        "border": { "size": "", "color": "", "radius": "" },
+        "height": "",
+        "margin": "",
+        "opacity": "0.9",
+        "padding": "",
+        "backgroundColor": ""
+      },
+      "content": {
+        "for": "background",
+        "src": "",
+        "link": "",
+        "type": "text",
+        "label": "Name",
+        "value": "Name"
+      },
+      "display": "block",
+      "editable": true,
+      "formFields": {
+        "id": "831fb540-d5c7-11f0-a2d2-3a65dcbcfba5",
+        "cols": [
+          {
+            "colspan": 12,
+            "colsData": {
+              "fieldData": {
+                "id": "831fb644-d5c7-11f0-a2d2-3a65dcbcfba5",
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "enabled": true,
+                "validation": { "required": true },
+                "placeholder": "Enter your full name"
+              }
+            }
+          }
+        ],
+        "rowId": "831fb540-d5c7-11f0-a2d2-3a65dcbcfba5",
+        "colspan": 12,
+        "colindex": 2
+      }
+    },
+    {
+      "id": "5218a4f8-a4f6-11f1-bf05-f6014a890f1a",
+      "style": {
+        "blur": 0,
+        "font": { "size": "", "color": "primary", "style": "", "family": "" },
+        "width": "",
+        "border": { "size": "", "color": "", "radius": "" },
+        "height": "",
+        "margin": "",
+        "opacity": "0.9",
+        "padding": "",
+        "backgroundColor": ""
+      },
+      "content": {
+        "for": "background",
+        "src": "",
+        "link": "",
+        "type": "text",
+        "label": "Email",
+        "value": "Email"
+      },
+      "display": "block",
+      "editable": true,
+      "formFields": {
+        "id": "831fb73e-d5c7-11f0-a2d2-3a65dcbcfba5",
+        "cols": [
+          {
+            "colspan": 12,
+            "colsData": {
+              "fieldData": {
+                "id": "831fb7b6-d5c7-11f0-a2d2-3a65dcbcfba5",
+                "name": "email",
+                "type": "email",
+                "label": "Email",
+                "enabled": true,
+                "validation": { "required": true },
+                "placeholder": "Enter your email address"
+              }
+            }
+          }
+        ],
+        "rowId": "831fb73e-d5c7-11f0-a2d2-3a65dcbcfba5",
+        "colspan": 12,
+        "colindex": 3
+      }
+    },
+    {
+      "id": "5218a8cc-a4f6-11f1-bf05-f6014a890f1a",
+      "style": {
+        "blur": 0,
+        "font": { "size": "", "color": "primary", "style": "", "family": "" },
+        "width": "",
+        "border": { "size": "", "color": "", "radius": "" },
+        "height": "",
+        "margin": "",
+        "opacity": "0.9",
+        "padding": "",
+        "backgroundColor": ""
+      },
+      "content": {
+        "for": "background",
+        "src": "",
+        "link": "",
+        "type": "text",
+        "label": "Whatsapp/Phone",
+        "value": "Whatsapp/Phone"
+      },
+      "display": "block",
+      "editable": true,
+      "formFields": {
+        "id": "831fb8a6-d5c7-11f0-a2d2-3a65dcbcfba5",
+        "cols": [
+          {
+            "colspan": 12,
+            "colsData": {
+              "fieldData": {
+                "id": "831fb90a-d5c7-11f0-a2d2-3a65dcbcfba5",
+                "name": "phone",
+                "type": "tel",
+                "label": "Whatsapp/Phone",
+                "enabled": true,
+                "validation": { "required": true },
+                "placeholder": "Enter your whatsapp or Phone number"
+              }
+            }
+          }
+        ],
+        "rowId": "831fb8a6-d5c7-11f0-a2d2-3a65dcbcfba5",
+        "colspan": 12,
+        "colindex": 4
+      }
+    },
+    {
+      "id": "5218abd8-a4f6-11f1-bf05-f6014a890f1a",
+      "style": {
+        "blur": 0,
+        "font": { "size": "", "color": "primary", "style": "", "family": "" },
+        "width": "",
+        "border": { "size": "", "color": "", "radius": "" },
+        "height": "",
+        "margin": "",
+        "opacity": "0.9",
+        "padding": "",
+        "backgroundColor": ""
+      },
+      "content": {
+        "for": "background",
+        "src": "",
+        "link": "",
+        "type": "text",
+        "label": "Which course are you interested in?",
+        "value": "Which course are you interested in?"
+      },
+      "display": "block",
+      "editable": true,
+      "formFields": {
+        "id": "831fb9f0-d5c7-11f0-a2d2-3a65dcbcfba5",
+        "cols": [
+          {
+            "colspan": 12,
+            "colsData": {
+              "fieldData": {
+                "id": "831fba5e-d5c7-11f0-a2d2-3a65dcbcfba5",
+                "name": "course",
+                "type": "select",
+                "label": "Which course are you interested in?",
+                "enabled": true,
+                "options": [
+                  { "label": "ADC part-1", "value": "ADC part-1" },
+                  { "label": "ADC part-2", "value": "ADC part-2" },
+                  { "label": "Mock Exam", "value": "Mock Exam" },
+                  {
+                    "label": "Free online session",
+                    "value": "Free online session"
+                  }
+                ],
+                "validation": { "required": true }
+              }
+            }
+          }
+        ],
+        "rowId": "831fb9f0-d5c7-11f0-a2d2-3a65dcbcfba5",
+        "colspan": 12,
+        "colindex": 5
+      }
+    },
+    {
+      "id": "5218b11e-a4f6-11f1-bf05-f6014a890f1a",
+      "style": {
+        "blur": 0,
+        "font": { "size": "", "color": "primary", "style": "", "family": "" },
+        "width": "",
+        "border": { "size": "", "color": "", "radius": "" },
+        "height": "",
+        "margin": "",
+        "opacity": "0.9",
+        "padding": "",
+        "backgroundColor": ""
+      },
+      "content": {
+        "for": "background",
+        "src": "",
+        "link": "",
+        "type": "text",
+        "label": "Message",
+        "value": "Message"
+      },
+      "display": "block",
+      "editable": true,
+      "formFields": {
+        "id": "831fbb4e-d5c7-11f0-a2d2-3a65dcbcfba5",
+        "cols": [
+          {
+            "colspan": 12,
+            "colsData": {
+              "fieldData": {
+                "id": "831fbbb2-d5c7-11f0-a2d2-3a65dcbcfba5",
+                "name": "message",
+                "type": "textarea",
+                "label": "Message",
+                "enabled": true,
+                "validation": { "required": true },
+                "placeholder": "Enter your Message"
+              }
+            }
+          }
+        ],
+        "rowId": "831fbb4e-d5c7-11f0-a2d2-3a65dcbcfba5",
+        "colspan": 12,
+        "colindex": 6
+      }
+    },
+    {
+      "id": "5218b45c-a4f6-11f1-bf05-f6014a890f1a",
+      "style": {
+        "font": {
+          "size": "",
+          "color": "",
+          "style": "",
+          "family": "",
+          "weight": ""
+        },
+        "width": "",
+        "border": { "size": "", "color": "", "radius": "" },
+        "height": "",
+        "margin": "",
+        "padding": "",
+        "variant": "filled",
+        "backgroundColor": "primary"
+      },
+      "content": {
+        "for": "background",
+        "src": "",
+        "link": "",
+        "type": "button",
+        "label": "Submit",
+        "value": "Submit",
+        "buttonType": "sequence"
+      },
+      "display": "block",
+      "editable": true,
+      "formFields": {
+        "id": "",
+        "cols": [
+          {
+            "colspan": 12,
+            "colsData": {
+              "fieldData": {
+                "id": "5218b4d4-a4f6-11f1-bf05-f6014a890f1a",
+                "type": "submit",
+                "label": "Submit",
+                "enabled": true
+              }
+            }
+          }
+        ],
+        "rowId": "5218b54c-a4f6-11f1-bf05-f6014a890f1a",
+        "colindex": 7
+      }
+    },
+    {
+      "id": "5218b81c-a4f6-11f1-bf05-f6014a890f1a",
+      "style": {
+        "font": {
+          "size": "",
+          "color": "",
+          "style": "",
+          "family": "",
+          "weight": ""
+        },
+        "width": "",
+        "border": { "size": "1 1 1 1", "color": "black", "radius": "" },
+        "height": "",
+        "margin": "",
+        "padding": "",
+        "variant": "filled",
+        "backgroundColor": "white"
+      },
+      "content": {
+        "for": "background",
+        "src": "",
+        "link": "",
+        "type": "button",
+        "label": "Reset",
+        "value": "Reset",
+        "buttonType": "sequence"
+      },
+      "display": "block",
+      "editable": true,
+      "formFields": {
+        "id": "",
+        "cols": [
+          {
+            "colspan": 12,
+            "colsData": {
+              "fieldData": {
+                "id": "5218b88a-a4f6-11f1-bf05-f6014a890f1a",
+                "type": "reset",
+                "label": "Reset",
+                "enabled": true
+              }
+            }
+          }
+        ],
+        "rowId": "5218b8ee-a4f6-11f1-bf05-f6014a890f1a",
+        "colindex": 8
+      }
+    },
+    {
+      "id": "5218bba0-a4f6-11f1-bf05-f6014a890f1a",
+      "style": {
+        "fit": "contain",
+        "font": {
+          "size": "",
+          "color": "",
+          "style": "",
+          "family": "",
+          "weight": ""
+        },
+        "width": "",
+        "height": "",
+        "margin": "",
+        "opacity": "0.9",
+        "padding": "",
+        "backgroundColor": ""
+      },
+      "content": {
+        "for": "background",
+        "src": "",
+        "link": "",
+        "type": "img",
+        "label": "Background",
+        "value": ""
+      },
+      "display": "block",
+      "editable": true
+    },
+    {
+      "id": "5218bdc6-a4f6-11f1-bf05-f6014a890f1a",
+      "style": {
+        "blur": 0,
+        "font": {
+          "size": "",
+          "color": "",
+          "style": "",
+          "family": "",
+          "height": "",
+          "weight": ""
+        },
+        "height": "",
+        "margin": "",
+        "padding": "",
+        "alignment": "left",
+        "backgroundColor": ""
+      },
+      "content": {
+        "for": "formName",
+        "src": "",
+        "link": "",
+        "type": "title",
+        "label": "Form Name",
+        "value": "Contact Form"
+      },
+      "display": "block",
+      "editable": true
+    },
+    {
+      "id": "5218c032-a4f6-11f1-bf05-f6014a890f1a",
+      "style": {
+        "blur": 0,
+        "font": { "style": "", "family": "" },
+        "border": { "size": "", "color": "", "radius": "" },
+        "margin": "",
+        "padding": "0 30 0 30",
+        "backgroundColor": ""
+      },
+      "content": {
+        "for": "headerImage",
+        "src": "",
+        "link": "",
+        "type": "img",
+        "label": "Header Image",
+        "value": ""
+      },
+      "display": "none",
+      "editable": true
+    }
+  ],
+  "type": "brik",
+  "style": {
+    "font": {
+      "size": "",
+      "color": "",
+      "style": "",
+      "family": "",
+      "weight": ""
+    },
+    "color": "",
+    "backgroundColor": ""
+  },
+  "brikId": "@koadz/form-view",
+  "version": "1.0.67",
+  "brikName": "FormView",
+  "editable": true,
+  "editorId": "604cb06e-81d6-4877-90d1-4dd3761c5224",
+  "sequence": {
+    "id": "8329b5ea-d5c7-11f0-a2d2-3a65dcbcfba5",
+    "data": {
+      "edges": [
+        { "id": "1", "source": "begin", "target": "formApi", "animated": true },
+        {
+          "id": "2",
+          "source": "formApi",
+          "target": "checkApiStatus",
+          "animated": true
+        },
+        {
+          "id": "3",
+          "data": { "color": "green", "label": "true" },
+          "source": "checkApiStatus",
+          "target": "successInfo",
+          "animated": true,
+          "condition": true
+        },
+        {
+          "id": "4",
+          "data": { "color": "red", "label": "false" },
+          "source": "checkApiStatus",
+          "target": "failureInfo",
+          "animated": true,
+          "condition": false
+        },
+        {
+          "id": "5",
+          "type": "custom",
+          "source": "successInfo",
+          "target": "end",
+          "animated": true
+        },
+        {
+          "id": "6",
+          "type": "default",
+          "source": "failureInfo",
+          "target": "end",
+          "animated": true
+        }
+      ],
+      "nodes": [
+        {
+          "id": "begin",
+          "data": {
+            "icon": "https://cdn-icons-png.flaticon.com/128/5690/5690573.png",
+            "badge": "Begin",
+            "color": "#004381",
+            "title": "Begin Flow",
+            "mockRun": false,
+            "displayName": "Begin Flow",
+            "inputExample": {},
+            "allowDataEdit": false,
+            "outputExample": {
+              "id": 5,
+              "body": {
+                "form_json": {
+                  "Last Name": "Test from begin",
+                  "First Name": "to bgin"
+                },
+                "form_builder_id": "83208939-d5c7-11f0-9f65-0616b5b288d3"
+              },
+              "title": "delectus aut autem",
+              "completed": false
+            }
+          },
+          "type": "begin",
+          "position": { "x": 0, "y": 0 }
+        },
+        {
+          "id": "formApi",
+          "data": {
+            "icon": "https://cdn-icons-png.flaticon.com/128/1674/1674969.png",
+            "badge": "Form + Email",
+            "color": "#004381",
+            "title": "Submit Form + Email",
+            "mockRun": false,
+            "properties": {
+              "sections": [
+                {
+                  "id": "ab51c125-d783-4be7-9632-64c5ba41288f",
+                  "properties": [
+                    {
+                      "id": "cec572fd-47df-48fd-8fe4-a35502f316f1",
+                      "type": "email",
+                      "title": "",
+                      "value": "jackvania8@gmail.com",
+                      "options": null,
+                      "required": true,
+                      "placeholder": "Enter email address"
+                    },
+                    {
+                      "id": "2d817270-d9bf-4104-8a22-9cba60533c39",
+                      "type": "email",
+                      "title": "",
+                      "value": "uma.arakalgudu@makelooplabs.com",
+                      "options": null,
+                      "required": true,
+                      "placeholder": "Enter email address"
+                    },
+                    {
+                      "id": "bf460e5b-b49c-4362-8767-3e357fa928d7",
+                      "type": "email",
+                      "title": "",
+                      "value": "aditya@makelooplabs.com",
+                      "options": null,
+                      "required": true,
+                      "placeholder": "Enter email address"
+                    },
+                    {
+                      "id": "dd429782-244a-4cba-860c-3976a8eba3b8",
+                      "type": "email",
+                      "title": "",
+                      "value": "adminteam@adcexperts.com.au",
+                      "options": null,
+                      "required": true,
+                      "placeholder": "Enter email address"
+                    },
+                    {
+                      "id": "db97c37d-6438-4b4e-8f0d-d140ca756f67",
+                      "type": "email",
+                      "title": "",
+                      "value": "drvania8@gmail.com",
+                      "options": null,
+                      "required": true,
+                      "placeholder": "Enter email address"
+                    },
+                    {
+                      "id": "d6a1c603-98ee-4124-93d9-c8d63adc7937",
+                      "type": "email",
+                      "title": "",
+                      "value": "nandana.reddivari@makelooplabs.com",
+                      "options": null,
+                      "required": true,
+                      "placeholder": "Enter email address"
+                    }
+                  ],
+                  "sectionName": "Receipient Emails",
+                  "allowSectionEdit": true
+                },
+                {
+                  "id": "ab51c125-d783-4be7-9632-64c5ba41266h",
+                  "properties": [
+                    {
+                      "id": "e3eedef5-12e1-44ee-bbbd-bdb7fae711c2",
+                      "type": "text",
+                      "title": "title",
+                      "value": "New Email",
+                      "options": null,
+                      "required": true,
+                      "placeholder": "Enter Title"
+                    },
+                    {
+                      "id": "b7b09316-11a6-48da-bad8-4cdf7956eda4",
+                      "type": "text",
+                      "title": "message",
+                      "value": "A new request has been submitted with the following details:",
+                      "options": null,
+                      "required": true,
+                      "placeholder": "Enter Message"
+                    }
+                  ],
+                  "sectionName": "Email Content",
+                  "allowSectionEdit": true
+                },
+                {
+                  "id": "ab51c125-d783-4be7-9632-64c5ba41277e",
+                  "properties": [
+                    {
+                      "id": "4b2cfe59-b6c4-4948-ab4f-9ddeed79a90e",
+                      "type": "text",
+                      "title": "Body",
+                      "value": "{{input.body}}",
+                      "required": true
+                    }
+                  ],
+                  "sectionName": "Body",
+                  "allowSectionEdit": false
+                },
+                {
+                  "id": "ded84179-093d-4284-845a-dad17e926d90",
+                  "properties": [
+                    {
+                      "id": "ed422057-1b90-493d-bffa-de07d4cbd4f4",
+                      "type": "text",
+                      "title": "URL",
+                      "value": "https://commonapi.koadz.ai/api/v1/form/submit-form",
+                      "required": true,
+                      "isTitleEditable": false
+                    },
+                    {
+                      "id": "f54933f7-4d6d-48e9-94e0-cdb2b1a24674",
+                      "type": "select",
+                      "title": "Method",
+                      "value": "POST",
+                      "options": ["GET", "POST", "PUT", "DELETE"],
+                      "required": true,
+                      "isTitleEditable": false
+                    }
+                  ],
+                  "sectionName": "API Config",
+                  "allowSectionEdit": false
+                }
+              ]
+            },
+            "displayName": "Form Submit + Email",
+            "inputExample": {
+              "id": 5,
+              "body": {
+                "form_json": {
+                  "email": "koadz@mail.com",
+                  "Last Name": "Runner node",
+                  "First Name": "Runner flow"
+                },
+                "form_builder_id": "83208939-d5c7-11f0-9f65-0616b5b288d3"
+              },
+              "title": "delectus aut autem",
+              "completed": false,
+              "recepientEmails": ["koadz@mail.com", "info@mail.com"]
+            },
+            "allowDataEdit": true,
+            "outputExample": {
+              "id": 1,
+              "title": "delectus aut autem",
+              "completed": false
+            }
+          },
+          "type": "formSubmitAndEmail",
+          "position": { "x": 0, "y": 0 }
+        },
+        {
+          "id": "checkApiStatus",
+          "data": {
+            "icon": "https://cdn-icons-png.flaticon.com/128/18968/18968833.png",
+            "badge": "Condition",
+            "color": "#ffe54a",
+            "title": "Condition",
+            "mockRun": false,
+            "properties": {
+              "sections": [
+                {
+                  "properties": [
+                    {
+                      "id": "form builder ID",
+                      "type": "condition",
+                      "title": "Condition 1",
+                      "value": "{\"lhs\":\"{{input.status}}\",\"rhs\":\"true\",\"operator\":\"==\"}",
+                      "options": null,
+                      "required": true
+                    }
+                  ],
+                  "sectionName": "Conditions",
+                  "allowSectionEdit": false
+                }
+              ]
+            },
+            "displayName": "Condition",
+            "inputExample": {
+              "data": {
+                "form_builder_id": "83208939-d5c7-11f0-9f65-0616b5b288d3"
+              },
+              "status": true,
+              "message": "Form submitted successfully",
+              "error_code": null
+            },
+            "allowDataEdit": false,
+            "outputExample": {}
+          },
+          "type": "condition",
+          "position": { "x": 0, "y": 0 }
+        },
+        {
+          "id": "successInfo",
+          "data": {
+            "icon": "https://cdn-icons-png.flaticon.com/128/14090/14090300.png",
+            "badge": "Info",
+            "color": "green",
+            "title": "API Succeeded!",
+            "mockRun": false,
+            "variant": "success",
+            "properties": {
+              "sections": [
+                {
+                  "properties": [
+                    {
+                      "id": "39e9b193-a032-48b1-9c1b-a9fd1e13b03b",
+                      "type": "text",
+                      "title": "39e9b193-a032-48b1-9c1b-a9fd1e13b03b",
+                      "value": "Thanks for your interest! We will reach out to you at the earliest.   ",
+                      "options": null,
+                      "required": true
+                    },
+                    {
+                      "id": "ae278c55-a476-4397-9969-e62f08777560",
+                      "type": "text",
+                      "title": "ae278c55-a476-4397-9969-e62f08777560",
+                      "value": "Successfully inserted",
+                      "options": null,
+                      "required": true
+                    }
+                  ],
+                  "sectionName": "Messages",
+                  "allowSectionEdit": true
+                },
+                {
+                  "properties": [
+                    {
+                      "id": "8f0d977c-b2ee-4ca3-b3fa-23fdb046e541",
+                      "type": "text",
+                      "title": "Redirect Url",
+                      "value": "",
+                      "options": null,
+                      "required": true
+                    }
+                  ],
+                  "sectionName": "Redirects",
+                  "allowSectionEdit": true
+                }
+              ]
+            },
+            "displayName": "Info",
+            "inputExample": {
+              "title": "Success!",
+              "message": "Form submitted"
+            },
+            "allowDataEdit": true,
+            "outputExample": {}
+          },
+          "type": "info",
+          "position": { "x": 0, "y": 0 }
+        },
+        {
+          "id": "failureInfo",
+          "data": {
+            "icon": "https://cdn-icons-png.flaticon.com/128/13984/13984272.png",
+            "badge": "Info",
+            "color": "red",
+            "title": "API Failed!",
+            "mockRun": false,
+            "properties": {
+              "sections": [
+                {
+                  "properties": [
+                    {
+                      "id": "2e4c389a-da5c-4bde-93f2-25253accaaf4",
+                      "type": "text",
+                      "title": "2e4c389a-da5c-4bde-93f2-25253accaaf4",
+                      "value": "Failed",
+                      "options": null,
+                      "required": true
+                    }
+                  ],
+                  "sectionName": "Messages",
+                  "allowSectionEdit": true
+                }
+              ]
+            },
+            "displayName": "Info",
+            "inputExample": { "message": "Submission failed!" },
+            "allowDataEdit": true,
+            "outputExample": {}
+          },
+          "type": "info",
+          "position": { "x": 0, "y": 0 }
+        }
+      ]
+    }
+  },
+  "settings": [
+    {
+      "type": "dropdown",
+      "label": "Input styles",
+      "value": "default",
+      "options": ["default", "floating-label", "underlined"]
+    }
+  ]
+}

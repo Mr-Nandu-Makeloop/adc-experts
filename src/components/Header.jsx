@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import logoImg from '../assets/logo.jpg';
+import logoImg from '../assets/logo.png';
 
 export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelpModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -41,7 +41,7 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
           <img 
             src={logoImg} 
             alt="ADC Experts - Experience ADC before ADC" 
-            style={{ height: '70px', width: 'auto', objectFit: 'contain' }} 
+            style={{ height: '52px', width: 'auto', objectFit: 'contain' }} 
           />
         </button>
 
@@ -202,6 +202,14 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
 
           <button 
             type="button" 
+            className={`nav-link ${activePage === 'gallery' ? 'active' : ''}`}
+            onClick={() => handleNav('gallery')}
+          >
+            Gallery
+          </button>
+
+          <button 
+            type="button" 
             className={`nav-link ${activePage === 'faq' ? 'active' : ''}`}
             onClick={() => handleNav('faq')}
           >
@@ -348,6 +356,15 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
             onClick={() => handleNav('facilities')}
           >
             Facilities
+          </button>
+
+          <button 
+            type="button" 
+            className="mobile-nav-link" 
+            style={{ textAlign: 'left', background: 'none', border: 'none', width: '100%', cursor: 'pointer' }}
+            onClick={() => handleNav('gallery')}
+          >
+            Gallery
           </button>
 
           <button 

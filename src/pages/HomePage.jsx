@@ -1,598 +1,590 @@
 import React, { useState } from 'react';
-import heroImg from '../assets/hero-img.jpeg';
-import homeBottomImg from '../assets/home-bottom.png';
+import heroVisualImg from '../assets/home-hero-visual.png';
+import cardPart1 from '../assets/member-card-part1.png';
+import cardPart2 from '../assets/member-card-part2.png';
+import cardChair from '../assets/member-card-chair.png';
+import cardMentoring from '../assets/member-card-mentoring.png';
+import cardWorldwide from '../assets/member-card-worldwide.png';
+import galleryMainImg from '../assets/home-gallery-main.png';
+import galleryThumb1 from '../assets/home-gallery-thumb1.png';
+import galleryThumb2 from '../assets/home-gallery-thumb2.png';
+import galleryThumb3 from '../assets/home-gallery-thumb3.png';
+import galleryThumb4 from '../assets/home-gallery-thumb4.png';
+import practiceFocusImg from '../assets/home-practice-focus.png';
+import { openStripeCheckout } from '../config/stripe';
 
-export default function HomePage({ commonImage, onNavigate, onOpenModal }) {
-  const [openFaqIndex, setOpenFaqIndex] = useState(0);
+export default function HomePage({ onNavigate, _onOpenModal }) {
+  // Gallery Carousel State for Section 4
+  const [activeSlide, setActiveSlide] = useState(0);
 
-  const FAQ_ITEMS = [
+  const GALLERY_SLIDES = [
     {
-      q: 'Who can join ADC Experts?',
-      a: 'Dental candidates preparing for the Australian Dental Council assessment pathway can join to access learning resources and explore available preparation support.'
+      img: galleryMainImg,
+      thumb: galleryThumb1,
+      title: 'Modern Training Facilities',
+      desc: 'State-of-the-art dental chairs and equipment for real-world hands-on practice.'
     },
     {
-      q: 'How much does membership cost?',
-      a: 'Membership costs A$10 per week, with a minimum three-month commitment. One month\'s advance cancellation notice is required after the minimum period.'
+      img: galleryMainImg,
+      thumb: galleryThumb2,
+      title: 'Dedicated Phantom Head Lab',
+      desc: '10+ simulation stations calibrated precisely to ADC Melbourne examination standards.'
     },
     {
-      q: 'Can I access resources from outside Australia?',
-      a: 'Yes. Online learning resources are available worldwide, subject to active membership and applicable resource permissions.'
+      img: galleryMainImg,
+      thumb: galleryThumb3,
+      title: 'Digital Audio-Visual OSCE Stations',
+      desc: 'Private role-play suites equipped with high-definition video recording for examiner feedback.'
     },
     {
-      q: 'What is included in membership?',
-      a: 'Part 1 and Part 2 LMS resources, reading materials and available textbooks, weekly common online coaching with ADC-qualified dentists, and use of the Perth library, shared study space and internet during published hours, subject to availability.'
-    },
-    {
-      q: 'How much does chair hire cost?',
-      a: 'The regular member rate is A$200 per day, with a current introductory offer of A$100 per day. Standard materials for a complete technical task session and preparation burs for use are included. Optional additional standard materials cost A$20 for the same day.'
-    },
-    {
-      q: 'How much does mentorship cost?',
-      a: 'Mentorship costs A$100 per hour per mentor, online or in person, subject to availability. Shared sessions are permitted, and chair hire is separate if needed.'
-    },
-    {
-      q: 'Can I get a personalised preparation roadmap?',
-      a: 'Active members can request a consultation with an ADC-qualified dentist to discuss their exam history, goals and preparation needs.'
-    },
-    {
-      q: 'Does registering interest confirm a booking?',
-      a: 'No. A registration of interest or booking request is not a confirmed booking. The team will confirm availability and arrangements separately.'
+      img: galleryMainImg,
+      thumb: galleryThumb4,
+      title: 'Self-Practice & Independent Study Space',
+      desc: 'Quiet, air-conditioned study library with high-speed internet and clinical materials.'
     }
   ];
 
+  const handlePrevSlide = () => {
+    setActiveSlide((prev) => (prev === 0 ? GALLERY_SLIDES.length - 1 : prev - 1));
+  };
+
+  const handleNextSlide = () => {
+    setActiveSlide((prev) => (prev === GALLERY_SLIDES.length - 1 ? 0 : prev + 1));
+  };
+
   return (
-    <div className="homepage-content">
-      {/* ------------------------------------------------------------------
-          1. HERO SECTION — VIDEO BACKGROUND & FOOTAGE
-          ------------------------------------------------------------------ */}
-      <section className="hero-section" aria-labelledby="hero-heading">
+    <div className="new-homepage">
+      {/* ======================================================================
+          SECTION 1: HERO SECTION (Matching homepage.png)
+          ====================================================================== */}
+      <section className="nh-hero-section">
         <div className="container">
-          <div className="hero-grid">
-            <div className="hero-content">
-              <span className="text-eyebrow">YOUR JOURNEY TO DENTISTRY IN AUSTRALIA</span>
-              <h1 id="hero-heading" className="hero-heading">
-                Your Australian Dental Journey Starts Here.
+          <div className="nh-hero-grid">
+            {/* Left Content Column */}
+            <div className="nh-hero-content">
+              <span className="nh-eyebrow">
+                AUSTRALIAN DENTAL EXAM PREPARATION
+              </span>
+              <h1 className="nh-hero-title">
+                Your Australian<br />
+                Dental Journey<br />
+                <span className="text-terracotta">Starts Here.</span>
               </h1>
-              <p className="hero-subtext">
-                Access ADC Part 1 and Part 2 learning resources, join weekly coaching with ADC-qualified dentists, and discover practical preparation opportunities at our Perth centre.
+              <p className="nh-hero-lead">
+                Join ADC Experts for structured exam preparation, expert guidance and a supportive community to help you achieve your Australian dental career goals.
               </p>
 
-              <div className="hero-cta-group">
+              {/* CTAs */}
+              <div className="nh-hero-cta-row">
                 <button 
                   type="button" 
-                  className="btn btn-primary"
-                  onClick={() => onNavigate('membership')}
+                  className="btn-terracotta nh-btn-primary"
+                  onClick={(e) => openStripeCheckout(e)}
                 >
-                  Become a Member — Just A$10/week
+                  Become a Member — A$10/week →
                 </button>
                 <button 
                   type="button" 
-                  className="btn btn-secondary"
+                  className="nh-btn-secondary"
                   onClick={() => {
-                    const el = document.getElementById('preparation-services');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    const servicesEl = document.getElementById('home-services');
+                    if (servicesEl) {
+                      servicesEl.scrollIntoView({ behavior: 'smooth' });
+                    } else if (onNavigate) {
+                      onNavigate('membership');
+                    }
                   }}
                 >
-                  Explore Preparation Services
+                  Explore Our Services
                 </button>
               </div>
 
-              <div className="hero-credential-note">
-                <span className="hero-credential-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <polyline points="12 6 12 12 16 14"/>
-                  </svg>
-                </span>
-                <span>Worldwide online access · Expert guidance · Perth study facilities</span>
+              {/* 4 Feature Badges Row (Clean Vector SVGs) */}
+              <div className="nh-hero-trust-row">
+                <div className="nh-trust-item">
+                  <span className="nh-trust-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A33817" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="2" y1="12" x2="22" y2="12" />
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    </svg>
+                  </span>
+                  <span>Worldwide Access</span>
+                </div>
+                <div className="nh-trust-item">
+                  <span className="nh-trust-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A33817" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                  </span>
+                  <span>Expert Educators</span>
+                </div>
+                <div className="nh-trust-item">
+                  <span className="nh-trust-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A33817" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="20" x2="18" y2="10" />
+                      <line x1="12" y1="20" x2="12" y2="4" />
+                      <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                  </span>
+                  <span>Structured Learning</span>
+                </div>
+                <div className="nh-trust-item">
+                  <span className="nh-trust-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A33817" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                  </span>
+                  <span>Supportive Community</span>
+                </div>
               </div>
             </div>
 
-            {/* Video Footage Presentation */}
-            <div className="hero-image-col">
-              <div className="hero-video-frame">
-                <video 
-                  className="hero-video-elem" 
-                  poster={heroImg} 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                >
-                  <source src="/dental-training.mp4" type="video/mp4" />
-                </video>
-                <div className="video-overlay-badge">
-                  <span className="video-play-pulse"></span>
-                  <span>Real footage of the ADC Experts centre, dental training and study facilities</span>
-                </div>
+            {/* Right Visual Column */}
+            <div className="nh-hero-media">
+              <div className="nh-hero-img-wrap">
+                <img 
+                  src={heroVisualImg} 
+                  alt="Doctor in clinical practice — Same Dream Bigger Opportunities" 
+                  className="nh-hero-img"
+                  loading="eager"
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ------------------------------------------------------------------
-          2. MEMBERSHIP OFFER
-          ------------------------------------------------------------------ */}
-      <section className="section" style={{ backgroundColor: 'rgba(82, 103, 115, 0.04)' }} aria-labelledby="membership-offer-heading">
+      {/* ======================================================================
+          SECTION 2: MEMBERSHIP BENEFITS (Everything You Need to Start Preparing)
+          ====================================================================== */}
+      <section className="nh-benefits-section">
         <div className="container">
-          <div className="section-header-centered" style={{ marginBottom: '48px' }}>
-            <span className="text-eyebrow">ONE MEMBERSHIP. MORE WAYS TO PREPARE.</span>
-            <h2 id="membership-offer-heading">Everything You Need to Start Preparing.</h2>
-            <p>
-              Build your preparation routine with online resources, expert-led coaching and a dedicated place to study.
+          <div className="nh-section-header">
+            <span className="nh-eyebrow">MEMBERSHIP BENEFITS</span>
+            <h2 className="nh-section-title">Everything You Need to Start Preparing.</h2>
+            <p className="nh-section-subtitle">
+              Access comprehensive resources, expert guidance and practical support — all in one membership.
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 0.9fr', gap: '40px', alignItems: 'center' }}>
-            {/* 4 Benefit Inclusions */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
-              <div className="card-base" style={{ padding: '24px' }}>
-                <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Part 1 & Part 2 Resources</h3>
-                <p style={{ fontSize: '14px', lineHeight: '1.55', color: '#000000', marginBottom: 0 }}>
-                  Access online preparation materials, reading resources and available textbooks through our LMS.
+          <div className="nh-benefits-grid">
+            {/* Left 4 Benefits (2x2 Grid) */}
+            <div className="nh-benefits-cards-grid">
+              {/* Card 1 */}
+              <div className="nh-benefit-card">
+                <div className="nh-benefit-icon-wrap" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                  </svg>
+                </div>
+                <h3 className="nh-benefit-card-title">Part 1 &amp; Part 2 Resources</h3>
+                <p className="nh-benefit-card-desc">
+                  High-quality study materials, lecture notes, practice questions and more.
                 </p>
               </div>
 
-              <div className="card-base" style={{ padding: '24px' }}>
-                <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Weekly Online Coaching</h3>
-                <p style={{ fontSize: '14px', lineHeight: '1.55', color: '#000000', marginBottom: 0 }}>
-                  Join common coaching sessions with ADC-qualified dentists.
+              {/* Card 2 */}
+              <div className="nh-benefit-card">
+                <div className="nh-benefit-icon-wrap" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                  </svg>
+                </div>
+                <h3 className="nh-benefit-card-title">Weekly Online Coaching</h3>
+                <p className="nh-benefit-card-desc">
+                  Live and recorded sessions with case discussions and with experienced educators.
                 </p>
               </div>
 
-              <div className="card-base" style={{ padding: '24px' }}>
-                <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Perth Study Facilities</h3>
-                <p style={{ fontSize: '14px', lineHeight: '1.55', color: '#000000', marginBottom: 0 }}>
-                  Use our library, shared study space and internet during published hours, subject to availability.
+              {/* Card 3 */}
+              <div className="nh-benefit-card">
+                <div className="nh-benefit-icon-wrap" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <h3 className="nh-benefit-card-title">Worldwide Online Access</h3>
+                <p className="nh-benefit-card-desc">
+                  Learn anytime, anywhere across the globe.
                 </p>
               </div>
 
-              <div className="card-base" style={{ padding: '24px' }}>
-                <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Worldwide Online Access</h3>
-                <p style={{ fontSize: '14px', lineHeight: '1.55', color: '#000000', marginBottom: 0 }}>
-                  Access your learning resources wherever you are.
+              {/* Card 4 */}
+              <div className="nh-benefit-card">
+                <div className="nh-benefit-icon-wrap" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                  </svg>
+                </div>
+                <h3 className="nh-benefit-card-title">Perth Study Facilities</h3>
+                <p className="nh-benefit-card-desc">
+                  Access our Perth centre for independent study (for active members).
                 </p>
               </div>
             </div>
 
-            {/* Pricing Card */}
-            <div className="pricing-highlight-box">
-              <span className="text-eyebrow" style={{ marginBottom: '8px' }}>FULL ACCESS MEMBERSHIP</span>
-              <div style={{ fontSize: '38px', fontWeight: 800, color: 'var(--color-primary)', lineHeight: 1.1, marginBottom: '14px' }}>
-                A$10<span style={{ fontSize: '18px', fontWeight: 600, color: '#000000' }}> / week</span>
+            {/* Right Highlighted Pricing Card */}
+            <div className="nh-pricing-card">
+              <span className="nh-pricing-badge">ADC EXPERTS MEMBERSHIP</span>
+              <div className="nh-pricing-amount-row">
+                <span className="nh-pricing-val">A$10</span>
+                <span className="nh-pricing-period">/ week</span>
               </div>
-              <p style={{ fontSize: '13px', color: 'rgba(0,0,0,0.7)', lineHeight: 1.5, marginBottom: '24px' }}>
-                Minimum three-month commitment. One month's advance cancellation notice is required after the minimum period.
-              </p>
+              <ul className="nh-pricing-checklist">
+                <li>
+                  <span className="nh-check-icon" aria-hidden="true">✓</span>
+                  <span>Access to all learning resources</span>
+                </li>
+                <li>
+                  <span className="nh-check-icon" aria-hidden="true">✓</span>
+                  <span>Minimum 3-month commitment</span>
+                </li>
+                <li>
+                  <span className="nh-check-icon" aria-hidden="true">✓</span>
+                  <span>Worldwide access</span>
+                </li>
+                <li>
+                  <span className="nh-check-icon" aria-hidden="true">✓</span>
+                  <span>Perth centre study facility (active members)</span>
+                </li>
+              </ul>
               <button 
                 type="button" 
-                className="btn btn-primary"
-                style={{ width: '100%' }}
-                onClick={() => onNavigate('membership')}
+                className="btn-terracotta nh-pricing-btn"
+                onClick={(e) => openStripeCheckout(e)}
               >
-                Become a Member
+                Become a Member →
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ------------------------------------------------------------------
-          3. WHY ADC EXPERTS — FOUR BENEFIT CARDS
-          ------------------------------------------------------------------ */}
-      <section className="section" aria-labelledby="why-experts-heading">
+      {/* ======================================================================
+          SECTION 3: OUR PREPARATION SERVICES
+          ====================================================================== */}
+      <section className="nh-services-section" id="home-services">
         <div className="container">
-          <div className="section-header-centered">
-            <span className="text-eyebrow">SUPPORT FOR YOUR NEXT STEP</span>
-            <h2 id="why-experts-heading">Prepare With Purpose. Progress With Guidance.</h2>
-          </div>
-
-          <div className="why-us-grid">
-            <div className="why-card">
-              <span className="step-badge-num">01</span>
-              <h3 className="why-title">Structured Learning</h3>
-              <p className="why-desc">
-                Explore learning resources for both ADC assessment stages through one member learning experience.
-              </p>
-            </div>
-
-            <div className="why-card">
-              <span className="step-badge-num">02</span>
-              <h3 className="why-title">Expert Guidance</h3>
-              <p className="why-desc">
-                Connect through weekly coaching and mentorship with ADC-qualified dentists.
-              </p>
-            </div>
-
-            <div className="why-card">
-              <span className="step-badge-num">03</span>
-              <h3 className="why-title">Practical Preparation</h3>
-              <p className="why-desc">
-                Explore technical practice opportunities through chair hire and additional materials at our Perth centre.
-              </p>
-            </div>
-
-            <div className="why-card">
-              <span className="step-badge-num">04</span>
-              <h3 className="why-title">Personalised Preparation</h3>
-              <p className="why-desc">
-                Discuss your exam history, goals and challenges to identify suitable next steps for your preparation.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------
-          4. PREPARATION SERVICES — FIVE CARDS
-          ------------------------------------------------------------------ */}
-      <section id="preparation-services" className="section" style={{ backgroundColor: 'rgba(201, 140, 140, 0.08)' }} aria-labelledby="services-heading">
-        <div className="container">
-          <div className="section-header-centered">
-            <span className="text-eyebrow">FIND YOUR PATH FORWARD</span>
-            <h2 id="services-heading">Preparation That Fits Your Needs.</h2>
-          </div>
-
-          <div className="services-grid-5">
-            {/* Card 1: Part 1 Resources */}
-            <article className="service-card">
-              <div>
-                <span className="text-eyebrow">STAGE 01</span>
-                <h3>Part 1 Resources</h3>
-                <p>
-                  Explore online learning materials and reading resources to support your preparation for the ADC written assessment.
-                </p>
-              </div>
-              <button 
-                type="button" 
-                className="btn btn-secondary"
-                style={{ width: '100%', marginTop: '20px' }}
-                onClick={() => onOpenModal('Explore Part 1 Resources')}
-              >
-                Explore Part 1
-              </button>
-            </article>
-
-            {/* Card 2: Part 2 Preparation */}
-            <article className="service-card">
-              <div>
-                <span className="text-eyebrow">STAGE 02</span>
-                <h3>Part 2 Preparation</h3>
-                <p>
-                  Discover learning resources and practical preparation options relevant to your clinical and communication goals.
-                </p>
-              </div>
-              <button 
-                type="button" 
-                className="btn btn-secondary"
-                style={{ width: '100%', marginTop: '20px' }}
-                onClick={() => onOpenModal('Explore Part 2 Preparation')}
-              >
-                Explore Part 2
-              </button>
-            </article>
-
-            {/* Card 3: Chair Hire */}
-            <article className="service-card">
-              <div>
-                <span className="text-eyebrow">PRACTICAL SKILLS</span>
-                <h3>Chair Hire</h3>
-                <p>
-                  Practise technical tasks at our Perth centre with a dedicated chair and a standard materials allocation for a complete technical task session. Preparation burs are available for use.
-                </p>
-                <div className="service-price-chip">
-                  A$100/day — Introductory offer
-                </div>
-                <div style={{ fontSize: '13px', color: 'rgba(0,0,0,0.65)', lineHeight: 1.45, marginTop: '6px' }}>
-                  Regular member rate: A$200/day. Optional additional standard materials: A$20 for the same chair-hire day. Practice teeth are supplied by the candidate or purchased separately at the centre.
-                </div>
-              </div>
-              <button 
-                type="button" 
-                className="btn btn-primary"
-                style={{ width: '100%', marginTop: '20px' }}
-                onClick={() => onOpenModal('Explore Chair Hire Booking')}
-              >
-                Explore Chair Hire
-              </button>
-            </article>
-
-            {/* Card 4: Expert Mentorship */}
-            <article className="service-card">
-              <div>
-                <span className="text-eyebrow">CLINICAL TUTORING</span>
-                <h3>Expert Mentorship</h3>
-                <p>
-                  Get technical feedback, OSCE communication practice or preparation guidance online or in person, subject to availability.
-                </p>
-                <div className="service-price-chip">
-                  A$100/hour per mentor
-                </div>
-                <div style={{ fontSize: '13px', color: 'rgba(0,0,0,0.65)', lineHeight: 1.45, marginTop: '6px' }}>
-                  Shared sessions are welcome. Chair hire is separate when required.
-                </div>
-              </div>
-              <button 
-                type="button" 
-                className="btn btn-secondary"
-                style={{ width: '100%', marginTop: '20px' }}
-                onClick={() => onOpenModal('Explore Expert Mentorship')}
-              >
-                Explore Mentorship
-              </button>
-            </article>
-
-            {/* Card 5: Tailored Preparation & Mock Exams */}
-            <article className="service-card">
-              <div>
-                <span className="text-eyebrow">EXAM BENCHMARKS</span>
-                <h3>Tailored Preparation & Mock Exams</h3>
-                <p>
-                  Register your interest in technical preparation, Skilled OSCE, combined preparation or a full observed mock exam. Active members can request a consultation with an ADC-qualified dentist.
-                </p>
-                <div style={{ fontSize: '13px', color: 'rgba(0,0,0,0.65)', lineHeight: 1.45, marginTop: '12px' }}>
-                  Active membership is required for paid services and consultations. Mock exam dates and booking details will be announced when groups are organised.
-                </div>
-              </div>
-              <button 
-                type="button" 
-                className="btn btn-primary"
-                style={{ width: '100%', marginTop: '20px' }}
-                onClick={() => onOpenModal('Register Interest: Tailored Preparation & Mock Exams')}
-              >
-                Register Your Interest
-              </button>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------
-          5. OUR CENTRE — VIDEO & GALLERY
-          ------------------------------------------------------------------ */}
-      <section className="section" aria-labelledby="centre-heading">
-        <div className="container">
-          <div className="editorial-split-grid">
-            {/* Visual / Video Gallery Area */}
-            <div className="editorial-frame image-wrapper" style={{ position: 'relative' }}>
-              <img 
-                src={commonImage} 
-                alt="ADC Experts Perth dental training center facilities" 
-                className="common-image"
-                loading="lazy"
-              />
-              <div className="video-overlay-badge" style={{ bottom: '16px', left: '16px' }}>
-                <span className="video-play-pulse"></span>
-                <span>Perth Study Space & Dental Chair Facilities</span>
-              </div>
-            </div>
-
-            {/* Content Details */}
+          <div className="nh-services-top-row">
             <div>
-              <span className="text-eyebrow">YOUR STUDY SPACE IN PERTH</span>
-              <h2 id="centre-heading">A Place to Focus, Practise and Prepare.</h2>
-              <p>
-                Discover a supportive environment for focused study and practical preparation, with facilities designed to help you make the most of your time.
-              </p>
-
-              <div className="editorial-bullets" style={{ marginTop: '20px', marginBottom: '24px' }}>
-                <div className="bullet-item">
-                  <span className="bullet-dot"></span>
-                  <span>Library and available learning materials</span>
-                </div>
-                <div className="bullet-item">
-                  <span className="bullet-dot"></span>
-                  <span>Shared study space and internet access</span>
-                </div>
-                <div className="bullet-item">
-                  <span className="bullet-dot"></span>
-                  <span>Dental chair-hire facilities</span>
-                </div>
-                <div className="bullet-item">
-                  <span className="bullet-dot"></span>
-                  <span>In-person mentorship opportunities, subject to availability</span>
-                </div>
-              </div>
-
-              {/* Operating Hours Box */}
-              <div className="centre-hours-card">
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#000000', marginBottom: '6px' }}>
-                  Centre hours: 9:00 am–5:00 pm Perth time
-                </div>
-                <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-primary)' }}>
-                  Chair-hire hours: 9:30 am–4:30 pm Perth time
-                </div>
-              </div>
-
-              <div style={{ marginTop: '28px' }}>
-                <button 
-                  type="button" 
-                  className="btn btn-primary"
-                  onClick={() => onNavigate('facilities')}
-                >
-                  Explore Our Centre
-                </button>
-              </div>
+              <span className="nh-eyebrow">OUR PREPARATION SERVICES</span>
+              <h2 className="nh-section-title">Preparation That Fits Your Needs.</h2>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------
-          6. HOW MEMBERSHIP WORKS — FOUR STEPS
-          ------------------------------------------------------------------ */}
-      <section className="section" style={{ backgroundColor: 'rgba(82, 103, 115, 0.04)' }} aria-labelledby="steps-heading">
-        <div className="container">
-          <div className="section-header-centered">
-            <span className="text-eyebrow">YOUR JOURNEY STARTS HERE</span>
-            <h2 id="steps-heading">Get Started in Four Simple Steps.</h2>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
-            <div className="step-card-modern">
-              <span className="step-badge-num">01</span>
-              <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Become a Member</h3>
-              <p style={{ fontSize: '14px', lineHeight: 1.55, marginBottom: 0 }}>
-                Join ADC Experts for A$10 per week through our secure Stripe checkout.
-              </p>
-            </div>
-
-            <div className="step-card-modern">
-              <span className="step-badge-num">02</span>
-              <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Activate Your Account</h3>
-              <p style={{ fontSize: '14px', lineHeight: 1.55, marginBottom: 0 }}>
-                Receive your activation email, set your password and sign in securely.
-              </p>
-            </div>
-
-            <div className="step-card-modern">
-              <span className="step-badge-num">03</span>
-              <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Access Your Resources</h3>
-              <p style={{ fontSize: '14px', lineHeight: 1.55, marginBottom: 0 }}>
-                Explore Part 1 and Part 2 learning materials through the LMS.
-              </p>
-            </div>
-
-            <div className="step-card-modern">
-              <span className="step-badge-num">04</span>
-              <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Explore Your Next Steps</h3>
-              <p style={{ fontSize: '14px', lineHeight: 1.55, marginBottom: 0 }}>
-                Discover coaching, mentorship, chair hire and tailored preparation options.
-              </p>
-            </div>
-          </div>
-
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
             <button 
               type="button" 
-              className="btn btn-primary"
-              onClick={() => onNavigate('membership')}
+              className="nh-view-all-link"
+              onClick={() => onNavigate && onNavigate('membership')}
             >
-              Join ADC Experts
+              View All Services →
             </button>
           </div>
-        </div>
-      </section>
 
-      {/* ------------------------------------------------------------------
-          7. TAILORED PREPARATION CTA
-          ------------------------------------------------------------------ */}
-      <section className="section" aria-labelledby="roadmap-heading">
-        <div className="container">
-          <div className="card-base" style={{ padding: '48px', maxWidth: '960px', margin: '0 auto', border: '1px solid var(--color-border)' }}>
-            <div style={{ maxWidth: '820px' }}>
-              <span className="text-eyebrow">EVERY CANDIDATE HAS A DIFFERENT JOURNEY</span>
-              <h2 id="roadmap-heading" style={{ marginBottom: '16px' }}>Not Sure What to Focus on Next?</h2>
-              
-              <p>
-                Your exam history, previous preparation and individual goals can help shape your next steps.
-              </p>
-              <p>
-                Active members can request a consultation with an ADC-qualified dentist to discuss their preparation needs and receive a recommended roadmap.
-              </p>
-              <p>
-                Tell us about your experience, challenges and intended exam date. Our team can review your requirements and recommend suitable preparation options.
-              </p>
-              
-              <div style={{ marginTop: '28px', display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-                <button 
-                  type="button" 
-                  className="btn btn-primary"
-                  onClick={() => onOpenModal('Register Interest for Consultation & Roadmap')}
-                >
-                  Register Your Interest
-                </button>
-                <span style={{ fontSize: '13px', color: 'rgba(0,0,0,0.6)' }}>
-                  Recommendations, availability, duration and fees are confirmed after review.
-                </span>
+          <div className="nh-services-grid">
+            {/* Card 1 */}
+            <div className="nh-service-card" onClick={() => onNavigate && onNavigate('membership')}>
+              <div className="nh-service-img-wrap">
+                <img src={cardPart1} alt="Part 1 Resources" className="nh-service-img" />
+              </div>
+              <div className="nh-service-body">
+                <h3 className="nh-service-title">Part 1 Resources</h3>
+                <p className="nh-service-desc">
+                  Comprehensive study materials, practice questions and exam-focused content.
+                </p>
+                <span className="nh-service-link">Explore →</span>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="nh-service-card" onClick={() => onNavigate && onNavigate('membership')}>
+              <div className="nh-service-img-wrap">
+                <img src={cardPart2} alt="Part 2 Preparation" className="nh-service-img" />
+              </div>
+              <div className="nh-service-body">
+                <h3 className="nh-service-title">Part 2 Preparation</h3>
+                <p className="nh-service-desc">
+                  Structured preparation with case discussions and examiner-style practice.
+                </p>
+                <span className="nh-service-link">Explore →</span>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="nh-service-card" onClick={() => onNavigate && onNavigate('membership')}>
+              <div className="nh-service-img-wrap">
+                <img src={cardChair} alt="Chair Hire" className="nh-service-img" />
+              </div>
+              <div className="nh-service-body">
+                <h3 className="nh-service-title">Chair Hire</h3>
+                <p className="nh-service-desc">
+                  Practice your clinical skills at our Perth centre with modern facilities.
+                </p>
+                <span className="nh-service-link">Explore →</span>
+              </div>
+            </div>
+
+            {/* Card 4 */}
+            <div className="nh-service-card" onClick={() => onNavigate && onNavigate('membership')}>
+              <div className="nh-service-img-wrap">
+                <img src={cardMentoring} alt="Expert Mentorship" className="nh-service-img" />
+              </div>
+              <div className="nh-service-body">
+                <h3 className="nh-service-title">Expert Mentorship</h3>
+                <p className="nh-service-desc">
+                  Get guidance from experienced Australian dental professionals.
+                </p>
+                <span className="nh-service-link">Explore →</span>
+              </div>
+            </div>
+
+            {/* Card 5 */}
+            <div className="nh-service-card" onClick={() => onNavigate && onNavigate('membership')}>
+              <div className="nh-service-img-wrap">
+                <img src={cardWorldwide} alt="Tailored Preparation" className="nh-service-img" />
+              </div>
+              <div className="nh-service-body">
+                <h3 className="nh-service-title">Tailored Preparation</h3>
+                <p className="nh-service-desc">
+                  Custom study plans based on your background, strengths and goals.
+                </p>
+                <span className="nh-service-link">Explore →</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ------------------------------------------------------------------
-          8. FREQUENTLY ASKED QUESTIONS
-          ------------------------------------------------------------------ */}
-      <section className="section" style={{ backgroundColor: 'rgba(82, 103, 115, 0.04)' }} aria-labelledby="faq-home-heading">
+      {/* ======================================================================
+          SECTION 4: INSIDE THE ADC EXPERTS CENTRE (Modern Space Carousel)
+          ====================================================================== */}
+      <section className="nh-gallery-section">
         <div className="container">
-          <div className="section-header-centered">
-            <span className="text-eyebrow">NEED MORE INFORMATION?</span>
-            <h2 id="faq-home-heading">Frequently Asked Questions</h2>
-          </div>
+          <div className="nh-gallery-grid">
+            {/* Left Narrative Column */}
+            <div className="nh-gallery-narrative">
+              <span className="nh-eyebrow">INSIDE THE ADC EXPERTS CENTRE</span>
+              <h2 className="nh-section-title">
+                A Modern Space Designed for Your Success.
+              </h2>
+              <p className="nh-gallery-desc">
+                Our Perth centre offers modern dental chairs and equipment, simulation tools, and a quiet, supportive environment for hands-on practice and independent study.
+              </p>
+              <div>
+                <button 
+                  type="button" 
+                  className="btn-terracotta"
+                  onClick={() => onNavigate && onNavigate('gallery')}
+                >
+                  View Full Gallery →
+                </button>
+              </div>
+            </div>
 
-          <div className="faq-grid" style={{ maxWidth: '880px', margin: '0 auto', gridTemplateColumns: '1fr' }}>
-            {FAQ_ITEMS.map((item, index) => {
-              const isOpen = openFaqIndex === index;
-              return (
-                <div key={index} className={`faq-item ${isOpen ? 'open' : ''}`}>
-                  <button 
-                    type="button" 
-                    className="faq-question"
-                    aria-expanded={isOpen}
-                    onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
-                  >
-                    <span>{item.q}</span>
-                    <span className="faq-icon" aria-hidden="true">+</span>
-                  </button>
-                  {isOpen && (
-                    <div className="faq-answer">
-                      <p>{item.a}</p>
-                    </div>
-                  )}
+            {/* Right Interactive Carousel Column */}
+            <div className="nh-gallery-carousel-col">
+              {/* Main Feature Display */}
+              <div className="nh-carousel-main-frame">
+                <img 
+                  src={GALLERY_SLIDES[activeSlide].img} 
+                  alt={GALLERY_SLIDES[activeSlide].title} 
+                  className="nh-carousel-active-img"
+                />
+
+                {/* Left/Right Floating Arrows */}
+                <button 
+                  type="button" 
+                  className="nh-carousel-nav-btn prev"
+                  onClick={handlePrevSlide}
+                  aria-label="Previous facility photo"
+                >
+                  ‹
+                </button>
+                <button 
+                  type="button" 
+                  className="nh-carousel-nav-btn next"
+                  onClick={handleNextSlide}
+                  aria-label="Next facility photo"
+                >
+                  ›
+                </button>
+
+                {/* Overlaid Caption Banner */}
+                <div className="nh-carousel-caption">
+                  <h4 className="nh-caption-title">{GALLERY_SLIDES[activeSlide].title}</h4>
+                  <p className="nh-caption-desc">{GALLERY_SLIDES[activeSlide].desc}</p>
                 </div>
-              );
-            })}
+              </div>
+
+              {/* 4 Interactive Thumbnails */}
+              <div className="nh-carousel-thumbnails-row">
+                {GALLERY_SLIDES.map((slide, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`nh-thumb-btn ${activeSlide === idx ? 'active' : ''}`}
+                    onClick={() => setActiveSlide(idx)}
+                    aria-label={`View slide ${idx + 1}`}
+                  >
+                    <img src={slide.thumb} alt={slide.title} className="nh-thumb-img" />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ------------------------------------------------------------------
-          9. FINAL CALL TO ACTION
-          ------------------------------------------------------------------ */}
-      <section className="section final-cta-section" style={{ backgroundColor: 'var(--color-tertiary)' }} aria-labelledby="final-cta-heading">
+      {/* ======================================================================
+          SECTION 5: YOUR JOURNEY IN FOUR SIMPLE STEPS
+          ====================================================================== */}
+      <section className="nh-steps-section">
         <div className="container">
-          <div className="final-cta-grid">
-            <div className="final-cta-content">
-              <span className="text-eyebrow" style={{ color: '#FFFFFF' }}>TAKE THE FIRST STEP</span>
-              <h2 id="final-cta-heading">Your ADC Preparation Starts Today.</h2>
-              <p>
-                Access online learning resources, connect with ADC-qualified dentists and explore practical preparation opportunities with ADC Experts.
-              </p>
-              
-              <div style={{ display: 'inline-block', backgroundColor: 'rgba(255,255,255,0.1)', padding: '8px 16px', borderRadius: '8px', marginBottom: '24px', border: '1px solid rgba(255,255,255,0.2)' }}>
-                <span style={{ fontSize: '24px', fontWeight: 800, color: '#FFFFFF' }}>A$10/week</span>
-                <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.8)', marginLeft: '10px' }}>
-                  Minimum three-month commitment. Membership terms apply.
-                </span>
-              </div>
+          <div className="nh-section-header">
+            <span className="nh-eyebrow">GET STARTED TODAY</span>
+            <h2 className="nh-section-title">Your Journey in Four Simple Steps.</h2>
+          </div>
 
-              <div className="final-cta-actions">
-                <button 
-                  type="button" 
-                  className="btn btn-primary"
-                  onClick={() => onNavigate('membership')}
-                >
-                  Become a Member
-                </button>
-                <button 
-                  type="button" 
-                  className="btn btn-white-outline"
-                  onClick={() => onNavigate('contact')}
-                >
-                  Contact Our Team
-                </button>
+          <div className="nh-steps-row">
+            {/* Step 1 */}
+            <div className="nh-step-item">
+              <div className="nh-step-badge-wrap">
+                <span className="nh-step-num">01</span>
+                <div className="nh-step-icon-circle" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+              </div>
+              <h3 className="nh-step-title">Become a Member</h3>
+              <p className="nh-step-desc">
+                Join for A$10/week with a minimum 3-month commitment.
+              </p>
+            </div>
+
+            <div className="nh-step-arrow" aria-hidden="true">→</div>
+
+            {/* Step 2 */}
+            <div className="nh-step-item">
+              <div className="nh-step-badge-wrap">
+                <span className="nh-step-num">02</span>
+                <div className="nh-step-icon-circle" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                  </svg>
+                </div>
+              </div>
+              <h3 className="nh-step-title">Activate Your Account</h3>
+              <p className="nh-step-desc">
+                Get instant access to all learning resources and study materials.
+              </p>
+            </div>
+
+            <div className="nh-step-arrow" aria-hidden="true">→</div>
+
+            {/* Step 3 */}
+            <div className="nh-step-item">
+              <div className="nh-step-badge-wrap">
+                <span className="nh-step-num">03</span>
+                <div className="nh-step-icon-circle" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                  </svg>
+                </div>
+              </div>
+              <h3 className="nh-step-title">Access Your Resources</h3>
+              <p className="nh-step-desc">
+                Explore Part 1, Part 2 content, recorded sessions and more.
+              </p>
+            </div>
+
+            <div className="nh-step-arrow" aria-hidden="true">→</div>
+
+            {/* Step 4 */}
+            <div className="nh-step-item">
+              <div className="nh-step-badge-wrap">
+                <span className="nh-step-num">04</span>
+                <div className="nh-step-icon-circle" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="18" y1="20" x2="18" y2="10"/>
+                    <line x1="12" y1="20" x2="12" y2="4"/>
+                    <line x1="6" y1="20" x2="6" y2="14"/>
+                  </svg>
+                </div>
+              </div>
+              <h3 className="nh-step-title">Explore Your Next Steps</h3>
+              <p className="nh-step-desc">
+                Join live coaching, book chair hire (if required) and connect with our community.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================================
+          SECTION 6: A PLACE TO FOCUS, PRACTISE AND PREPARE
+          ====================================================================== */}
+      <section className="nh-focus-section">
+        <div className="container">
+          <div className="nh-focus-grid">
+            {/* Left Side: Dentist practicing on phantom head with lamp */}
+            <div className="nh-focus-media">
+              <div className="nh-focus-img-wrap">
+                <img 
+                  src={practiceFocusImg} 
+                  alt="Dentist practicing on typodont under dental lamp" 
+                  className="nh-focus-img"
+                />
               </div>
             </div>
 
-            <div className="final-cta-image-frame image-wrapper">
-              <img 
-                src={homeBottomImg} 
-                alt="ADC Experts dental mentor and preparation guidance" 
-                className="common-image"
-                loading="lazy"
-              />
+            {/* Right Side: Editorial & Checkmarks */}
+            <div className="nh-focus-content">
+              <span className="nh-eyebrow">WHY ADC EXPERTS</span>
+              <h2 className="nh-section-title">
+                A Place to Focus, Practise and Prepare.
+              </h2>
+              <p className="nh-focus-desc">
+                Our modern Perth centre provides a comfortable and well-equipped environment for hands-on practice and independent study (for active members).
+              </p>
+
+              <ul className="nh-focus-checklist">
+                <li>
+                  <span className="nh-circle-check" aria-hidden="true">✔</span>
+                  <span>Modern dental chairs and equipment</span>
+                </li>
+                <li>
+                  <span className="nh-circle-check" aria-hidden="true">✔</span>
+                  <span>Independent study space</span>
+                </li>
+                <li>
+                  <span className="nh-circle-check" aria-hidden="true">✔</span>
+                  <span>A supportive and professional environment</span>
+                </li>
+                <li>
+                  <span className="nh-circle-check" aria-hidden="true">✔</span>
+                  <span>Convenient location in Perth</span>
+                </li>
+                <li>
+                  <span className="nh-circle-check" aria-hidden="true">✔</span>
+                  <span>Access for active ADC Experts members</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
