@@ -6,12 +6,303 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/fav.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ADC Dental Education | Australian Examination Preparation Platform</title>
-    <meta name="description" content="Modern, editorial dental education platform preparing international practitioners for Australian Dental Council examinations." />
+    <title>
+      ADC Dental Education | Australian Examination Preparation Platform
+    </title>
+    <meta
+      name="description"
+      content="Modern, editorial dental education platform preparing international practitioners for Australian Dental Council examinations."
+    />
     <!-- Google Fonts: Manrope -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Auto popup tag -->
+    <script>
+      (function () {
+        function showMembershipPopup() {
+          /* Prevent duplicate popup on the same page */
+          if (document.getElementById("adc-membership-popup")) return;
+
+          var popup = document.createElement("div");
+          popup.id = "adc-membership-popup";
+
+          popup.innerHTML = `
+      <style>
+        #adc-membership-popup {
+          --adc-primary: #a33817;
+          --adc-secondary: #c898c8;
+          --adc-tertiary: #526773;
+          --adc-text: #000000;
+          --adc-background: #ffffff;
+        }
+
+        #adc-membership-popup {
+          position: fixed;
+          inset: 0;
+          z-index: 999999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          background: rgba(82, 103, 115, 0.68);
+          backdrop-filter: blur(5px);
+          -webkit-backdrop-filter: blur(5px);
+          font-family: "Manrope", Arial, Helvetica, sans-serif;
+          animation: adcFadeIn 0.35s ease;
+        }
+
+        #adc-membership-popup * {
+          box-sizing: border-box;
+        }
+
+        .adc-popup-box {
+          position: relative;
+          width: min(480px, 100%);
+          overflow: hidden;
+          background: var(--adc-background);
+          border-radius: 22px;
+          box-shadow: 0 25px 70px rgba(0,0,0,0.28);
+          animation: adcPopupIn 0.45s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .adc-popup-content {
+          position: relative;
+          padding: 34px;
+          background: var(--adc-background);
+        }
+
+        .adc-label {
+          display: inline-block;
+          margin-bottom: 18px;
+          padding: 7px 13px;
+          border-radius: 30px;
+          background: var(--adc-secondary);
+          color: var(--adc-text);
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 1.2px;
+          text-transform: uppercase;
+        }
+
+        .adc-title {
+          margin: 0;
+          max-width: 380px;
+          color: var(--adc-text);
+          font-size: 32px;
+          line-height: 1.12;
+          font-weight: 800;
+          letter-spacing: -1px;
+        }
+
+        .adc-title span {
+          color: var(--adc-primary);
+        }
+
+        .adc-description {
+          margin: 20px 0 25px;
+          max-width: 380px;
+          color: var(--adc-tertiary);
+          font-size: 16px;
+          line-height: 1.65;
+        }
+
+        .adc-price {
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
+          margin-bottom: 27px;
+        }
+
+        .adc-price strong {
+          color: var(--adc-primary);
+          font-size: 32px;
+          font-weight: 800;
+        }
+
+        .adc-price span {
+          color: var(--adc-tertiary);
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        .adc-join-btn {
+          position: relative;
+          z-index: 2;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 205px;
+          padding: 15px 28px;
+          border: 2px solid var(--adc-primary);
+          border-radius: 9px;
+          background: var(--adc-primary);
+          color: var(--adc-background) !important;
+          text-decoration: none !important;
+          font-size: 15px;
+          font-weight: 800;
+          letter-spacing: 0.3px;
+          transition: all 0.25s ease;
+          cursor: pointer;
+        }
+
+        .adc-join-btn:hover {
+          background: #812d12;
+          border-color: #812d12;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(163,56,23,0.25);
+        }
+
+        /* Close button */
+        .adc-close {
+          position: absolute;
+          z-index: 20;
+          top: 15px;
+          right: 17px;
+          width: 38px;
+          height: 38px;
+          border: none;
+          border-radius: 50%;
+          background: var(--adc-background);
+          color: var(--adc-primary);
+          font-size: 25px;
+          line-height: 38px;
+          text-align: center;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .adc-close:hover {
+          background: var(--adc-background);
+          transform: rotate(90deg);
+        }
+
+        @keyframes adcFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes adcPopupIn {
+          from {
+            opacity: 0;
+            transform: translateY(25px) scale(0.96);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @media (max-width: 700px) {
+          #adc-membership-popup {
+            padding: 14px;
+          }
+
+          .adc-popup-box {
+            max-height: 92vh;
+            overflow-y: auto;
+            border-radius: 18px;
+          }
+
+          .adc-popup-content {
+            padding: 32px 25px;
+          }
+
+          .adc-title {
+            font-size: 29px;
+            letter-spacing: -0.5px;
+          }
+
+          .adc-description {
+            font-size: 15px;
+            margin-top: 16px;
+          }
+
+          .adc-price strong {
+            font-size: 28px;
+          }
+
+          .adc-join-btn {
+            width: 100%;
+          }
+        }
+      </style>
+
+      <div class="adc-popup-box">
+
+        <button class="adc-close" aria-label="Close">&times;</button>
+
+        <div class="adc-popup-content">
+
+          <div class="adc-label">ADC Membership</div>
+
+          <h2 class="adc-title">
+            Your ADC Preparation<br>
+            <span>Starts Here</span>
+          </h2>
+
+          <p class="adc-description">
+            Get access to ADC Part 1 and Part 2 online learning
+            resources worldwide, plus independent study access
+            at our Perth centre for active members.
+          </p>
+
+          <div class="adc-price">
+            <strong>A$10</strong>
+            <span>/ week</span>
+          </div>
+
+          <a
+            href="https://buy.stripe.com/fZu00lc8obKqanHdY21wY00"
+            class="adc-join-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            JOIN MEMBERSHIP
+          </a>
+
+        </div>
+      </div>
+    `;
+
+          document.body.appendChild(popup);
+
+          /* Close button */
+          popup
+            .querySelector(".adc-close")
+            .addEventListener("click", function () {
+              popup.remove();
+            });
+
+          /* Close when clicking outside */
+          popup.addEventListener("click", function (e) {
+            if (e.target === popup) {
+              popup.remove();
+            }
+          });
+
+          /* Close with Escape key */
+          document.addEventListener("keydown", function adcEscape(e) {
+            if (e.key === "Escape") {
+              popup.remove();
+              document.removeEventListener("keydown", adcEscape);
+            }
+          });
+        }
+
+        /* Show automatically when page finishes loading */
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(showMembershipPopup, 900);
+          });
+        } else {
+          setTimeout(showMembershipPopup, 900);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
