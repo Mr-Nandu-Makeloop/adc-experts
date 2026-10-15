@@ -70,7 +70,7 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
                 AUSTRALIAN DENTAL EXAM PREPARATION
               </span>
               <h1 className="nh-hero-title">
-                Your Australian Nandu
+                Your Australian
                 <br />
                 Dental Journey
                 <br />
