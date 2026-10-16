@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import heroVisualImg from "../assets/home-hero-visual.png";
 import cardPart1 from "../assets/member-card-part1.png";
 import cardPart2 from "../assets/member-card-part2.png";
@@ -55,6 +55,27 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
       prev === GALLERY_SLIDES.length - 1 ? 0 : prev + 1,
     );
   };
+
+  // Intersection Observer for entrance animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+    );
+
+    const animated = document.querySelectorAll(
+      ".adc-fade-up, .adc-fade-in, .adc-scale-in",
+    );
+    animated.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="new-homepage">
@@ -203,11 +224,107 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
       </section>
 
       {/* ======================================================================
+          VIDEO SECTION: See ADC Experts in Action
+          Client: Please provide video files or links from the Telegram group
+          ====================================================================== */}
+      <section className="nh-video-section">
+        <div className="container">
+          <div className="nh-video-grid">
+            {/* Left: Narrative */}
+            <div className="nh-video-narrative adc-fade-up">
+              <span className="nh-eyebrow">SEE IT IN ACTION</span>
+              <h2 className="nh-video-title">
+                Experience ADC Preparation
+                <br />
+                <span>Before Your Exam Day.</span>
+              </h2>
+              <p className="nh-video-desc">
+                Watch how ADC Experts members prepare with structured coaching
+                sessions, phantom head practice, and expert-led case reviews —
+                all designed around Australian Dental Council standards.
+              </p>
+              <div className="nh-video-features">
+                <div className="nh-video-feature-item">
+                  <span className="nh-video-feature-dot" />
+                  <span>Real coaching sessions with expert dentists</span>
+                </div>
+                <div className="nh-video-feature-item">
+                  <span className="nh-video-feature-dot" />
+                  <span>Phantom head lab walkthroughs</span>
+                </div>
+                <div className="nh-video-feature-item">
+                  <span className="nh-video-feature-dot" />
+                  <span>Perth study centre facilities tour</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Video Placeholder */}
+            <div className="nh-video-frame-col adc-fade-up">
+              <div className="nh-video-placeholder">
+                {/* Subtle grid texture */}
+                <div className="nh-video-bg-pattern" />
+
+                {/* Play Button */}
+                <button
+                  type="button"
+                  className="nh-video-play-btn"
+                  aria-label="Play video"
+                >
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <polygon points="5,3 19,12 5,21" />
+                  </svg>
+                </button>
+
+                {/* Bottom caption strip */}
+                <div className="nh-video-info-strip">
+                  <span className="nh-video-info-title">
+                    ADC Experts — Inside the Perth Centre
+                  </span>
+                  <span className="nh-video-duration-badge">Coming Soon</span>
+                </div>
+              </div>
+
+              {/* Client notice */}
+              <div className="nh-video-notice">
+                <svg
+                  className="nh-video-notice-icon"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span>
+                  <strong>Video pending:</strong> Please share the video files
+                  or accessible links from the Telegram group so they can be
+                  embedded here. Placeholder will be replaced once videos are
+                  provided.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================================
           SECTION 2: MEMBERSHIP BENEFITS (Everything You Need to Start Preparing)
           ====================================================================== */}
       <section className="nh-benefits-section">
         <div className="container">
-          <div className="nh-section-header">
+          <div className="nh-section-header adc-fade-up">
             <span className="nh-eyebrow">MEMBERSHIP BENEFITS</span>
             <h2 className="nh-section-title">
               Everything You Need to Start Preparing.
@@ -389,7 +506,7 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
           <div className="nh-services-grid">
             {/* Card 1 */}
             <div
-              className="nh-service-card"
+              className="nh-service-card adc-fade-up"
               onClick={() => onNavigate && onNavigate("membership")}
             >
               <div className="nh-service-img-wrap">

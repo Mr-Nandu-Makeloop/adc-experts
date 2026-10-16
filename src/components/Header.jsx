@@ -41,7 +41,7 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
           <img 
             src={logoImg} 
             alt="ADC Experts - Experience ADC before ADC" 
-            style={{ height: '52px', width: 'auto', objectFit: 'contain' }} 
+            style={{ height: '68px', width: 'auto', objectFit: 'contain' }} 
           />
         </button>
 
