@@ -1,63 +1,136 @@
-import React, { useState, useEffect } from "react";
-import heroVisualImg from "../assets/home-hero-visual.png";
-import cardPart1 from "../assets/member-card-part1.png";
-import cardPart2 from "../assets/member-card-part2.png";
-import cardChair from "../assets/member-card-chair.png";
-import cardMentoring from "../assets/member-card-mentoring.png";
-import cardWorldwide from "../assets/member-card-worldwide.png";
-import galleryMainImg from "../assets/home-gallery-main.png";
-import galleryThumb1 from "../assets/home-gallery-thumb1.png";
-import galleryThumb2 from "../assets/home-gallery-thumb2.png";
-import galleryThumb3 from "../assets/home-gallery-thumb3.png";
-import galleryThumb4 from "../assets/home-gallery-thumb4.png";
-import practiceFocusImg from "../assets/home-practice-focus.png";
+import React, { useState, useEffect, useRef } from "react";
+// Reference Assets (Sourced directly from ADChomepagenewskin design)
+import heroBgBlur from "../assets/newskin/hero-bg-blur.png";
+import heroComposition from "../assets/newskin/hero-composition.png";
+
+// Section 2: Experience ADC Preparation Video Showcase
+import trainingVideoMain from "../assets/newskin/training-screen-main.png";
+import trainingThumb1 from "../assets/newskin/training-thumb1.png";
+import trainingThumb2 from "../assets/newskin/training-thumb2.png";
+import trainingThumb3 from "../assets/newskin/training-thumb3.png";
+import watchJourneyArrow from "../assets/newskin/watch-the-journey-arrow.png";
+
+// Section 4: Membership Preparation Services Images
+import cardPart1 from "../assets/member-card-part1.webp";
+import cardPart2 from "../assets/member-card-part2.webp";
+import cardWorldwide from "../assets/member-card-worldwide.webp";
+import cardChair from "../assets/member-card-chair.webp";
+import cardMentoring from "../assets/member-card-mentoring.webp";
+
+// Section 5: Facilities Showcase
+import facScreenMain from "../assets/newskin/facilities-screen-main.png";
+import facThumb1 from "../assets/newskin/facilities-thumb1.png";
+import facThumb2 from "../assets/newskin/facilities-thumb2.png";
+import facThumb3 from "../assets/newskin/facilities-thumb3.png";
+import facThumb4 from "../assets/newskin/facilities-thumb4.png";
+
+// Animated Lordicon & Vector UI Models
+import LordIcon from "../components/LordIcon";
+
+// 3D Floating Decorations (GLB models with subtle levitation & cursor tilt)
+import ToothDecoration from "../components/3d/ToothDecoration";
+import GraduationCapDecoration from "../components/3d/GraduationCapDecoration";
+import BooksDecoration from "../components/3d/BooksDecoration";
+
+// Existing Integration
 import { openStripeCheckout } from "../config/stripe";
 
 export default function HomePage({ onNavigate, _onOpenModal }) {
-  // Gallery Carousel State for Section 4
-  const [activeSlide, setActiveSlide] = useState(0);
+  // Video Showcase State for Section 2
+  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
+  const [activeVideoChapter, setActiveVideoChapter] = useState(0);
+  const videoRef = useRef(null);
 
-  const GALLERY_SLIDES = [
+  // Gallery Showcase Carousel State for Section 5
+  const [activeFacilitySlide, setActiveFacilitySlide] = useState(0);
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
+
+  const VIDEO_CHAPTERS = [
     {
-      img: galleryMainImg,
-      thumb: galleryThumb1,
-      title: "Modern Training Facilities",
-      desc: "State-of-the-art dental chairs and equipment for real-world hands-on practice.",
+      title: "ADC Experts – Inside the Perth Centre & Simulation Lab",
+      duration: "03:24",
+      poster: trainingVideoMain,
+      src: "/hero-bg.mp4",
+      label: "Simulation Lab Tour",
+      thumb: trainingThumb1,
     },
     {
-      img: galleryMainImg,
-      thumb: galleryThumb2,
-      title: "Dedicated Phantom Head Lab",
-      desc: "10+ simulation stations calibrated precisely to ADC Melbourne examination standards.",
+      title: "Hands-on Clinical Chair Practice & Phantom Head Training",
+      duration: "02:45",
+      poster: trainingThumb2,
+      src: "/hero-bg.mp4",
+      label: "Clinical Practice",
+      thumb: trainingThumb2,
     },
     {
-      img: galleryMainImg,
-      thumb: galleryThumb3,
-      title: "Digital Audio-Visual OSCE Stations",
-      desc: "Private role-play suites equipped with high-definition video recording for examiner feedback.",
-    },
-    {
-      img: galleryMainImg,
-      thumb: galleryThumb4,
-      title: "Self-Practice & Independent Study Space",
-      desc: "Quiet, air-conditioned study library with high-speed internet and clinical materials.",
+      title: "OSCE Audio-Visual Examination Station Insights",
+      duration: "04:12",
+      poster: trainingThumb3,
+      src: "/hero-bg.mp4",
+      label: "OSCE Suite",
+      thumb: trainingThumb3,
     },
   ];
 
-  const handlePrevSlide = () => {
-    setActiveSlide((prev) =>
-      prev === 0 ? GALLERY_SLIDES.length - 1 : prev - 1,
-    );
-  };
+  const FACILITY_SLIDES = [
+    {
+      img: facScreenMain,
+      title: "Modern Clinical Facilities",
+      desc: "Designed specifically for ADC examination standards",
+    },
+    {
+      img: facThumb1,
+      title: "Phantom Head Simulation Lab",
+      desc: "Calibrated mannequins & real clinical handpieces",
+    },
+    {
+      img: facThumb2,
+      title: "Clinical Chairside Workstation",
+      desc: "State-of-the-art dental delivery units & suction systems",
+    },
+    {
+      img: facThumb3,
+      title: "OSCE Audio-Visual Station",
+      desc: "Mock communication scenarios & structured examiner feedback",
+    },
+    {
+      img: facThumb4,
+      title: "Perth Dedicated Study Space",
+      desc: "Quiet independent study facility for active members",
+    },
+  ];
 
+  // Carousel navigation handlers
   const handleNextSlide = () => {
-    setActiveSlide((prev) =>
-      prev === GALLERY_SLIDES.length - 1 ? 0 : prev + 1,
+    setActiveFacilitySlide((prev) => (prev + 1) % FACILITY_SLIDES.length);
+  };
+
+  const handlePrevSlide = () => {
+    setActiveFacilitySlide(
+      (prev) => (prev - 1 + FACILITY_SLIDES.length) % FACILITY_SLIDES.length,
     );
   };
 
-  // Intersection Observer for entrance animations
+  // Auto-advance gallery carousel every 4.5s when not hovered
   useEffect(() => {
+    if (isCarouselHovered) return undefined;
+    const interval = setInterval(() => {
+      setActiveFacilitySlide((prev) => (prev + 1) % FACILITY_SLIDES.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isCarouselHovered, FACILITY_SLIDES.length]);
+
+  // Intersection Observer for scroll entrance animations
+  useEffect(() => {
+    const animated = document.querySelectorAll(
+      ".adc-fade-up, .adc-fade-in, .adc-scale-in",
+    );
+
+    if (!("IntersectionObserver" in window)) {
+      animated.forEach((el) => el.classList.add("is-visible"));
+      return undefined;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -66,55 +139,71 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
     );
 
-    const animated = document.querySelectorAll(
-      ".adc-fade-up, .adc-fade-in, .adc-scale-in",
-    );
     animated.forEach((el) => observer.observe(el));
-
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="new-homepage">
+    <div className="new-homepage adc-newskin-page">
       {/* ======================================================================
-          SECTION 1: HERO SECTION (Matching homepage.png)
+          SECTION 1: HERO SECTION (Exact Reference Composition)
+          - Video Background Container with Fallback Poster & Readability Overlay
+          - Left: Eyebrow, Heading, Lead, CTAs, 4 trust items
+          - Right: Doctor Composition with floating badges (clean, uncropped)
           ====================================================================== */}
-      <section className="nh-hero-section">
-        <div className="container">
-          <div className="nh-hero-grid">
+      <section className="ns-hero-section">
+        {/* Ambient Video Background with Fallback Poster & Readability Overlay */}
+        <div className="ns-hero-bg-container" aria-hidden="true">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster={heroBgBlur}
+            className="ns-hero-video-bg"
+          >
+            <source src="/hero-bg.mp4" type="video/mp4" />
+          </video>
+          {/* Layered Readability Gradient Overlay */}
+          <div className="ns-hero-gradient-overlay" />
+          <div className="ns-hero-ambient-glow" />
+        </div>
+
+        <div className="container ns-hero-container">
+          <div className="ns-hero-grid">
             {/* Left Content Column */}
-            <div className="nh-hero-content">
-              <span className="nh-eyebrow">
+            <div className="ns-hero-content adc-fade-up">
+              <span className="ns-eyebrow">
                 AUSTRALIAN DENTAL EXAM PREPARATION
               </span>
-              <h1 className="nh-hero-title">
+              <h1 className="ns-hero-title">
                 Your Australian
                 <br />
                 Dental Journey
                 <br />
-                <span className="text-terracotta">Starts Here.</span>
+                <span className="ns-text-terracotta">Starts Here.</span>
               </h1>
-              <p className="nh-hero-lead">
+              <p className="ns-hero-lead">
                 Join ADC Experts for structured exam preparation, expert
                 guidance and a supportive community to help you achieve your
                 Australian dental career goals.
               </p>
-              {/* Added env */}
-              {/* CTAs */}
-              <div className="nh-hero-cta-row">
+
+              {/* CTAs matching reference */}
+              <div className="ns-hero-cta-row">
                 <button
                   type="button"
-                  className="btn-terracotta nh-btn-primary"
+                  className="ns-btn-primary"
                   onClick={(e) => openStripeCheckout(e)}
                 >
                   Become a Member — A$10/week →
                 </button>
                 <button
                   type="button"
-                  className="nh-btn-secondary"
+                  className="ns-btn-secondary"
                   onClick={() => {
                     const servicesEl = document.getElementById("home-services");
                     if (servicesEl) {
@@ -128,13 +217,13 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
                 </button>
               </div>
 
-              {/* 4 Feature Badges Row (Clean Vector SVGs) */}
-              <div className="nh-hero-trust-row">
-                <div className="nh-trust-item">
-                  <span className="nh-trust-icon" aria-hidden="true">
+              {/* 4 Feature Badges Row matching reference */}
+              <div className="ns-hero-feature-row">
+                <div className="ns-feature-item">
+                  <span className="ns-feature-icon" aria-hidden="true">
                     <svg
-                      width="18"
-                      height="18"
+                      width="16"
+                      height="16"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="#A33817"
@@ -149,11 +238,11 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
                   </span>
                   <span>Worldwide Access</span>
                 </div>
-                <div className="nh-trust-item">
-                  <span className="nh-trust-icon" aria-hidden="true">
+                <div className="ns-feature-item">
+                  <span className="ns-feature-icon" aria-hidden="true">
                     <svg
-                      width="18"
-                      height="18"
+                      width="16"
+                      height="16"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="#A33817"
@@ -161,19 +250,17 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     >
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                      <path d="M6 12v5c3 3 9 3 12 0v-5" />
                     </svg>
                   </span>
                   <span>Expert Educators</span>
                 </div>
-                <div className="nh-trust-item">
-                  <span className="nh-trust-icon" aria-hidden="true">
+                <div className="ns-feature-item">
+                  <span className="ns-feature-icon" aria-hidden="true">
                     <svg
-                      width="18"
-                      height="18"
+                      width="16"
+                      height="16"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="#A33817"
@@ -188,11 +275,11 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
                   </span>
                   <span>Structured Learning</span>
                 </div>
-                <div className="nh-trust-item">
-                  <span className="nh-trust-icon" aria-hidden="true">
+                <div className="ns-feature-item">
+                  <span className="ns-feature-icon" aria-hidden="true">
                     <svg
-                      width="18"
-                      height="18"
+                      width="16"
+                      height="16"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="#A33817"
@@ -208,14 +295,15 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
               </div>
             </div>
 
-            {/* Right Visual Column */}
-            <div className="nh-hero-media">
-              <div className="nh-hero-img-wrap">
+            {/* Right Visual Composition (Clean pristine presentation from reference) */}
+            <div className="ns-hero-visual-col">
+              <div className="ns-hero-stage">
                 <img
-                  src={heroVisualImg}
-                  alt="Doctor in clinical practice — Same Dream Bigger Opportunities"
-                  className="nh-hero-img"
+                  src={heroComposition}
+                  alt="Australian Dental Exam Mentor with clinical learning tools"
+                  className="ns-hero-main-img"
                   loading="eager"
+                  fetchPriority="high"
                 />
               </div>
             </div>
@@ -224,95 +312,128 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
       </section>
 
       {/* ======================================================================
-          VIDEO SECTION: See ADC Experts in Action
-          Client: Please provide video files or links from the Telegram group
+          SECTION 2: TRAINING VIDEO SHOWCASE (Full Video Player on Right)
+          - Left: Eyebrow, Heading, Subtitle, 3 checkmarks, handwritten arrow
+          - Right: Full Responsive Video Player with Chapter Selector
           ====================================================================== */}
-      <section className="nh-video-section">
+      <section className="ns-training-video-section">
         <div className="container">
-          <div className="nh-video-grid">
-            {/* Left: Narrative */}
-            <div className="nh-video-narrative adc-fade-up">
-              <span className="nh-eyebrow">SEE IT IN ACTION</span>
-              <h2 className="nh-video-title">
+          <div className="ns-training-video-grid">
+            {/* Left Narrative Column */}
+            <div className="ns-video-text-col adc-fade-up">
+              <span className="ns-eyebrow">SEE IT IN ACTION</span>
+              <h2 className="ns-section-title">
                 Experience ADC Preparation
                 <br />
-                <span>Before Your Exam Day.</span>
+                <span className="ns-text-terracotta">
+                  Before Your Exam Day.
+                </span>
               </h2>
-              <p className="nh-video-desc">
-                Watch how ADC Experts members prepare with structured coaching
-                sessions, phantom head practice, and expert-led case reviews —
-                all designed around Australian Dental Council standards.
+              <p className="ns-section-lead">
+                Take a glimpse into our modern learning environment, expert
+                teaching and real student experiences. See how ADC Experts helps
+                you prepare with clarity, confidence and practical clinical
+                exposure.
               </p>
-              <div className="nh-video-features">
-                <div className="nh-video-feature-item">
-                  <span className="nh-video-feature-dot" />
-                  <span>Real coaching sessions with expert dentists</span>
-                </div>
-                <div className="nh-video-feature-item">
-                  <span className="nh-video-feature-dot" />
-                  <span>Phantom head lab walkthroughs</span>
-                </div>
-                <div className="nh-video-feature-item">
-                  <span className="nh-video-feature-dot" />
-                  <span>Perth study centre facilities tour</span>
-                </div>
-              </div>
+
+              <ul className="ns-video-checklist">
+                <li>
+                  <span className="ns-check-badge">✔</span>
+                  <span>Real student experiences and testimonials</span>
+                </li>
+                <li>
+                  <span className="ns-check-badge">✔</span>
+                  <span>Practical clinical training insights</span>
+                </li>
+                <li>
+                  <span className="ns-check-badge">✔</span>
+                  <span>A look inside our Perth study centre</span>
+                </li>
+              </ul>
             </div>
 
-            {/* Right: Video Placeholder */}
-            <div className="nh-video-frame-col adc-fade-up">
-              <div className="nh-video-placeholder">
-                {/* Subtle grid texture */}
-                <div className="nh-video-bg-pattern" />
-
-                {/* Play Button */}
-                <button
-                  type="button"
-                  className="nh-video-play-btn"
-                  aria-label="Play video"
-                >
-                  <svg
-                    width="28"
-                    height="28"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
+            {/* Right Media Panel Column - Full Responsive Video Player */}
+            <div className="ns-video-media-col adc-fade-up">
+              <div className="ns-video-player-frame">
+                {/* Main Video Screen */}
+                <div className="ns-video-screen-wrap">
+                  <video
+                    ref={videoRef}
+                    playsInline
+                    controls={isPlayingVideo}
+                    poster={VIDEO_CHAPTERS[activeVideoChapter].poster}
+                    className="ns-video-screen-img"
+                    onPlay={() => setIsPlayingVideo(true)}
+                    onPause={() => setIsPlayingVideo(false)}
                   >
-                    <polygon points="5,3 19,12 5,21" />
-                  </svg>
-                </button>
+                    <source
+                      src={VIDEO_CHAPTERS[activeVideoChapter].src}
+                      type="video/mp4"
+                    />
+                  </video>
 
-                {/* Bottom caption strip */}
-                <div className="nh-video-info-strip">
-                  <span className="nh-video-info-title">
-                    ADC Experts — Inside the Perth Centre
-                  </span>
-                  <span className="nh-video-duration-badge">Coming Soon</span>
+                  {/* Custom Play Button Overlay when paused */}
+                  {!isPlayingVideo && (
+                    <button
+                      type="button"
+                      className="ns-video-play-button"
+                      onClick={() => {
+                        if (videoRef.current) {
+                          videoRef.current.play();
+                          setIsPlayingVideo(true);
+                        }
+                      }}
+                      aria-label="Play ADC Experts Tour Video"
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="#A33817"
+                      >
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                      </svg>
+                    </button>
+                  )}
+
+                  {/* Video Bottom Overlay Pill */}
+                  {!isPlayingVideo && (
+                    <div className="ns-video-bottom-pill">
+                      <div className="ns-video-pill-left">
+                        <span className="ns-video-pill-avatar" />
+                        <span className="ns-video-pill-title">
+                          {VIDEO_CHAPTERS[activeVideoChapter].title}
+                        </span>
+                      </div>
+                      <span className="ns-video-pill-duration">
+                        {VIDEO_CHAPTERS[activeVideoChapter].duration}
+                      </span>
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              {/* Client notice */}
-              <div className="nh-video-notice">
-                <svg
-                  className="nh-video-notice-icon"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="8" x2="12" y2="12" />
-                  <line x1="12" y1="16" x2="12.01" y2="16" />
-                </svg>
-                <span>
-                  <strong>Video pending:</strong> Please share the video files
-                  or accessible links from the Telegram group so they can be
-                  embedded here. Placeholder will be replaced once videos are
-                  provided.
-                </span>
+                {/* Right 3 Thumbnails Strip for Chapter Switch */}
+                <div className="ns-video-side-thumbs">
+                  {VIDEO_CHAPTERS.map((chap, idx) => (
+                    <button
+                      key={chap.label}
+                      type="button"
+                      className={`ns-video-thumb-btn ${activeVideoChapter === idx ? "active" : ""}`}
+                      onClick={() => {
+                        setActiveVideoChapter(idx);
+                        setIsPlayingVideo(false);
+                        if (videoRef.current) {
+                          videoRef.current.pause();
+                          videoRef.current.currentTime = 0;
+                        }
+                      }}
+                      aria-label={`Switch to ${chap.label}`}
+                      title={chap.title}
+                    >
+                      <img src={chap.thumb} alt={chap.label} />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -320,159 +441,156 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
       </section>
 
       {/* ======================================================================
-          SECTION 2: MEMBERSHIP BENEFITS (Everything You Need to Start Preparing)
+          SECTION 3: LEARNING BENEFITS & STARTER KIT (Exact Reference Match)
+          - Centered Eyebrow & Headline
+          - 4 Floating 3D Cards: Part 1 & 2, Weekly Coaching, Worldwide, Perth
+          - Right Elevated Pricing Card with 3D Graduation Cap (Zero-crop)
           ====================================================================== */}
-      <section className="nh-benefits-section">
+      <section className="ns-starter-kit-section">
         <div className="container">
-          <div className="nh-section-header adc-fade-up">
-            <span className="nh-eyebrow">MEMBERSHIP BENEFITS</span>
-            <h2 className="nh-section-title">
+          <div className="ns-section-header-centered adc-fade-up">
+            <span className="ns-eyebrow">YOUR COMPLETE STARTER KIT</span>
+            <h2 className="ns-section-title">
               Everything You Need to Start Preparing.
             </h2>
-            <p className="nh-section-subtitle">
+            <p className="ns-section-lead">
               Access comprehensive resources, expert guidance and practical
-              support — all in one membership.
+              support – all in one membership.
             </p>
           </div>
 
-          <div className="nh-benefits-grid">
-            {/* Left 4 Benefits (2x2 Grid) */}
-            <div className="nh-benefits-cards-grid">
+          <div className="ns-starter-kit-grid">
+            {/* 4 Learning Benefit Cards with Animated Lordicons */}
+            <div className="ns-starter-cards-group">
               {/* Card 1 */}
-              <div className="nh-benefit-card">
-                <div className="nh-benefit-icon-wrap" aria-hidden="true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                  </svg>
+              <div className="ns-starter-card adc-fade-up">
+                <div className="ns-starter-icon-bubble">
+                  <LordIcon
+                    src="https://cdn.lordicon.com/wxnxiano.json"
+                    trigger="hover"
+                    size={64}
+                    colors="primary:#A33817,secondary:#111827"
+                  />
                 </div>
-                <h3 className="nh-benefit-card-title">
+                <h3 className="ns-starter-card-title">
                   Part 1 &amp; Part 2 Resources
                 </h3>
-                <p className="nh-benefit-card-desc">
-                  High-quality study materials, lecture notes, practice
-                  questions and more.
+                <p className="ns-starter-card-desc">
+                  High-quality study materials, lecture notes, question banks
+                  and more.
                 </p>
+                <div className="ns-starter-card-footer">
+                  <span className="ns-starter-card-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
               </div>
 
               {/* Card 2 */}
-              <div className="nh-benefit-card">
-                <div className="nh-benefit-icon-wrap" aria-hidden="true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                    <line x1="8" y1="21" x2="16" y2="21" />
-                    <line x1="12" y1="17" x2="12" y2="21" />
-                  </svg>
+              <div className="ns-starter-card adc-fade-up">
+                <div className="ns-starter-icon-bubble">
+                  <LordIcon
+                    src="https://cdn.lordicon.com/gqdnbnwt.json"
+                    trigger="hover"
+                    size={64}
+                    colors="primary:#A33817,secondary:#111827"
+                  />
                 </div>
-                <h3 className="nh-benefit-card-title">
+                <h3 className="ns-starter-card-title">
                   Weekly Online Coaching
                 </h3>
-                <p className="nh-benefit-card-desc">
-                  Live and recorded sessions with case discussions and with
-                  experienced educators.
+                <p className="ns-starter-card-desc">
+                  Live and recorded sessions with experienced educators.
                 </p>
+                <div className="ns-starter-card-footer">
+                  <span className="ns-starter-card-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
               </div>
 
               {/* Card 3 */}
-              <div className="nh-benefit-card">
-                <div className="nh-benefit-icon-wrap" aria-hidden="true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                  </svg>
+              <div className="ns-starter-card adc-fade-up">
+                <div className="ns-starter-icon-bubble">
+                  <LordIcon
+                    src="https://cdn.lordicon.com/qhgmphtg.json"
+                    trigger="hover"
+                    size={64}
+                    colors="primary:#A33817,secondary:#111827"
+                  />
                 </div>
-                <h3 className="nh-benefit-card-title">
+                <h3 className="ns-starter-card-title">
                   Worldwide Online Access
                 </h3>
-                <p className="nh-benefit-card-desc">
-                  Learn anytime, anywhere across the globe.
+                <p className="ns-starter-card-desc">
+                  Learn anytime, anywhere on any device.
                 </p>
+                <div className="ns-starter-card-footer">
+                  <span className="ns-starter-card-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
               </div>
 
               {/* Card 4 */}
-              <div className="nh-benefit-card">
-                <div className="nh-benefit-icon-wrap" aria-hidden="true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    <polyline points="9 22 9 12 15 12 15 22" />
-                  </svg>
+              <div className="ns-starter-card adc-fade-up">
+                <div className="ns-starter-icon-bubble">
+                  <LordIcon
+                    src="https://cdn.lordicon.com/gmzxduhd.json"
+                    trigger="hover"
+                    size={64}
+                    colors="primary:#A33817,secondary:#111827"
+                  />
                 </div>
-                <h3 className="nh-benefit-card-title">
+                <h3 className="ns-starter-card-title">
                   Perth Study Facilities
                 </h3>
-                <p className="nh-benefit-card-desc">
+                <p className="ns-starter-card-desc">
                   Access our Perth centre for independent study (for active
                   members).
                 </p>
+                <div className="ns-starter-card-footer">
+                  <span className="ns-starter-card-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
               </div>
             </div>
 
-            {/* Right Highlighted Pricing Card */}
-            <div className="nh-pricing-card">
-              <span className="nh-pricing-badge">ADC EXPERTS MEMBERSHIP</span>
-              <div className="nh-pricing-amount-row">
-                <span className="nh-pricing-val">A$10</span>
-                <span className="nh-pricing-period">/ week</span>
+            {/* Right Elevated Pricing Card with 3D Graduation Cap (Zero-crop) */}
+            <div className="ns-pricing-card adc-fade-up">
+              <div className="ns-pricing-3d-cap-wrap" aria-hidden="true">
+                <GraduationCapDecoration size={115} />
               </div>
-              <ul className="nh-pricing-checklist">
+
+              <span className="ns-pricing-eyebrow">ADC EXPERTS MEMBERSHIP</span>
+              <div className="ns-pricing-figure-row">
+                <span className="ns-pricing-figure">A$10</span>
+                <span className="ns-pricing-term">/week</span>
+              </div>
+
+              <ul className="ns-pricing-checklist">
                 <li>
-                  <span className="nh-check-icon" aria-hidden="true">
-                    ✓
-                  </span>
+                  <span className="ns-pricing-check-icon">✔</span>
                   <span>Access to all learning resources</span>
                 </li>
                 <li>
-                  <span className="nh-check-icon" aria-hidden="true">
-                    ✓
-                  </span>
+                  <span className="ns-pricing-check-icon">✔</span>
                   <span>Minimum 3-month commitment</span>
                 </li>
                 <li>
-                  <span className="nh-check-icon" aria-hidden="true">
-                    ✓
-                  </span>
+                  <span className="ns-pricing-check-icon">✔</span>
                   <span>Worldwide access</span>
                 </li>
                 <li>
-                  <span className="nh-check-icon" aria-hidden="true">
-                    ✓
-                  </span>
-                  <span>Perth centre study facility (active members)</span>
+                  <span className="ns-pricing-check-icon">✔</span>
+                  <span>Perth centre study access (for active members)</span>
                 </li>
               </ul>
+
               <button
                 type="button"
-                className="btn-terracotta nh-pricing-btn"
+                className="ns-pricing-submit-btn"
                 onClick={(e) => openStripeCheckout(e)}
               >
                 Become a Member →
@@ -483,223 +601,475 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
       </section>
 
       {/* ======================================================================
-          SECTION 3: OUR PREPARATION SERVICES
+          SECTION 4: PREPARATION THAT FITS YOUR NEEDS (Using Membership Services Images)
           ====================================================================== */}
-      <section className="nh-services-section" id="home-services">
+      <section className="ns-services-section" id="home-services">
         <div className="container">
-          <div className="nh-services-top-row">
+          <div className="ns-services-top-bar adc-fade-up">
             <div>
-              <span className="nh-eyebrow">OUR PREPARATION SERVICES</span>
-              <h2 className="nh-section-title">
+              <span className="ns-eyebrow">OUR PREPARATION SERVICES</span>
+              <h2 className="ns-section-title">
                 Preparation That Fits Your Needs.
               </h2>
             </div>
-            <button
-              type="button"
-              className="nh-view-all-link"
-              onClick={() => onNavigate && onNavigate("membership")}
-            >
-              View All Services →
-            </button>
-          </div>
-
-          <div className="nh-services-grid">
-            {/* Card 1 */}
-            <div
-              className="nh-service-card adc-fade-up"
-              onClick={() => onNavigate && onNavigate("membership")}
-            >
-              <div className="nh-service-img-wrap">
-                <img
-                  src={cardPart1}
-                  alt="Part 1 Resources"
-                  className="nh-service-img"
-                />
-              </div>
-              <div className="nh-service-body">
-                <h3 className="nh-service-title">Part 1 Resources</h3>
-                <p className="nh-service-desc">
-                  Comprehensive study materials, practice questions and
-                  exam-focused content.
-                </p>
-                <span className="nh-service-link">Explore →</span>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div
-              className="nh-service-card"
-              onClick={() => onNavigate && onNavigate("membership")}
-            >
-              <div className="nh-service-img-wrap">
-                <img
-                  src={cardPart2}
-                  alt="Part 2 Preparation"
-                  className="nh-service-img"
-                />
-              </div>
-              <div className="nh-service-body">
-                <h3 className="nh-service-title">Part 2 Preparation</h3>
-                <p className="nh-service-desc">
-                  Structured preparation with case discussions and
-                  examiner-style practice.
-                </p>
-                <span className="nh-service-link">Explore →</span>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div
-              className="nh-service-card"
-              onClick={() => onNavigate && onNavigate("membership")}
-            >
-              <div className="nh-service-img-wrap">
-                <img
-                  src={cardChair}
-                  alt="Chair Hire"
-                  className="nh-service-img"
-                />
-              </div>
-              <div className="nh-service-body">
-                <h3 className="nh-service-title">Chair Hire</h3>
-                <p className="nh-service-desc">
-                  Practice your clinical skills at our Perth centre with modern
-                  facilities.
-                </p>
-                <span className="nh-service-link">Explore →</span>
-              </div>
-            </div>
-
-            {/* Card 4 */}
-            <div
-              className="nh-service-card"
-              onClick={() => onNavigate && onNavigate("membership")}
-            >
-              <div className="nh-service-img-wrap">
-                <img
-                  src={cardMentoring}
-                  alt="Expert Mentorship"
-                  className="nh-service-img"
-                />
-              </div>
-              <div className="nh-service-body">
-                <h3 className="nh-service-title">Expert Mentorship</h3>
-                <p className="nh-service-desc">
-                  Get guidance from experienced Australian dental professionals.
-                </p>
-                <span className="nh-service-link">Explore →</span>
-              </div>
-            </div>
-
-            {/* Card 5 */}
-            <div
-              className="nh-service-card"
-              onClick={() => onNavigate && onNavigate("membership")}
-            >
-              <div className="nh-service-img-wrap">
-                <img
-                  src={cardWorldwide}
-                  alt="Tailored Preparation"
-                  className="nh-service-img"
-                />
-              </div>
-              <div className="nh-service-body">
-                <h3 className="nh-service-title">Tailored Preparation</h3>
-                <p className="nh-service-desc">
-                  Custom study plans based on your background, strengths and
-                  goals.
-                </p>
-                <span className="nh-service-link">Explore →</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ======================================================================
-          SECTION 4: INSIDE THE ADC EXPERTS CENTRE (Modern Space Carousel)
-          ====================================================================== */}
-      <section className="nh-gallery-section">
-        <div className="container">
-          <div className="nh-gallery-grid">
-            {/* Left Narrative Column */}
-            <div className="nh-gallery-narrative">
-              <span className="nh-eyebrow">INSIDE THE ADC EXPERTS CENTRE</span>
-              <h2 className="nh-section-title">
-                A Modern Space Designed for Your Success.
-              </h2>
-              <p className="nh-gallery-desc">
-                Our Perth centre offers modern dental chairs and equipment,
-                simulation tools, and a quiet, supportive environment for
-                hands-on practice and independent study.
-              </p>
-              <div>
+            <div className="ns-services-nav-actions">
+              <button
+                type="button"
+                className="ns-view-all-link"
+                onClick={() => onNavigate && onNavigate("membership")}
+              >
+                View All Services →
+              </button>
+              <div className="ns-services-arrow-group" aria-hidden="true">
                 <button
                   type="button"
-                  className="btn-terracotta"
-                  onClick={() => onNavigate && onNavigate("gallery")}
-                >
-                  View Full Gallery →
-                </button>
-              </div>
-            </div>
-
-            {/* Right Interactive Carousel Column */}
-            <div className="nh-gallery-carousel-col">
-              {/* Main Feature Display */}
-              <div className="nh-carousel-main-frame">
-                <img
-                  src={GALLERY_SLIDES[activeSlide].img}
-                  alt={GALLERY_SLIDES[activeSlide].title}
-                  className="nh-carousel-active-img"
-                />
-
-                {/* Left/Right Floating Arrows */}
-                <button
-                  type="button"
-                  className="nh-carousel-nav-btn prev"
-                  onClick={handlePrevSlide}
-                  aria-label="Previous facility photo"
+                  className="ns-arrow-circle"
+                  aria-label="Previous service"
                 >
                   ‹
                 </button>
                 <button
                   type="button"
-                  className="nh-carousel-nav-btn next"
-                  onClick={handleNextSlide}
-                  aria-label="Next facility photo"
+                  className="ns-arrow-circle"
+                  aria-label="Next service"
                 >
                   ›
                 </button>
+              </div>
+            </div>
+          </div>
 
-                {/* Overlaid Caption Banner */}
-                <div className="nh-carousel-caption">
-                  <h4 className="nh-caption-title">
-                    {GALLERY_SLIDES[activeSlide].title}
-                  </h4>
-                  <p className="nh-caption-desc">
-                    {GALLERY_SLIDES[activeSlide].desc}
-                  </p>
+          <div className="ns-services-cards-grid">
+            {/* Card 1: Part 1 Resources */}
+            <a
+              href="#membership"
+              className="ns-service-card adc-fade-up"
+              onClick={(e) => {
+                if (onNavigate) {
+                  e.preventDefault();
+                  onNavigate("membership");
+                }
+              }}
+            >
+              <div className="ns-srv-media">
+                <img
+                  src={cardPart1}
+                  alt="Part 1 Resources"
+                  className="ns-srv-photo"
+                />
+                <span className="ns-srv-badge-icon" aria-hidden="true">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A33817"
+                    strokeWidth="2.5"
+                  >
+                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
+                </span>
+              </div>
+              <div className="ns-srv-content">
+                <h3 className="ns-srv-title">Part 1 Resources</h3>
+                <p className="ns-srv-desc">
+                  Comprehensive study materials, question banks and recorded
+                  lectures.
+                </p>
+                <div className="ns-srv-footer">
+                  <span className="ns-srv-link">Learn More →</span>
+                  <span className="ns-srv-circle-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
+              </div>
+            </a>
+
+            {/* Card 2: Part 2 Preparation */}
+            <a
+              href="#membership"
+              className="ns-service-card adc-fade-up"
+              onClick={(e) => {
+                if (onNavigate) {
+                  e.preventDefault();
+                  onNavigate("membership");
+                }
+              }}
+            >
+              <div className="ns-srv-media">
+                <img
+                  src={cardPart2}
+                  alt="Part 2 Preparation"
+                  className="ns-srv-photo"
+                />
+                <span className="ns-srv-badge-icon" aria-hidden="true">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A33817"
+                    strokeWidth="2.5"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                </span>
+              </div>
+              <div className="ns-srv-content">
+                <h3 className="ns-srv-title">Part 2 Preparation</h3>
+                <p className="ns-srv-desc">
+                  Clinical training, assessments and practical examination
+                  guidance.
+                </p>
+                <div className="ns-srv-footer">
+                  <span className="ns-srv-link">Learn More →</span>
+                  <span className="ns-srv-circle-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
+              </div>
+            </a>
+
+            {/* Card 3: Chairside Skills */}
+            <a
+              href="#membership"
+              className="ns-service-card adc-fade-up"
+              onClick={(e) => {
+                if (onNavigate) {
+                  e.preventDefault();
+                  onNavigate("membership");
+                }
+              }}
+            >
+              <div className="ns-srv-media">
+                <img
+                  src={cardChair}
+                  alt="Chairside Skills"
+                  className="ns-srv-photo"
+                />
+                <span className="ns-srv-badge-icon" aria-hidden="true">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A33817"
+                    strokeWidth="2.5"
+                  >
+                    <path d="M19 9h-4V3H9v6H5l7 8 7-8z" />
+                    <path d="M5 18v2h14v-2H5z" />
+                  </svg>
+                </span>
+              </div>
+              <div className="ns-srv-content">
+                <h3 className="ns-srv-title">Chairside Skills</h3>
+                <p className="ns-srv-desc">
+                  Hands-on phantom head workstation practice and modern clinical
+                  techniques.
+                </p>
+                <div className="ns-srv-footer">
+                  <span className="ns-srv-link">Learn More →</span>
+                  <span className="ns-srv-circle-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
+              </div>
+            </a>
+
+            {/* Card 4: Expert Mentorship */}
+            <a
+              href="#membership"
+              className="ns-service-card adc-fade-up"
+              onClick={(e) => {
+                if (onNavigate) {
+                  e.preventDefault();
+                  onNavigate("membership");
+                }
+              }}
+            >
+              <div className="ns-srv-media">
+                <img
+                  src={cardMentoring}
+                  alt="Expert Mentorship"
+                  className="ns-srv-photo"
+                />
+                <span className="ns-srv-badge-icon" aria-hidden="true">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A33817"
+                    strokeWidth="2.5"
+                  >
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </span>
+              </div>
+              <div className="ns-srv-content">
+                <h3 className="ns-srv-title">Expert Mentorship</h3>
+                <p className="ns-srv-desc">
+                  Direct 1-on-1 feedback from qualified Australian dental
+                  practitioners.
+                </p>
+                <div className="ns-srv-footer">
+                  <span className="ns-srv-link">Learn More →</span>
+                  <span className="ns-srv-circle-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
+              </div>
+            </a>
+
+            {/* Card 5: Worldwide Access */}
+            <a
+              href="#membership"
+              className="ns-service-card adc-fade-up"
+              onClick={(e) => {
+                if (onNavigate) {
+                  e.preventDefault();
+                  onNavigate("membership");
+                }
+              }}
+            >
+              <div className="ns-srv-media">
+                <img
+                  src={cardWorldwide}
+                  alt="Worldwide Access"
+                  className="ns-srv-photo"
+                />
+                <span className="ns-srv-badge-icon" aria-hidden="true">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A33817"
+                    strokeWidth="2.5"
+                  >
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                  </svg>
+                </span>
+              </div>
+              <div className="ns-srv-content">
+                <h3 className="ns-srv-title">Worldwide Access</h3>
+                <p className="ns-srv-desc">
+                  Personalised study plans and flexible online access from
+                  anywhere in the world.
+                </p>
+                <div className="ns-srv-footer">
+                  <span className="ns-srv-link">Learn More →</span>
+                  <span className="ns-srv-circle-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================================
+          SECTION 5: INSIDE THE ADC EXPERTS CENTRE (Interactive Carousel & 3D Tooth)
+          - Left: 3D Glossy Tooth Decor (Uncropped), Eyebrow, Title, Description, Badges
+          - Right: Interactive Facility Carousel with Prev/Next, Dots & Thumbnails
+          ====================================================================== */}
+      <section className="ns-facilities-section">
+        <div className="container">
+          <div className="ns-facilities-grid">
+            {/* Left Narrative Column with 3D Tooth Decor */}
+            <div className="ns-facilities-text-col adc-fade-up">
+              <div className="ns-fac-header-with-tooth">
+                <div>
+                  <span className="ns-eyebrow">
+                    INSIDE THE ADC EXPERTS CENTRE
+                  </span>
+                  <h2 className="ns-section-title">
+                    A Modern Space
+                    <br />
+                    Designed for Your Success.
+                  </h2>
+                </div>
+                {/* 3D Floating Tooth Decoration - Clean, uncropped, glowing */}
+                <div className="ns-fac-decor-tooth" aria-hidden="true">
+                  <ToothDecoration size={165} showGlow={true} />
                 </div>
               </div>
 
-              {/* 4 Interactive Thumbnails */}
-              <div className="nh-carousel-thumbnails-row">
-                {GALLERY_SLIDES.map((slide, idx) => (
+              <p className="ns-section-lead">
+                Our Perth centre offers a state-of-the-art facility with
+                calibrated simulation tools, phantom heads, and a supportive
+                environment for independent study and practical clinical
+                training.
+              </p>
+
+              <div className="ns-fac-cta-wrap">
+                <button
+                  type="button"
+                  className="ns-btn-primary"
+                  onClick={() => onNavigate && onNavigate("gallery")}
+                >
+                  View Full Gallery →
+                </button>
+              </div>
+
+              {/* 4 Feature Badges */}
+              <div className="ns-fac-badges-grid">
+                <div className="ns-fac-badge-item">
+                  <span className="ns-fac-badge-icon" aria-hidden="true">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#A33817"
+                      strokeWidth="2.2"
+                    >
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    </svg>
+                  </span>
+                  <span>Modern Facilities</span>
+                </div>
+                <div className="ns-fac-badge-item">
+                  <span className="ns-fac-badge-icon" aria-hidden="true">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#A33817"
+                      strokeWidth="2.2"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <circle cx="12" cy="12" r="4" />
+                    </svg>
+                  </span>
+                  <span>Clinical Simulation</span>
+                </div>
+                <div className="ns-fac-badge-item">
+                  <span className="ns-fac-badge-icon" aria-hidden="true">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#A33817"
+                      strokeWidth="2.2"
+                    >
+                      <rect x="2" y="3" width="20" height="14" rx="2" />
+                      <line x1="8" y1="21" x2="16" y2="21" />
+                    </svg>
+                  </span>
+                  <span>Independent Study Space</span>
+                </div>
+                <div className="ns-fac-badge-item">
+                  <span className="ns-fac-badge-icon" aria-hidden="true">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#A33817"
+                      strokeWidth="2.2"
+                    >
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                  </span>
+                  <span>Supportive Environment</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Media Panel: Interactive Image Carousel */}
+            <div
+              className="ns-facilities-media-col adc-fade-up"
+              onMouseEnter={() => setIsCarouselHovered(true)}
+              onMouseLeave={() => setIsCarouselHovered(false)}
+            >
+              <div className="ns-fac-media-frame">
+                {/* Main Carousel Active Screen */}
+                <div className="ns-fac-screen-wrap">
+                  <img
+                    src={FACILITY_SLIDES[activeFacilitySlide].img}
+                    alt={FACILITY_SLIDES[activeFacilitySlide].title}
+                    className="ns-fac-screen-img"
+                  />
+
+                  {/* Previous / Next Slide Controls */}
                   <button
-                    key={idx}
                     type="button"
-                    className={`nh-thumb-btn ${activeSlide === idx ? "active" : ""}`}
-                    onClick={() => setActiveSlide(idx)}
-                    aria-label={`View slide ${idx + 1}`}
+                    className="ns-carousel-nav-btn prev"
+                    onClick={handlePrevSlide}
+                    aria-label="Previous slide"
                   >
-                    <img
-                      src={slide.thumb}
-                      alt={slide.title}
-                      className="nh-thumb-img"
-                    />
+                    ‹
                   </button>
-                ))}
+                  <button
+                    type="button"
+                    className="ns-carousel-nav-btn next"
+                    onClick={handleNextSlide}
+                    aria-label="Next slide"
+                  >
+                    ›
+                  </button>
+
+                  {/* Overlaid Facilities Info Pill */}
+                  <div className="ns-fac-bottom-pill">
+                    <span className="ns-fac-pill-icon" />
+                    <div>
+                      <strong className="ns-fac-pill-title">
+                        {FACILITY_SLIDES[activeFacilitySlide].title}
+                      </strong>
+                      <small className="ns-fac-pill-desc">
+                        {FACILITY_SLIDES[activeFacilitySlide].desc}
+                      </small>
+                    </div>
+                  </div>
+
+                  {/* Carousel Dot Indicators */}
+                  <div
+                    className="ns-carousel-dots"
+                    role="tablist"
+                    aria-label="Slide indicators"
+                  >
+                    {FACILITY_SLIDES.map((slide, idx) => (
+                      <button
+                        key={slide.title}
+                        type="button"
+                        role="tab"
+                        aria-selected={activeFacilitySlide === idx}
+                        className={`ns-carousel-dot ${activeFacilitySlide === idx ? "active" : ""}`}
+                        onClick={() => setActiveFacilitySlide(idx)}
+                        aria-label={`Go to slide ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* 5 Vertical Thumbnails on Right */}
+                <div className="ns-fac-side-thumbs">
+                  {FACILITY_SLIDES.map((slide, idx) => (
+                    <button
+                      key={slide.title}
+                      type="button"
+                      className={`ns-fac-thumb-btn ${activeFacilitySlide === idx ? "active" : ""}`}
+                      onClick={() => setActiveFacilitySlide(idx)}
+                      aria-label={`View ${slide.title}`}
+                      title={slide.title}
+                    >
+                      <img src={slide.img} alt={slide.title} />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -707,196 +1077,138 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
       </section>
 
       {/* ======================================================================
-          SECTION 5: YOUR JOURNEY IN FOUR SIMPLE STEPS
+          SECTION 6: FOUR SIMPLE STEPS JOURNEY (Exact Reference Match)
+          - Left: 3D Books (Zero-crop)
+          - 4 Steps: 01 Become a Member, 02 Activate, 03 Access, 04 Explore Next Steps
+          - Right: 3D Graduation Cap (Zero-crop)
           ====================================================================== */}
-      <section className="nh-steps-section">
+      <section className="ns-journey-section">
         <div className="container">
-          <div className="nh-section-header">
-            <span className="nh-eyebrow">GET STARTED TODAY</span>
-            <h2 className="nh-section-title">
+          <div className="ns-section-header-centered adc-fade-up">
+            <span className="ns-eyebrow">MEMBERSHIP PROCESS</span>
+            <h2 className="ns-section-title">
               Your Journey in Four Simple Steps.
             </h2>
           </div>
 
-          <div className="nh-steps-row">
-            {/* Step 1 */}
-            <div className="nh-step-item">
-              <div className="nh-step-badge-wrap">
-                <span className="nh-step-num">01</span>
-                <div className="nh-step-icon-circle" aria-hidden="true">
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
+          <div className="ns-journey-row-container">
+            {/* Left 3D Books Model */}
+            <div
+              className="ns-journey-decor-left ns-journey-3d-books-wrap adc-fade-up"
+              aria-hidden="true"
+            >
+              <BooksDecoration size={145} />
+            </div>
+
+            {/* 4 Interactive Step Nodes */}
+            <div className="ns-journey-steps-track">
+              {/* Step 1 */}
+              <div className="ns-journey-step adc-fade-up">
+                <div className="ns-step-circle-badge">01</div>
+                <h3 className="ns-step-name">Become a Member</h3>
+                <p className="ns-step-info">
+                  Join for A$10/week with a minimum 3-month commitment.
+                </p>
+              </div>
+
+              {/* Connecting Curvy Vector Arrow 1 -> 2 */}
+              <div className="ns-step-arrow-divider" aria-hidden="true">
+                <svg width="48" height="24" viewBox="0 0 48 24" fill="none">
+                  <path
+                    d="M2 18 Q 24 2 44 14"
+                    stroke="#A33817"
                     strokeWidth="2"
-                  >
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
-                </div>
-              </div>
-              <h3 className="nh-step-title">Become a Member</h3>
-              <p className="nh-step-desc">
-                Join for A$10/week with a minimum 3-month commitment.
-              </p>
-            </div>
-
-            <div className="nh-step-arrow" aria-hidden="true">
-              →
-            </div>
-
-            {/* Step 2 */}
-            <div className="nh-step-item">
-              <div className="nh-step-badge-wrap">
-                <span className="nh-step-num">02</span>
-                <div className="nh-step-icon-circle" aria-hidden="true">
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
+                    strokeDasharray="3 3"
+                    strokeLinecap="round"
+                  />
+                  <polyline
+                    points="40,9 45,14 39,18"
                     fill="none"
-                    stroke="currentColor"
+                    stroke="#A33817"
                     strokeWidth="2"
-                  >
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                  </svg>
-                </div>
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </div>
-              <h3 className="nh-step-title">Activate Your Account</h3>
-              <p className="nh-step-desc">
-                Get instant access to all learning resources and study
-                materials.
-              </p>
-            </div>
 
-            <div className="nh-step-arrow" aria-hidden="true">
-              →
-            </div>
+              {/* Step 2 */}
+              <div className="ns-journey-step adc-fade-up">
+                <div className="ns-step-circle-badge">02</div>
+                <h3 className="ns-step-name">Activate Your Account</h3>
+                <p className="ns-step-info">
+                  Get instant access to all learning resources.
+                </p>
+              </div>
 
-            {/* Step 3 */}
-            <div className="nh-step-item">
-              <div className="nh-step-badge-wrap">
-                <span className="nh-step-num">03</span>
-                <div className="nh-step-icon-circle" aria-hidden="true">
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
+              {/* Connecting Curvy Vector Arrow 2 -> 3 */}
+              <div className="ns-step-arrow-divider" aria-hidden="true">
+                <svg width="48" height="24" viewBox="0 0 48 24" fill="none">
+                  <path
+                    d="M2 18 Q 24 2 44 14"
+                    stroke="#A33817"
+                    strokeWidth="2"
+                    strokeDasharray="3 3"
+                    strokeLinecap="round"
+                  />
+                  <polyline
+                    points="40,9 45,14 39,18"
                     fill="none"
-                    stroke="currentColor"
+                    stroke="#A33817"
                     strokeWidth="2"
-                  >
-                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                    <line x1="8" y1="21" x2="16" y2="21" />
-                    <line x1="12" y1="17" x2="12" y2="21" />
-                  </svg>
-                </div>
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </div>
-              <h3 className="nh-step-title">Access Your Resources</h3>
-              <p className="nh-step-desc">
-                Explore Part 1, Part 2 content, recorded sessions and more.
-              </p>
-            </div>
 
-            <div className="nh-step-arrow" aria-hidden="true">
-              →
-            </div>
+              {/* Step 3 */}
+              <div className="ns-journey-step adc-fade-up">
+                <div className="ns-step-circle-badge">03</div>
+                <h3 className="ns-step-name">Access Your Resources</h3>
+                <p className="ns-step-info">
+                  Explore Part 1 &amp; Part 2 materials, recordings and tools.
+                </p>
+              </div>
 
-            {/* Step 4 */}
-            <div className="nh-step-item">
-              <div className="nh-step-badge-wrap">
-                <span className="nh-step-num">04</span>
-                <div className="nh-step-icon-circle" aria-hidden="true">
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
+              {/* Connecting Curvy Vector Arrow 3 -> 4 */}
+              <div className="ns-step-arrow-divider" aria-hidden="true">
+                <svg width="48" height="24" viewBox="0 0 48 24" fill="none">
+                  <path
+                    d="M2 18 Q 24 2 44 14"
+                    stroke="#A33817"
+                    strokeWidth="2"
+                    strokeDasharray="3 3"
+                    strokeLinecap="round"
+                  />
+                  <polyline
+                    points="40,9 45,14 39,18"
                     fill="none"
-                    stroke="currentColor"
+                    stroke="#A33817"
                     strokeWidth="2"
-                  >
-                    <line x1="18" y1="20" x2="18" y2="10" />
-                    <line x1="12" y1="20" x2="12" y2="4" />
-                    <line x1="6" y1="20" x2="6" y2="14" />
-                  </svg>
-                </div>
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </div>
-              <h3 className="nh-step-title">Explore Your Next Steps</h3>
-              <p className="nh-step-desc">
-                Join live coaching, book chair hire (if required) and connect
-                with our community.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ======================================================================
-          SECTION 6: A PLACE TO FOCUS, PRACTISE AND PREPARE
-          ====================================================================== */}
-      <section className="nh-focus-section">
-        <div className="container">
-          <div className="nh-focus-grid">
-            {/* Left Side: Dentist practicing on phantom head with lamp */}
-            <div className="nh-focus-media">
-              <div className="nh-focus-img-wrap">
-                <img
-                  src={practiceFocusImg}
-                  alt="Dentist practicing on typodont under dental lamp"
-                  className="nh-focus-img"
-                />
+              {/* Step 4 */}
+              <div className="ns-journey-step adc-fade-up">
+                <div className="ns-step-circle-badge">04</div>
+                <h3 className="ns-step-name">Explore Your Next Steps</h3>
+                <p className="ns-step-info">
+                  Continue practicing and get guidance for your Australian
+                  dental career.
+                </p>
               </div>
             </div>
 
-            {/* Right Side: Editorial & Checkmarks */}
-            <div className="nh-focus-content">
-              <span className="nh-eyebrow">WHY ADC EXPERTS</span>
-              <h2 className="nh-section-title">
-                A Place to Focus, Practise and Prepare.
-              </h2>
-              <p className="nh-focus-desc">
-                Our modern Perth centre provides a comfortable and well-equipped
-                environment for hands-on practice and independent study (for
-                active members).
-              </p>
-
-              <ul className="nh-focus-checklist">
-                <li>
-                  <span className="nh-circle-check" aria-hidden="true">
-                    ✔
-                  </span>
-                  <span>Modern dental chairs and equipment</span>
-                </li>
-                <li>
-                  <span className="nh-circle-check" aria-hidden="true">
-                    ✔
-                  </span>
-                  <span>Independent study space</span>
-                </li>
-                <li>
-                  <span className="nh-circle-check" aria-hidden="true">
-                    ✔
-                  </span>
-                  <span>A supportive and professional environment</span>
-                </li>
-                <li>
-                  <span className="nh-circle-check" aria-hidden="true">
-                    ✔
-                  </span>
-                  <span>Convenient location in Perth</span>
-                </li>
-                <li>
-                  <span className="nh-circle-check" aria-hidden="true">
-                    ✔
-                  </span>
-                  <span>Access for active ADC Experts members</span>
-                </li>
-              </ul>
+            {/* Right 3D Graduation Cap Model */}
+            <div
+              className="ns-journey-decor-right ns-journey-3d-cap-wrap adc-fade-up"
+              aria-hidden="true"
+            >
+              <GraduationCapDecoration size={145} />
             </div>
           </div>
         </div>

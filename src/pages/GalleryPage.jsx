@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import galleryMainImg from '../assets/home-gallery-main.png';
-import practiceFocusImg from '../assets/home-practice-focus.png';
+import galleryMainImg from '../assets/home-gallery-main.webp';
+import practiceFocusImg from '../assets/home-practice-focus.webp';
 import facilitiesHeroImg from '../assets/facilities-hero.png';
 import facilitiesPromiseImg from '../assets/facilities-promise.png';
 import thumb1 from '../assets/home-gallery-thumb1.png';

@@ -1,11 +1,11 @@
 import React from 'react';
 import heroImg from '../assets/membership-hero.png';
-import cardPart1 from '../assets/member-card-part1.png';
-import cardPart2 from '../assets/member-card-part2.png';
-import cardWorldwide from '../assets/member-card-worldwide.png';
+import cardPart1 from '../assets/member-card-part1.webp';
+import cardPart2 from '../assets/member-card-part2.webp';
+import cardWorldwide from '../assets/member-card-worldwide.webp';
 import cardPerth from '../assets/member-card-perth.png';
-import cardChair from '../assets/member-card-chair.png';
-import cardMentoring from '../assets/member-card-mentoring.png';
+import cardChair from '../assets/member-card-chair.webp';
+import cardMentoring from '../assets/member-card-mentoring.webp';
 import memberSimpleImg from '../assets/member-simple.png';
 import membershipSeal from '../assets/membership-seal.png';
 import { openStripeCheckout } from '../config/stripe';
@@ -175,7 +175,13 @@ export default function MembershipPage({ _onOpenModal }) {
             {BENEFIT_CARDS.map((card, idx) => (
               <div key={idx} className="member-benefit-card">
                 <div className="benefit-card-img-wrap">
-                  <img src={card.img} alt={card.title} className="benefit-card-img" />
+                  <img
+                    src={card.img}
+                    alt={card.title}
+                    className="benefit-card-img"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 <h3 className="benefit-card-title">{card.title}</h3>
                 <p className="benefit-card-text">{card.desc}</p>

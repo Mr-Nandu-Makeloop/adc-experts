@@ -240,6 +240,7 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
             className={`nav-hamburger ${mobileMenuOpen ? 'open' : ''}`}
             aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <span></span>
@@ -250,7 +251,12 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
       </div>
 
       {/* Mobile Drawer */}
-      <div className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`} aria-hidden={!mobileMenuOpen}>
+      <div
+        id="mobile-navigation"
+        className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}
+        aria-hidden={!mobileMenuOpen}
+        inert={!mobileMenuOpen}
+      >
         <div className="mobile-nav-links">
           <button 
             type="button" 

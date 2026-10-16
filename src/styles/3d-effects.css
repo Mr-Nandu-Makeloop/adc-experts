@@ -1,0 +1,158 @@
+/* 3D Floating Decorations & Micro-interactions CSS */
+
+.floating-model-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  pointer-events: none;
+  overflow: visible !important;
+}
+
+.floating-model-wrapper canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none;
+  overflow: visible !important;
+}
+
+/* Fallback styling */
+.model-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  overflow: visible;
+  animation: pulse-gentle 3s ease-in-out infinite;
+}
+
+@keyframes pulse-gentle {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(-4px) scale(1.02);
+    opacity: 1;
+  }
+}
+
+/* Container positioning helpers with visible overflow */
+.tooth-decoration-container {
+  display: inline-block;
+  pointer-events: none;
+  z-index: 20;
+  overflow: visible !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.graduation-cap-container {
+  display: inline-block;
+  pointer-events: none;
+  z-index: 20;
+  overflow: visible !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.books-decoration-container {
+  display: inline-block;
+  pointer-events: none;
+  z-index: 20;
+  overflow: visible !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Pricing card cap wrapper */
+.ns-pricing-3d-cap-wrap {
+  position: absolute;
+  top: -32px;
+  right: -16px;
+  z-index: 25;
+  pointer-events: none;
+  overflow: visible !important;
+  filter: drop-shadow(0 10px 22px rgba(163, 56, 23, 0.16));
+}
+
+/* Gallery Section 3D Tooth Decorator */
+.ns-gallery-3d-tooth-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  overflow: visible !important;
+  filter: drop-shadow(0 16px 32px rgba(163, 56, 23, 0.18));
+}
+
+/* Journey section decor wrappers */
+.ns-journey-3d-books-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  overflow: visible !important;
+  filter: drop-shadow(0 12px 24px rgba(163, 56, 23, 0.14));
+}
+
+.ns-journey-3d-cap-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  overflow: visible !important;
+  filter: drop-shadow(0 12px 24px rgba(217, 119, 6, 0.14));
+}
+
+/* Responsive Scaling */
+@media (max-width: 992px) {
+  .ns-pricing-3d-cap-wrap {
+    top: -24px;
+    right: -10px;
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 768px) {
+  .tooth-decoration-container {
+    transform: scale(0.85);
+    transform-origin: center center;
+  }
+
+  .graduation-cap-container {
+    transform: scale(0.85);
+    transform-origin: center center;
+  }
+
+  .books-decoration-container {
+    transform: scale(0.85);
+    transform-origin: center center;
+  }
+}
+
+@media (max-width: 480px) {
+  .tooth-decoration-container {
+    transform: scale(0.72);
+  }
+
+  .graduation-cap-container {
+    transform: scale(0.75);
+  }
+
+  .books-decoration-container {
+    transform: scale(0.75);
+  }
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .model-fallback {
+    animation: none !important;
+  }
+
+  .tooth-decoration-container,
+  .graduation-cap-container,
+  .books-decoration-container {
+    transition: none !important;
+  }
+}
