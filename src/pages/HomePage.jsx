@@ -41,68 +41,68 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
     {
       id: "reel-1",
       num: "01",
-      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8027.MOV",
-      title: "Phantom Head Simulation",
-      subtitle:
-        "High-speed handpiece posture, bur orientation & direct vision technique",
-      category: "Simulation Lab",
-      tag: "SIMULATION",
-      duration: "Live Drill",
+      src: "https://d703xoqfmkizu.cloudfront.net/video_assets/IMG_8027.MOV",
+      // title: "Phantom Head Simulation",
+      // subtitle:
+      //   "High-speed handpiece posture, bur orientation & direct vision technique",
+      // category: "Simulation Lab",
+      // tag: "SIMULATION",
+      // duration: "Live Drill",
     },
     {
       id: "reel-2",
       num: "02",
       src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8028.MOV",
-      title: "Clinical Chairside Workflow",
-      subtitle:
-        "Real delivery unit operation, suction technique & patient chair setup",
-      category: "Chairside Setup",
-      tag: "CHAIRSIDE",
-      duration: "Hands-on",
+      // title: "Clinical Chairside Workflow",
+      // subtitle:
+      //   "Real delivery unit operation, suction technique & patient chair setup",
+      // category: "Chairside Setup",
+      // tag: "CHAIRSIDE",
+      // duration: "Hands-on",
     },
     {
       id: "reel-3",
       num: "03",
       src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8029.MOV",
-      title: "Tooth Preparation & Boundary Checks",
-      subtitle:
-        "Class II cavity prep, crown margins, line angles & depth checks",
-      category: "Tooth Prep",
-      tag: "CAVITY PREP",
-      duration: "Technique",
+      // title: "Tooth Preparation & Boundary Checks",
+      // subtitle:
+      //   "Class II cavity prep, crown margins, line angles & depth checks",
+      // category: "Tooth Prep",
+      // tag: "CAVITY PREP",
+      // duration: "Technique",
     },
     {
       id: "reel-4",
       num: "04",
       src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8030.MOV",
-      title: "Instrument Handling & Finger Rests",
-      subtitle:
-        "Fulcrum stability, mirror retraction & indirect vision lighting",
-      category: "Ergonomics",
-      tag: "ERGONOMICS",
-      duration: "Precision",
+      // title: "Instrument Handling & Finger Rests",
+      // subtitle:
+      //   "Fulcrum stability, mirror retraction & indirect vision lighting",
+      // category: "Ergonomics",
+      // tag: "ERGONOMICS",
+      // duration: "Precision",
     },
     {
       id: "reel-5",
       num: "05",
       src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8032.MOV",
-      title: "Restorative Cavity & Matrix Setup",
-      subtitle:
-        "Rubber dam isolation, sectional matrix placement & composite finishing",
-      category: "Restorative",
-      tag: "RESTORATIVE",
-      duration: "Clinical",
+      // title: "Restorative Cavity & Matrix Setup",
+      // subtitle:
+      //   "Rubber dam isolation, sectional matrix placement & composite finishing",
+      // category: "Restorative",
+      // tag: "RESTORATIVE",
+      // duration: "Clinical",
     },
     {
       id: "reel-6",
       num: "06",
       src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8032-alt.MOV",
-      title: "Candidate Debrief & Rubric Feedback",
-      subtitle:
-        "1-on-1 examiner rubric evaluation, scoring criteria & practical tips",
-      category: "OSCE Mentoring",
-      tag: "MENTORING",
-      duration: "Evaluation",
+      // title: "Candidate Debrief & Rubric Feedback",
+      // subtitle:
+      //   "1-on-1 examiner rubric evaluation, scoring criteria & practical tips",
+      // category: "OSCE Mentoring",
+      // tag: "MENTORING",
+      // duration: "Evaluation",
     },
   ];
 
@@ -1137,4 +1137,3 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
     </div>
   );
 }
-
