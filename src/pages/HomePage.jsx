@@ -1,21 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-// Reference Assets (Sourced directly from ADChomepagenewskin design)
-import heroBgBlur from "../assets/newskin/hero-bg-blur.png";
-import heroComposition from "../assets/newskin/hero-composition.png";
+// Reference Assets (Sourced directly from ADChomepagenewskin design & authentic centre photos)
+import heroBgImage from "../assets/hero_bg.jpg";
 
-// Section 2: Experience ADC Preparation Video Showcase
-import trainingVideoMain from "../assets/newskin/training-screen-main.png";
-import trainingThumb1 from "../assets/newskin/training-thumb1.png";
-import trainingThumb2 from "../assets/newskin/training-thumb2.png";
-import trainingThumb3 from "../assets/newskin/training-thumb3.png";
-import watchJourneyArrow from "../assets/newskin/watch-the-journey-arrow.png";
+// Section 2: Experience ADC Preparation Video Showcase (6 Portrait 9:16 In-Clinic Reels)
+import PortraitReelCard from "../components/PortraitReelCard";
 
-// Section 4: Membership Preparation Services Images
-import cardPart1 from "../assets/member-card-part1.webp";
-import cardPart2 from "../assets/member-card-part2.webp";
-import cardWorldwide from "../assets/member-card-worldwide.webp";
-import cardChair from "../assets/member-card-chair.webp";
-import cardMentoring from "../assets/member-card-mentoring.webp";
+// Section 4: 6 Services Circular Infographic
+import CircularServicesInfographic from "../components/CircularServicesInfographic";
 
 // Section 5: Facilities Showcase
 import facScreenMain from "../assets/newskin/facilities-screen-main.png";
@@ -36,41 +27,130 @@ import BooksDecoration from "../components/3d/BooksDecoration";
 import { openStripeCheckout } from "../config/stripe";
 
 export default function HomePage({ onNavigate, _onOpenModal }) {
-  // Video Showcase State for Section 2
-  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
-  const [activeVideoChapter, setActiveVideoChapter] = useState(0);
-  const videoRef = useRef(null);
+  // Video Showcase State for Section 2 (6 Portrait 9:16 In-Clinic Reels)
+  const [activeReelIndex, setActiveReelIndex] = useState(null);
+  const [isReelsMuted, setIsReelsMuted] = useState(true);
+  const [activeCategoryFilter, setActiveCategoryFilter] = useState("ALL");
+  const reelsCarouselRef = useRef(null);
 
   // Gallery Showcase Carousel State for Section 5
   const [activeFacilitySlide, setActiveFacilitySlide] = useState(0);
   const [isCarouselHovered, setIsCarouselHovered] = useState(false);
 
-  const VIDEO_CHAPTERS = [
+  const PORTRAIT_REELS = [
     {
-      title: "ADC Experts – Inside the Perth Centre & Simulation Lab",
-      duration: "03:24",
-      poster: trainingVideoMain,
-      src: "/hero-bg.mp4",
-      label: "Simulation Lab Tour",
-      thumb: trainingThumb1,
+      id: "reel-1",
+      num: "01",
+      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8027.MOV",
+      title: "Phantom Head Simulation",
+      subtitle:
+        "High-speed handpiece posture, bur orientation & direct vision technique",
+      category: "Simulation Lab",
+      tag: "SIMULATION",
+      duration: "Live Drill",
     },
     {
-      title: "Hands-on Clinical Chair Practice & Phantom Head Training",
-      duration: "02:45",
-      poster: trainingThumb2,
-      src: "/hero-bg.mp4",
-      label: "Clinical Practice",
-      thumb: trainingThumb2,
+      id: "reel-2",
+      num: "02",
+      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8028.MOV",
+      title: "Clinical Chairside Workflow",
+      subtitle:
+        "Real delivery unit operation, suction technique & patient chair setup",
+      category: "Chairside Setup",
+      tag: "CHAIRSIDE",
+      duration: "Hands-on",
     },
     {
-      title: "OSCE Audio-Visual Examination Station Insights",
-      duration: "04:12",
-      poster: trainingThumb3,
-      src: "/hero-bg.mp4",
-      label: "OSCE Suite",
-      thumb: trainingThumb3,
+      id: "reel-3",
+      num: "03",
+      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8029.MOV",
+      title: "Tooth Preparation & Boundary Checks",
+      subtitle:
+        "Class II cavity prep, crown margins, line angles & depth checks",
+      category: "Tooth Prep",
+      tag: "CAVITY PREP",
+      duration: "Technique",
+    },
+    {
+      id: "reel-4",
+      num: "04",
+      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8030.MOV",
+      title: "Instrument Handling & Finger Rests",
+      subtitle:
+        "Fulcrum stability, mirror retraction & indirect vision lighting",
+      category: "Ergonomics",
+      tag: "ERGONOMICS",
+      duration: "Precision",
+    },
+    {
+      id: "reel-5",
+      num: "05",
+      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8032.MOV",
+      title: "Restorative Cavity & Matrix Setup",
+      subtitle:
+        "Rubber dam isolation, sectional matrix placement & composite finishing",
+      category: "Restorative",
+      tag: "RESTORATIVE",
+      duration: "Clinical",
+    },
+    {
+      id: "reel-6",
+      num: "06",
+      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8032-alt.MOV",
+      title: "Candidate Debrief & Rubric Feedback",
+      subtitle:
+        "1-on-1 examiner rubric evaluation, scoring criteria & practical tips",
+      category: "OSCE Mentoring",
+      tag: "MENTORING",
+      duration: "Evaluation",
     },
   ];
+
+  const handlePlayReel = (index) => {
+    setActiveReelIndex(index);
+  };
+
+  const handlePauseReel = (_index) => {
+    // Keep active index for persistent focus state
+  };
+
+  const handleToggleReelsMute = () => {
+    setIsReelsMuted((prev) => !prev);
+  };
+
+  const handleScrollReels = (direction) => {
+    if (!reelsCarouselRef.current) return;
+    const scrollAmount = 340;
+    if (direction === "prev") {
+      reelsCarouselRef.current.scrollBy({
+        left: -scrollAmount,
+        behavior: "smooth",
+      });
+    } else {
+      reelsCarouselRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleSelectReelFilter = (filterKey, reelIdx) => {
+    setActiveCategoryFilter(filterKey);
+    if (reelIdx !== null && reelsCarouselRef.current) {
+      setActiveReelIndex(reelIdx);
+      const cardElements =
+        reelsCarouselRef.current.querySelectorAll(".ns-portrait-card");
+      if (cardElements[reelIdx]) {
+        cardElements[reelIdx].scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      }
+    } else if (reelsCarouselRef.current) {
+      reelsCarouselRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+  };
 
   const FACILITY_SLIDES = [
     {
@@ -149,24 +229,22 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
   return (
     <div className="new-homepage adc-newskin-page">
       {/* ======================================================================
-          SECTION 1: HERO SECTION (Exact Reference Composition)
-          - Video Background Container with Fallback Poster & Readability Overlay
+          SECTION 1: HERO SECTION
+          - Authentic ADC Experts Reception Photo Background (hero_bg.jpg)
+          - Carefully Calibrated Readability Overlay for High Visibility & Contrast
           - Left: Eyebrow, Heading, Lead, CTAs, 4 trust items
           - Right: Doctor Composition with floating badges (clean, uncropped)
           ====================================================================== */}
       <section className="ns-hero-section">
-        {/* Ambient Video Background with Fallback Poster & Readability Overlay */}
+        {/* Authentic ADC Experts Reception Background with Readability Overlay */}
         <div className="ns-hero-bg-container" aria-hidden="true">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            poster={heroBgBlur}
-            className="ns-hero-video-bg"
-          >
-            <source src="/hero-bg.mp4" type="video/mp4" />
-          </video>
+          <img
+            src={heroBgImage}
+            alt="ADC Experts Perth Reception Centre"
+            className="ns-hero-photo-bg"
+            loading="eager"
+            fetchPriority="high"
+          />
           {/* Layered Readability Gradient Overlay */}
           <div className="ns-hero-gradient-overlay" />
           <div className="ns-hero-ambient-glow" />
@@ -297,31 +375,28 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
 
             {/* Right Visual Composition (Clean pristine presentation from reference) */}
             <div className="ns-hero-visual-col">
-              <div className="ns-hero-stage">
-                <img
-                  src={heroComposition}
-                  alt="Australian Dental Exam Mentor with clinical learning tools"
-                  className="ns-hero-main-img"
-                  loading="eager"
-                  fetchPriority="high"
-                />
-              </div>
+              <div className="ns-hero-stage"></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ======================================================================
-          SECTION 2: TRAINING VIDEO SHOWCASE (Full Video Player on Right)
-          - Left: Eyebrow, Heading, Subtitle, 3 checkmarks, handwritten arrow
-          - Right: Full Responsive Video Player with Chapter Selector
+          SECTION 2: TRAINING VIDEO SHOWCASE (6 Portrait 9:16 In-Clinic Reels)
+          - Header: Eyebrow with pulsating dot, Title, Description, Reel Counter & Carousel Navigation
+          - Category Filter Pills for rapid navigation across the 6 reels
+          - Full-Bleed 9:16 Portrait Reels Carousel with native playback, audio toggle, and seek
+          - Reassurance Trust Strip & CTA
           ====================================================================== */}
-      <section className="ns-training-video-section">
+      <section className="ns-training-video-section" id="clinical-reels">
         <div className="container">
-          <div className="ns-training-video-grid">
-            {/* Left Narrative Column */}
-            <div className="ns-video-text-col adc-fade-up">
-              <span className="ns-eyebrow">SEE IT IN ACTION</span>
+          {/* Section Header with Eyebrow, Title & Interactive Controls */}
+          <div className="ns-reels-header adc-fade-up">
+            <div className="ns-reels-header-left">
+              <span className="ns-eyebrow ns-eyebrow-pulse">
+                <span className="ns-pulse-dot" />
+                LIVE CLINICAL REELS
+              </span>
               <h2 className="ns-section-title">
                 Experience ADC Preparation
                 <br />
@@ -330,112 +405,211 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
                 </span>
               </h2>
               <p className="ns-section-lead">
-                Take a glimpse into our modern learning environment, expert
-                teaching and real student experiences. See how ADC Experts helps
-                you prepare with clarity, confidence and practical clinical
-                exposure.
+                Explore 6 vertical clinical reels recorded directly inside our
+                Perth Training Centre. See hands-on phantom head procedures,
+                real chairside workflows, and live candidate mentoring so you
+                step into your ADC examination with full clarity and confidence.
               </p>
-
-              <ul className="ns-video-checklist">
-                <li>
-                  <span className="ns-check-badge">✔</span>
-                  <span>Real student experiences and testimonials</span>
-                </li>
-                <li>
-                  <span className="ns-check-badge">✔</span>
-                  <span>Practical clinical training insights</span>
-                </li>
-                <li>
-                  <span className="ns-check-badge">✔</span>
-                  <span>A look inside our Perth study centre</span>
-                </li>
-              </ul>
             </div>
 
-            {/* Right Media Panel Column - Full Responsive Video Player */}
-            <div className="ns-video-media-col adc-fade-up">
-              <div className="ns-video-player-frame">
-                {/* Main Video Screen */}
-                <div className="ns-video-screen-wrap">
-                  <video
-                    ref={videoRef}
-                    playsInline
-                    controls={isPlayingVideo}
-                    poster={VIDEO_CHAPTERS[activeVideoChapter].poster}
-                    className="ns-video-screen-img"
-                    onPlay={() => setIsPlayingVideo(true)}
-                    onPause={() => setIsPlayingVideo(false)}
+            {/* Header Right: Master Audio, Counter & Navigation Controls */}
+            <div className="ns-reels-header-controls">
+              <div className="ns-reels-counter-pill">
+                <span className="ns-reels-counter-active">
+                  {activeReelIndex !== null
+                    ? (activeReelIndex + 1).toString().padStart(2, "0")
+                    : "01"}
+                </span>
+                <span className="ns-reels-counter-sep">/</span>
+                <span className="ns-reels-counter-total">06</span>
+              </div>
+
+              {/* Master Audio Toggle */}
+              <button
+                type="button"
+                className={`ns-reels-master-audio ${!isReelsMuted ? "is-unmuted" : ""}`}
+                onClick={handleToggleReelsMute}
+                aria-label={
+                  isReelsMuted ? "Unmute all videos" : "Mute all videos"
+                }
+                title={
+                  isReelsMuted ? "Click to enable sound" : "Click to mute sound"
+                }
+              >
+                {isReelsMuted ? (
+                  <>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <line x1="23" y1="9" x2="17" y2="15" />
+                      <line x1="17" y1="9" x2="23" y2="15" />
+                    </svg>
+                    <span>Sound Off</span>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    </svg>
+                    <span>Sound On</span>
+                  </>
+                )}
+              </button>
+
+              {/* Carousel Prev / Next Controls */}
+              <div className="ns-reels-nav-buttons">
+                <button
+                  type="button"
+                  className="ns-reels-nav-btn"
+                  onClick={() => handleScrollReels("prev")}
+                  aria-label="Previous clinical reel"
+                  title="Previous Reel"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   >
-                    <source
-                      src={VIDEO_CHAPTERS[activeVideoChapter].src}
-                      type="video/mp4"
-                    />
-                  </video>
-
-                  {/* Custom Play Button Overlay when paused */}
-                  {!isPlayingVideo && (
-                    <button
-                      type="button"
-                      className="ns-video-play-button"
-                      onClick={() => {
-                        if (videoRef.current) {
-                          videoRef.current.play();
-                          setIsPlayingVideo(true);
-                        }
-                      }}
-                      aria-label="Play ADC Experts Tour Video"
-                    >
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="#A33817"
-                      >
-                        <polygon points="5 3 19 12 5 21 5 3" />
-                      </svg>
-                    </button>
-                  )}
-
-                  {/* Video Bottom Overlay Pill */}
-                  {!isPlayingVideo && (
-                    <div className="ns-video-bottom-pill">
-                      <div className="ns-video-pill-left">
-                        <span className="ns-video-pill-avatar" />
-                        <span className="ns-video-pill-title">
-                          {VIDEO_CHAPTERS[activeVideoChapter].title}
-                        </span>
-                      </div>
-                      <span className="ns-video-pill-duration">
-                        {VIDEO_CHAPTERS[activeVideoChapter].duration}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Right 3 Thumbnails Strip for Chapter Switch */}
-                <div className="ns-video-side-thumbs">
-                  {VIDEO_CHAPTERS.map((chap, idx) => (
-                    <button
-                      key={chap.label}
-                      type="button"
-                      className={`ns-video-thumb-btn ${activeVideoChapter === idx ? "active" : ""}`}
-                      onClick={() => {
-                        setActiveVideoChapter(idx);
-                        setIsPlayingVideo(false);
-                        if (videoRef.current) {
-                          videoRef.current.pause();
-                          videoRef.current.currentTime = 0;
-                        }
-                      }}
-                      aria-label={`Switch to ${chap.label}`}
-                      title={chap.title}
-                    >
-                      <img src={chap.thumb} alt={chap.label} />
-                    </button>
-                  ))}
-                </div>
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  className="ns-reels-nav-btn"
+                  onClick={() => handleScrollReels("next")}
+                  aria-label="Next clinical reel"
+                  title="Next Reel"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
               </div>
             </div>
+          </div>
+
+          {/* Category Filter Pills */}
+          <div className="ns-reels-filter-bar adc-fade-up">
+            <button
+              type="button"
+              className={`ns-filter-pill ${activeCategoryFilter === "ALL" ? "active" : ""}`}
+              onClick={() => handleSelectReelFilter("ALL", null)}
+            >
+              All Reels (6)
+            </button>
+            {PORTRAIT_REELS.map((reel, idx) => (
+              <button
+                key={reel.id}
+                type="button"
+                className={`ns-filter-pill ${activeCategoryFilter === reel.id || activeReelIndex === idx ? "active" : ""}`}
+                onClick={() => handleSelectReelFilter(reel.id, idx)}
+              >
+                <span className="ns-filter-num">{reel.num}</span>
+                <span>{reel.category}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* 6 Portrait Reels Carousel Track */}
+          <div
+            ref={reelsCarouselRef}
+            className="ns-portrait-reels-track adc-fade-up"
+            tabIndex={0}
+            role="region"
+            aria-label="6 Portrait Clinical Training Reels"
+          >
+            {PORTRAIT_REELS.map((reel, idx) => (
+              <PortraitReelCard
+                key={reel.id}
+                reel={reel}
+                index={idx}
+                isActive={activeReelIndex === idx}
+                isGlobalMuted={isReelsMuted}
+                onPlay={handlePlayReel}
+                onPause={handlePauseReel}
+                onToggleMute={handleToggleReelsMute}
+              />
+            ))}
+          </div>
+
+          {/* Bottom Trust & Feature Bar */}
+          <div className="ns-reels-bottom-bar adc-fade-up">
+            <div className="ns-reels-features">
+              <div className="ns-reels-feat-item">
+                <span className="ns-reels-feat-check">✔</span>
+                <span>
+                  Exam-calibrated phantom heads & authentic handpieces
+                </span>
+              </div>
+              <div className="ns-reels-feat-item">
+                <span className="ns-reels-feat-check">✔</span>
+                <span>
+                  One-on-one rubric evaluations by Australian dental mentors
+                </span>
+              </div>
+              <div className="ns-reels-feat-item">
+                <span className="ns-reels-feat-check">✔</span>
+                <span>Comprehensive Part 1 & Part 2 clinical preparation</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="ns-reels-tour-btn"
+              onClick={() => {
+                const el = document.getElementById("memberships");
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+            >
+              <span>Explore Preparation Services</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
           </div>
         </div>
       </section>
@@ -601,280 +775,27 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
       </section>
 
       {/* ======================================================================
-          SECTION 4: PREPARATION THAT FITS YOUR NEEDS (Using Membership Services Images)
+          SECTION 4: PREPARATION THAT FITS YOUR NEEDS (6 Circular Services Infographic)
+          - Centered Eyebrow, Heading & Subtitle
+          - 6 Symmetrical Circular Satellite Discs around Central Interactive Hub
+          - Minimalistic & Simple with 3D Cursor Hover Tilt & Magnetic States
           ====================================================================== */}
       <section className="ns-services-section" id="home-services">
         <div className="container">
-          <div className="ns-services-top-bar adc-fade-up">
-            <div>
-              <span className="ns-eyebrow">OUR PREPARATION SERVICES</span>
-              <h2 className="ns-section-title">
-                Preparation That Fits Your Needs.
-              </h2>
-            </div>
-            <div className="ns-services-nav-actions">
-              <button
-                type="button"
-                className="ns-view-all-link"
-                onClick={() => onNavigate && onNavigate("membership")}
-              >
-                View All Services →
-              </button>
-              <div className="ns-services-arrow-group" aria-hidden="true">
-                <button
-                  type="button"
-                  className="ns-arrow-circle"
-                  aria-label="Previous service"
-                >
-                  ‹
-                </button>
-                <button
-                  type="button"
-                  className="ns-arrow-circle"
-                  aria-label="Next service"
-                >
-                  ›
-                </button>
-              </div>
-            </div>
+          <div className="ns-services-header-centered adc-fade-up">
+            <span className="ns-eyebrow">OUR PREPARATION SERVICES</span>
+            <h2 className="ns-section-title">
+              Preparation That Fits Your Needs.
+            </h2>
+            <p className="ns-section-lead">
+              Discover all 6 core services included in the ADC Experts ecosystem
+              — from ADC Part 1 and Part 2 online resources to dedicated Perth
+              workstation chairs and 1-on-1 practical mentoring.
+            </p>
           </div>
 
-          <div className="ns-services-cards-grid">
-            {/* Card 1: Part 1 Resources */}
-            <a
-              href="#membership"
-              className="ns-service-card adc-fade-up"
-              onClick={(e) => {
-                if (onNavigate) {
-                  e.preventDefault();
-                  onNavigate("membership");
-                }
-              }}
-            >
-              <div className="ns-srv-media">
-                <img
-                  src={cardPart1}
-                  alt="Part 1 Resources"
-                  className="ns-srv-photo"
-                />
-                <span className="ns-srv-badge-icon" aria-hidden="true">
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#A33817"
-                    strokeWidth="2.5"
-                  >
-                    <rect x="2" y="3" width="20" height="14" rx="2" />
-                    <line x1="8" y1="21" x2="16" y2="21" />
-                    <line x1="12" y1="17" x2="12" y2="21" />
-                  </svg>
-                </span>
-              </div>
-              <div className="ns-srv-content">
-                <h3 className="ns-srv-title">Part 1 Resources</h3>
-                <p className="ns-srv-desc">
-                  Comprehensive study materials, question banks and recorded
-                  lectures.
-                </p>
-                <div className="ns-srv-footer">
-                  <span className="ns-srv-link">Learn More →</span>
-                  <span className="ns-srv-circle-arrow" aria-hidden="true">
-                    →
-                  </span>
-                </div>
-              </div>
-            </a>
-
-            {/* Card 2: Part 2 Preparation */}
-            <a
-              href="#membership"
-              className="ns-service-card adc-fade-up"
-              onClick={(e) => {
-                if (onNavigate) {
-                  e.preventDefault();
-                  onNavigate("membership");
-                }
-              }}
-            >
-              <div className="ns-srv-media">
-                <img
-                  src={cardPart2}
-                  alt="Part 2 Preparation"
-                  className="ns-srv-photo"
-                />
-                <span className="ns-srv-badge-icon" aria-hidden="true">
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#A33817"
-                    strokeWidth="2.5"
-                  >
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                </span>
-              </div>
-              <div className="ns-srv-content">
-                <h3 className="ns-srv-title">Part 2 Preparation</h3>
-                <p className="ns-srv-desc">
-                  Clinical training, assessments and practical examination
-                  guidance.
-                </p>
-                <div className="ns-srv-footer">
-                  <span className="ns-srv-link">Learn More →</span>
-                  <span className="ns-srv-circle-arrow" aria-hidden="true">
-                    →
-                  </span>
-                </div>
-              </div>
-            </a>
-
-            {/* Card 3: Chairside Skills */}
-            <a
-              href="#membership"
-              className="ns-service-card adc-fade-up"
-              onClick={(e) => {
-                if (onNavigate) {
-                  e.preventDefault();
-                  onNavigate("membership");
-                }
-              }}
-            >
-              <div className="ns-srv-media">
-                <img
-                  src={cardChair}
-                  alt="Chairside Skills"
-                  className="ns-srv-photo"
-                />
-                <span className="ns-srv-badge-icon" aria-hidden="true">
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#A33817"
-                    strokeWidth="2.5"
-                  >
-                    <path d="M19 9h-4V3H9v6H5l7 8 7-8z" />
-                    <path d="M5 18v2h14v-2H5z" />
-                  </svg>
-                </span>
-              </div>
-              <div className="ns-srv-content">
-                <h3 className="ns-srv-title">Chairside Skills</h3>
-                <p className="ns-srv-desc">
-                  Hands-on phantom head workstation practice and modern clinical
-                  techniques.
-                </p>
-                <div className="ns-srv-footer">
-                  <span className="ns-srv-link">Learn More →</span>
-                  <span className="ns-srv-circle-arrow" aria-hidden="true">
-                    →
-                  </span>
-                </div>
-              </div>
-            </a>
-
-            {/* Card 4: Expert Mentorship */}
-            <a
-              href="#membership"
-              className="ns-service-card adc-fade-up"
-              onClick={(e) => {
-                if (onNavigate) {
-                  e.preventDefault();
-                  onNavigate("membership");
-                }
-              }}
-            >
-              <div className="ns-srv-media">
-                <img
-                  src={cardMentoring}
-                  alt="Expert Mentorship"
-                  className="ns-srv-photo"
-                />
-                <span className="ns-srv-badge-icon" aria-hidden="true">
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#A33817"
-                    strokeWidth="2.5"
-                  >
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                  </svg>
-                </span>
-              </div>
-              <div className="ns-srv-content">
-                <h3 className="ns-srv-title">Expert Mentorship</h3>
-                <p className="ns-srv-desc">
-                  Direct 1-on-1 feedback from qualified Australian dental
-                  practitioners.
-                </p>
-                <div className="ns-srv-footer">
-                  <span className="ns-srv-link">Learn More →</span>
-                  <span className="ns-srv-circle-arrow" aria-hidden="true">
-                    →
-                  </span>
-                </div>
-              </div>
-            </a>
-
-            {/* Card 5: Worldwide Access */}
-            <a
-              href="#membership"
-              className="ns-service-card adc-fade-up"
-              onClick={(e) => {
-                if (onNavigate) {
-                  e.preventDefault();
-                  onNavigate("membership");
-                }
-              }}
-            >
-              <div className="ns-srv-media">
-                <img
-                  src={cardWorldwide}
-                  alt="Worldwide Access"
-                  className="ns-srv-photo"
-                />
-                <span className="ns-srv-badge-icon" aria-hidden="true">
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#A33817"
-                    strokeWidth="2.5"
-                  >
-                    <circle cx="12" cy="12" r="3" />
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                  </svg>
-                </span>
-              </div>
-              <div className="ns-srv-content">
-                <h3 className="ns-srv-title">Worldwide Access</h3>
-                <p className="ns-srv-desc">
-                  Personalised study plans and flexible online access from
-                  anywhere in the world.
-                </p>
-                <div className="ns-srv-footer">
-                  <span className="ns-srv-link">Learn More →</span>
-                  <span className="ns-srv-circle-arrow" aria-hidden="true">
-                    →
-                  </span>
-                </div>
-              </div>
-            </a>
-          </div>
+          {/* 6 Circular Services Infographic Component with Cursor Hover Effect */}
+          <CircularServicesInfographic onNavigate={onNavigate} />
         </div>
       </section>
 
@@ -1216,3 +1137,4 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
     </div>
   );
 }
+

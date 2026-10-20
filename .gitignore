@@ -28,6 +28,13 @@ reference/
 **/reference/
 src/components/reference/
 
+# Large media & video files (streamed directly via AWS S3)
+public/videos/
+src/assets/videos/
+*.MOV
+*.mp4
+*.mov
+
 # Environment files
 .env
 .env.local
