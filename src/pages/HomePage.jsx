@@ -9,11 +9,11 @@ import PortraitReelCard from "../components/PortraitReelCard";
 import CircularServicesInfographic from "../components/CircularServicesInfographic";
 
 // Section 5: Facilities Showcase
-import facScreenMain from "../assets/newskin/facilities-screen-main.png";
-import facThumb1 from "../assets/newskin/facilities-thumb1.png";
-import facThumb2 from "../assets/newskin/facilities-thumb2.png";
-import facThumb3 from "../assets/newskin/facilities-thumb3.png";
-import facThumb4 from "../assets/newskin/facilities-thumb4.png";
+import gallery1 from "../assets/gallery-1.jpg";
+import gallery2 from "../assets/gallery-2.jpg";
+import gallery3 from "../assets/gallery-3.jpg";
+import gallery4 from "../assets/gallery-4.jpg";
+import gallery5 from "../assets/gallery-5.jpg";
 
 // Animated Lordicon & Vector UI Models
 import LordIcon from "../components/LordIcon";
@@ -41,7 +41,7 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
     {
       id: "reel-1",
       num: "01",
-      src: "https://d703xoqfmkizu.cloudfront.net/video_assets/IMG_8027.MOV",
+      src: "https://f8140181-bd56-4776-8542-061a7104f81c.s3.us-west-1.amazonaws.com/video_assets/IMG_8027.MOV",
       // title: "Phantom Head Simulation",
       // subtitle:
       //   "High-speed handpiece posture, bur orientation & direct vision technique",
@@ -52,7 +52,7 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
     {
       id: "reel-2",
       num: "02",
-      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8028.MOV",
+      src: "https://f8140181-bd56-4776-8542-061a7104f81c.s3.us-west-1.amazonaws.com/video_assets/IMG_8029.MOV",
       // title: "Clinical Chairside Workflow",
       // subtitle:
       //   "Real delivery unit operation, suction technique & patient chair setup",
@@ -63,7 +63,7 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
     {
       id: "reel-3",
       num: "03",
-      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8029.MOV",
+      src: "https://f8140181-bd56-4776-8542-061a7104f81c.s3.us-west-1.amazonaws.com/video_assets/IMG_8030.MOV",
       // title: "Tooth Preparation & Boundary Checks",
       // subtitle:
       //   "Class II cavity prep, crown margins, line angles & depth checks",
@@ -74,7 +74,7 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
     {
       id: "reel-4",
       num: "04",
-      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8030.MOV",
+      src: "https://f8140181-bd56-4776-8542-061a7104f81c.s3.us-west-1.amazonaws.com/video_assets/IMG_8032-alt.MOV",
       // title: "Instrument Handling & Finger Rests",
       // subtitle:
       //   "Fulcrum stability, mirror retraction & indirect vision lighting",
@@ -85,7 +85,7 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
     {
       id: "reel-5",
       num: "05",
-      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8032.MOV",
+      src: "https://f8140181-bd56-4776-8542-061a7104f81c.s3.us-west-1.amazonaws.com/video_assets/IMG_8032.MOV",
       // title: "Restorative Cavity & Matrix Setup",
       // subtitle:
       //   "Rubber dam isolation, sectional matrix placement & composite finishing",
@@ -93,17 +93,17 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
       // tag: "RESTORATIVE",
       // duration: "Clinical",
     },
-    {
-      id: "reel-6",
-      num: "06",
-      src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8032-alt.MOV",
-      // title: "Candidate Debrief & Rubric Feedback",
-      // subtitle:
-      //   "1-on-1 examiner rubric evaluation, scoring criteria & practical tips",
-      // category: "OSCE Mentoring",
-      // tag: "MENTORING",
-      // duration: "Evaluation",
-    },
+    // {
+    //   id: "reel-6",
+    //   num: "06",
+    //   src: "https://adc-experts.s3.ap-southeast-2.amazonaws.com/video_assets/IMG_8032-alt.MOV",
+    //   // title: "Candidate Debrief & Rubric Feedback",
+    //   // subtitle:
+    //   //   "1-on-1 examiner rubric evaluation, scoring criteria & practical tips",
+    //   // category: "OSCE Mentoring",
+    //   // tag: "MENTORING",
+    //   // duration: "Evaluation",
+    // },
   ];
 
   const handlePlayReel = (index) => {
@@ -154,29 +154,29 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
 
   const FACILITY_SLIDES = [
     {
-      img: facScreenMain,
-      title: "Modern Clinical Facilities",
-      desc: "Designed specifically for ADC examination standards",
+      img: gallery1,
+      // title: "Modern Clinical Facilities",
+      // desc: "Designed specifically for ADC examination standards",
     },
     {
-      img: facThumb1,
-      title: "Phantom Head Simulation Lab",
-      desc: "Calibrated mannequins & real clinical handpieces",
+      img: gallery2,
+      // title: "Phantom Head Simulation Lab",
+      // desc: "Calibrated mannequins & real clinical handpieces",
     },
     {
-      img: facThumb2,
-      title: "Clinical Chairside Workstation",
-      desc: "State-of-the-art dental delivery units & suction systems",
+      img: gallery3,
+      // title: "Clinical Chairside Workstation",
+      // desc: "State-of-the-art dental delivery units & suction systems",
     },
     {
-      img: facThumb3,
-      title: "OSCE Audio-Visual Station",
-      desc: "Mock communication scenarios & structured examiner feedback",
+      img: gallery4,
+      // title: "OSCE Audio-Visual Station",
+      // desc: "Mock communication scenarios & structured examiner feedback",
     },
     {
-      img: facThumb4,
-      title: "Perth Dedicated Study Space",
-      desc: "Quiet independent study facility for active members",
+      img: gallery5,
+      // title: "Perth Dedicated Study Space",
+      // desc: "Quiet independent study facility for active members",
     },
   ];
 
@@ -527,7 +527,7 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
               className={`ns-filter-pill ${activeCategoryFilter === "ALL" ? "active" : ""}`}
               onClick={() => handleSelectReelFilter("ALL", null)}
             >
-              All Reels (6)
+              All Reels (5)
             </button>
             {PORTRAIT_REELS.map((reel, idx) => (
               <button
