@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from "react";
-import galleryMainImg from "../assets/home-gallery-main.webp";
-import practiceFocusImg from "../assets/home-practice-focus.webp";
-import facilitiesHeroImg from "../assets/facilities-hero.png";
-import facilitiesPromiseImg from "../assets/facilities-promise.png";
 import gallery1 from "../assets/gallery-1.jpg";
 import gallery2 from "../assets/gallery-2.jpg";
 import gallery3 from "../assets/gallery-3.jpg";

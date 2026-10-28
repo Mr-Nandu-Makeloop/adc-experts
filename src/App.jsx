@@ -5,6 +5,7 @@ import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import BottomCtaBanner from './components/BottomCtaBanner';
+import EventFloatingPopup from './components/EventFloatingPopup';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -17,35 +18,77 @@ import MembershipAccessPage from './pages/MembershipAccessPage';
 import MembershipPage from './pages/MembershipPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import GalleryPage from './pages/GalleryPage';
+import UpcomingEventsPage from './pages/UpcomingEventsPage';
 
 // SINGLE COMMON PLACEHOLDER IMAGE used across the entire platform
 const COMMON_PLACEHOLDER_IMAGE = '/placeholder.jpg';
+
+// Normalize any route or legacy hash string into a standard page key
+const normalizePageKey = (raw) => {
+  const clean = (raw || '')
+    .replace(/^#/, '')
+    .replace(/^\/+|\/+$/g, '')
+    .toLowerCase();
+
+  if (!clean || clean === 'home' || clean === 'index.html') return 'home';
+  if (clean === 'membership-terms' || clean === 'terms') return 'membership-terms';
+  if (clean === 'membership') return 'membership';
+  if (clean === 'upcoming-events' || clean === 'upcoming_events' || clean === 'events') return 'upcoming-events';
+  if (clean === 'about' || clean === 'about-us') return 'about';
+  if (clean === 'facilities') return 'facilities';
+  if (clean === 'gallery') return 'gallery';
+  if (clean === 'faq') return 'faq';
+  if (clean === 'contact' || clean === 'contact-us') return 'contact';
+  if (clean === 'privacy-policy' || clean === 'privacy') return 'privacy-policy';
+  if (clean === 'membership-access') return 'membership-access';
+
+  return 'home';
+};
 
 export default function App() {
   const [activePage, setActivePage] = useState('home');
   const [helpModalOpen, setHelpModalOpen] = useState(false);
 
-  // Sync hash with page state on mount and hashchange
+  // Sync pathname with page state on mount and popstate (without #)
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash === 'membership-access') {
-        setHelpModalOpen(true);
+    const syncRouteFromLocation = () => {
+      // If a lingering hash exists (e.g. old bookmark #about), replace with standard pathname /about
+      if (window.location.hash) {
+        const hashTarget = normalizePageKey(window.location.hash);
+        const cleanUrl = hashTarget === 'home' ? '/' : `/${hashTarget}`;
+        window.history.replaceState(null, '', cleanUrl);
+        if (hashTarget === 'membership-access') {
+          setHelpModalOpen(true);
+          setActivePage('membership');
+        } else {
+          setActivePage(hashTarget);
+        }
         return;
       }
-      if (['home', 'about', 'facilities', 'gallery', 'faq', 'contact', 'terms', 'membership', 'privacy-policy'].includes(hash)) {
-        setActivePage(hash);
+
+      const pathTarget = normalizePageKey(window.location.pathname);
+      if (pathTarget === 'membership-access') {
+        setHelpModalOpen(true);
+        setActivePage('membership');
+        return;
       }
+
+      setActivePage(pathTarget);
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    syncRouteFromLocation();
+    window.addEventListener('popstate', syncRouteFromLocation);
+    return () => window.removeEventListener('popstate', syncRouteFromLocation);
   }, []);
 
   const navigateTo = (page) => {
-    setActivePage(page);
-    window.location.hash = page;
+    const targetKey = normalizePageKey(page);
+    setActivePage(targetKey);
+
+    const targetUrl = targetKey === 'home' ? '/' : `/${targetKey}`;
+    if (window.location.pathname !== targetUrl || window.location.hash) {
+      window.history.pushState(null, '', targetUrl);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -115,7 +158,7 @@ export default function App() {
           />
         )}
 
-        {activePage === 'terms' && (
+        {(activePage === 'membership-terms' || activePage === 'terms') && (
           <TermsPage 
             onOpenModal={openModal} 
           />
@@ -139,7 +182,19 @@ export default function App() {
             onOpenModal={openModal} 
           />
         )}
+
+        {(activePage === 'upcoming_events' || activePage === 'upcoming-events') && (
+          <UpcomingEventsPage 
+            onNavigate={navigateTo} 
+          />
+        )}
       </main>
+
+      {/* Floating Event Glimpse Popup */}
+      <EventFloatingPopup 
+        activePage={activePage} 
+        onNavigate={navigateTo} 
+      />
 
       <BottomCtaBanner 
         onNavigate={navigateTo} 

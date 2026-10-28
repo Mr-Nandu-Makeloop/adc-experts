@@ -398,11 +398,9 @@ export default function HomePage({ onNavigate, _onOpenModal }) {
                 LIVE CLINICAL REELS
               </span>
               <h2 className="ns-section-title">
-                Experience ADC Preparation
+                Inside ADC Experts
                 <br />
-                <span className="ns-text-terracotta">
-                  Before Your Exam Day.
-                </span>
+                <span className="ns-text-terracotta">Training in Action </span>
               </h2>
               <p className="ns-section-lead">
                 Explore 6 vertical clinical reels recorded directly inside our

@@ -22,14 +22,15 @@ export default function Footer({ onNavigate, onOpenHelpModal }) {
           }} 
         />
       </div>
+
       <div className="container" style={{ padding: '0 24px 56px' }}>
         <div className="footer-custom-grid">
-          {/* Left Column: Logo + Address + Email */}
+          {/* Column 1: Brand + Address + Contact */}
           <div className="footer-brand-section">
             <button 
               type="button" 
               onClick={() => handleNav('home')}
-              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left', display: 'block', marginBottom: '28px' }}
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left', display: 'block', marginBottom: '24px' }}
               aria-label="ADC Experts Home"
             >
               <img 
@@ -68,11 +69,27 @@ export default function Footer({ onNavigate, onOpenHelpModal }) {
                   adminteam@adcexperts.com.au
                 </a>
               </div>
+
+              {/* Phone / WhatsApp */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ color: '#A33817', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A33817" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </span>
+                <a 
+                  href="tel:0435421145" 
+                  style={{ fontSize: '14px', fontWeight: 700, color: '#000000', textDecoration: 'none' }}
+                >
+                  04 3542 1145
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Column 2: Home, About Us, Contact Us, Membership Access */}
+          {/* Column 2: Quick Links */}
           <div className="footer-links-col">
+            <h4 className="footer-col-heading">Navigation</h4>
             <button 
               type="button" 
               className="footer-bold-link"
@@ -106,8 +123,9 @@ export default function Footer({ onNavigate, onOpenHelpModal }) {
             </button>
           </div>
 
-          {/* Column 3: Facilities, FAQ, ADC Part-1, ADC Part-2 */}
+          {/* Column 3: Facilities, Gallery, FAQ & Upcoming Events */}
           <div className="footer-links-col">
+            <h4 className="footer-col-heading">Resources</h4>
             <button 
               type="button" 
               className="footer-bold-link"
@@ -132,21 +150,10 @@ export default function Footer({ onNavigate, onOpenHelpModal }) {
             <button 
               type="button" 
               className="footer-bold-link"
-              onClick={() => handleNav('home')}
+              onClick={() => handleNav('upcoming-events')}
             >
-              ADC Part-1
+              Upcoming Events
             </button>
-            <button 
-              type="button" 
-              className="footer-bold-link"
-              onClick={() => handleNav('home')}
-            >
-              ADC Part-2
-            </button>
-          </div>
-
-          {/* Column 4: Privacy Policy */}
-          <div className="footer-links-col">
             <button 
               type="button" 
               className="footer-bold-link"
@@ -154,6 +161,50 @@ export default function Footer({ onNavigate, onOpenHelpModal }) {
             >
               Privacy Policy
             </button>
+          </div>
+
+          {/* Column 4: Perth Campus Map & Direct Navigation */}
+          <div className="footer-map-section">
+            <h4 className="footer-col-heading">Find Our Campus</h4>
+            <div className="footer-map-frame-wrapper">
+              <iframe
+                title="ADC Experts Perth Location Map"
+                src="https://maps.google.com/maps?q=Suite+7%2F342+Albany+Highway%2C+Victoria+Park+WA+6100&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="150"
+                style={{ border: 0, display: 'block' }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+
+            <div className="footer-map-buttons-row">
+              <a 
+                href="https://maps.app.goo.gl/iHFxyBBkQiTPeAzeA?g_st=ic" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="footer-map-btn"
+                title="Open Venue in Google Maps"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>Venue Map</span>
+              </a>
+
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query=-31.9729330%2C115.8968960" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="footer-map-btn"
+                title="Parking Location in Google Maps"
+              >
+                <span style={{ fontSize: '13px' }}>🅿️</span>
+                <span>Parking</span>
+              </a>
+            </div>
           </div>
         </div>
 

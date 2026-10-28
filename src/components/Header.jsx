@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import logoImg from '../assets/logo.png';
 
-export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelpModal }) {
+export default function Header({ activePage, onNavigate, _onOpenModal, onOpenHelpModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMembershipOpen, setMobileMembershipOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isMembershipActive = activePage === 'membership' || activePage === 'terms' || activePage === 'membership-access';
+  const isMembershipActive = activePage === 'membership' || activePage === 'membership-terms' || activePage === 'terms' || activePage === 'membership-access';
 
   return (
     <header className="header" role="banner">
@@ -141,16 +141,16 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
                   type="button"
                   role="menuitem"
                   className="dropdown-item"
-                  onClick={() => handleNav('terms')}
+                  onClick={() => handleNav('membership-terms')}
                   style={{
                     display: 'block',
                     width: '100%',
                     textAlign: 'left',
                     padding: '12px 16px',
                     fontSize: '14px',
-                    fontWeight: activePage === 'terms' ? '700' : '600',
-                    color: activePage === 'terms' ? 'var(--color-primary)' : 'var(--color-text)',
-                    backgroundColor: activePage === 'terms' ? 'var(--color-primary-light)' : 'transparent',
+                    fontWeight: (activePage === 'membership-terms' || activePage === 'terms') ? '700' : '600',
+                    color: (activePage === 'membership-terms' || activePage === 'terms') ? 'var(--color-primary)' : 'var(--color-text)',
+                    backgroundColor: (activePage === 'membership-terms' || activePage === 'terms') ? 'var(--color-primary-light)' : 'transparent',
                     borderRadius: '8px',
                     border: 'none',
                     cursor: 'pointer',
@@ -223,18 +223,18 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
           >
             Contact Us
           </button>
+
+          <button 
+            type="button" 
+            className={`nav-link ${activePage === 'upcoming-events' || activePage === 'upcoming_events' ? 'active' : ''}`}
+            onClick={() => handleNav('upcoming-events')}
+          >
+            Events
+          </button>
         </nav>
 
         {/* Action Button & Mobile Hamburger */}
         <div className="nav-actions">
-          <button 
-            type="button" 
-            className="btn btn-primary"
-            onClick={() => onOpenModal('Enrol in Australian Examination Program')}
-          >
-            Enrol Now
-          </button>
-
           <button 
             type="button" 
             className={`nav-hamburger ${mobileMenuOpen ? 'open' : ''}`}
@@ -322,12 +322,12 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
                     background: 'none',
                     border: 'none',
                     fontSize: '15px',
-                    fontWeight: activePage === 'terms' ? '700' : '600',
-                    color: activePage === 'terms' ? 'var(--color-primary)' : 'rgba(0,0,0,0.85)',
+                    fontWeight: (activePage === 'membership-terms' || activePage === 'terms') ? '700' : '600',
+                    color: (activePage === 'membership-terms' || activePage === 'terms') ? 'var(--color-primary)' : 'rgba(0,0,0,0.85)',
                     cursor: 'pointer',
                     padding: '6px 0'
                   }}
-                  onClick={() => handleNav('terms')}
+                  onClick={() => handleNav('membership-terms')}
                 >
                   Terms & Conditions (T&C)
                 </button>
@@ -390,16 +390,16 @@ export default function Header({ activePage, onNavigate, onOpenModal, onOpenHelp
           >
             Contact Us
           </button>
-        </div>
 
-        <button 
-          type="button" 
-          className="btn btn-primary"
-          style={{ width: '100%', marginTop: '16px' }}
-          onClick={() => { setMobileMenuOpen(false); onOpenModal('Enrol in Australian Examination Program'); }}
-        >
-          Enrol in Program
-        </button>
+          <button 
+            type="button" 
+            className="mobile-nav-link" 
+            style={{ textAlign: 'left', background: 'none', border: 'none', width: '100%', cursor: 'pointer' }}
+            onClick={() => handleNav('upcoming-events')}
+          >
+            Events
+          </button>
+        </div>
       </div>
     </header>
   );
