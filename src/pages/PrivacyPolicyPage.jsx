@@ -162,7 +162,7 @@ export default function PrivacyPolicyPage() {
           <section className="privacy-section" style={{ marginBottom: '16px' }}>
             <h2 className="privacy-heading">14. Contact us</h2>
             <p style={{ marginBottom: '6px' }}>
-              ADC Experts Operated by ADC Coaching Pty Ltd Suite 7, 342 Albany Highway, Victoria Park WA 6100, Australia
+              ADC Experts Operated by ADC Coaching Pty Ltd, Suit 7 Unit 19 334-348, Albany Highway, VIC PARK WA 6100 (Western Australia)
             </p>
             <p style={{ margin: 0 }}>
               Website:{' '}
