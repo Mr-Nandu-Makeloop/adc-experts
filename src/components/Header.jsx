@@ -63,6 +63,14 @@ export default function Header({ activePage, onNavigate, _onOpenModal, onOpenHel
             About Us
           </button>
 
+          <button 
+            type="button" 
+            className={`nav-link ${activePage === 'adc-pathway' ? 'active' : ''}`}
+            onClick={() => handleNav('adc-pathway')}
+          >
+            ADC Pathway
+          </button>
+
           {/* Membership Dropdown (subheadings removed) */}
           <div 
             className="nav-dropdown-wrapper" 
@@ -274,6 +282,15 @@ export default function Header({ activePage, onNavigate, _onOpenModal, onOpenHel
             onClick={() => handleNav('about')}
           >
             About Us
+          </button>
+
+          <button 
+            type="button" 
+            className="mobile-nav-link" 
+            style={{ textAlign: 'left', background: 'none', border: 'none', width: '100%', cursor: 'pointer' }}
+            onClick={() => handleNav('adc-pathway')}
+          >
+            ADC Pathway
           </button>
 
           {/* Mobile Membership Accordion (subheadings removed) */}

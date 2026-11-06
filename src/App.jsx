@@ -19,6 +19,7 @@ import MembershipPage from './pages/MembershipPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import GalleryPage from './pages/GalleryPage';
 import UpcomingEventsPage from './pages/UpcomingEventsPage';
+import AdcPathwayPage from './pages/AdcPathwayPage';
 
 // SINGLE COMMON PLACEHOLDER IMAGE used across the entire platform
 const COMMON_PLACEHOLDER_IMAGE = '/placeholder.jpg';
@@ -33,6 +34,7 @@ const normalizePageKey = (raw) => {
   if (!clean || clean === 'home' || clean === 'index.html') return 'home';
   if (clean === 'membership-terms' || clean === 'terms') return 'membership-terms';
   if (clean === 'membership') return 'membership';
+  if (clean === 'adc-pathway' || clean === 'pathway') return 'adc-pathway';
   if (clean === 'upcoming-events' || clean === 'upcoming_events' || clean === 'events') return 'upcoming-events';
   if (clean === 'about' || clean === 'about-us') return 'about';
   if (clean === 'facilities') return 'facilities';
@@ -188,6 +190,13 @@ export default function App() {
             onNavigate={navigateTo} 
           />
         )}
+
+        {activePage === 'adc-pathway' && (
+          <AdcPathwayPage 
+            onNavigate={navigateTo} 
+            onOpenModal={openModal} 
+          />
+        )}
       </main>
 
       {/* Floating Event Glimpse Popup */}
@@ -196,10 +205,13 @@ export default function App() {
         onNavigate={navigateTo} 
       />
 
-      <BottomCtaBanner 
-        onNavigate={navigateTo} 
-        onOpenModal={openModal} 
-      />
+      {/* Section 5 CTA Banner (Customized natively inside AdcPathwayPage) */}
+      {activePage !== 'adc-pathway' && (
+        <BottomCtaBanner 
+          onNavigate={navigateTo} 
+          onOpenModal={openModal} 
+        />
+      )}
 
       {/* ------------------------------------------------------------------
           FOOTER (Includes Home, About Us, Facilities, FAQ, Contact Us, 
