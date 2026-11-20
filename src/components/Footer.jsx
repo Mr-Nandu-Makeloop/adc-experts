@@ -94,7 +94,7 @@ export default function Footer({ onNavigate, onOpenHelpModal }) {
                     lineHeight: 1.45,
                   }}
                 >
-                  Suit 7 Unit 19 342, Albany Highway, VIC PARK WA 6100 (Western
+                  Suit 7 Unit 342, Albany Highway, VIC PARK WA 6100 (Western
                   Australia)
                 </span>
               </div>
