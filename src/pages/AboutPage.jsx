@@ -1,7 +1,7 @@
 import React from "react";
 import aboutUsImg from "../assets/about-us.png";
 
-export default function AboutPage({ _commonImage, _onNavigate, onOpenModal }) {
+export default function AboutPage({ _commonImage, onNavigate, _onOpenModal }) {
   return (
     <div className="about-page">
       {/* ------------------------------------------------------------------
@@ -78,7 +78,7 @@ export default function AboutPage({ _commonImage, _onNavigate, onOpenModal }) {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => onOpenModal("Meet Our Dental Faculty Team")}
+                onClick={() => onNavigate && onNavigate("facilities")}
               >
                 Meet the Team →
               </button>
