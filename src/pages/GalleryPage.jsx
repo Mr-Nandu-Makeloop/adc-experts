@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import adcVicPark2 from "../assets/ADCVicPark-2.jpg";
+import adcVicPark5 from "../assets/ADCVicPark-5.jpg";
+import adcVicPark10 from "../assets/ADCVicPark-10.jpg";
+import adcVicPark13 from "../assets/ADCVicPark-13.jpg";
 import gallery1 from "../assets/gallery-1.jpg";
 import gallery2 from "../assets/gallery-2.jpg";
 import gallery3 from "../assets/gallery-3.jpg";
@@ -12,6 +16,42 @@ export default function GalleryPage({ _onNavigate, _onOpenModal }) {
   const GALLERY_ITEMS = [
     {
       id: 1,
+      title: "Technical Skills Demonstration Area",
+      category: "simulation",
+      categoryLabel: "Technical Skills Demonstration",
+      desc: "Live mentor-led clinical demonstration setup with overhead camera and lighting rig for clear close-up guidance on phantom head procedures.",
+      img: adcVicPark2,
+      objectPosition: "center center",
+    },
+    {
+      id: 2,
+      title: "Technical Task Station",
+      category: "simulation",
+      categoryLabel: "Technical Task Station",
+      desc: "Individual clinical simulation station equipped with dental delivery unit, overhead LED operating light, monitor, handpieces, and phantom head.",
+      img: adcVicPark5,
+      objectPosition: "center 58%",
+    },
+    {
+      id: 3,
+      title: "Technical Task Station",
+      category: "simulation",
+      categoryLabel: "Technical Task Station",
+      desc: "Full row of dedicated ADC technical task stations replicating Australian Dental Council examination room layout and ergonomics.",
+      img: adcVicPark10,
+      objectPosition: "center center",
+    },
+    {
+      id: 4,
+      title: "ADC Experts Team",
+      category: "team",
+      categoryLabel: "ADC Experts Team",
+      desc: "Our Perth clinical mentors and support team inside the Victoria Park training centre.",
+      img: adcVicPark13,
+      objectPosition: "center 20%",
+    },
+    {
+      id: 5,
       title: "Modern Clinical Operatory",
       category: "chairs",
       categoryLabel: "Dental Chairs & Operatory",
@@ -19,7 +59,7 @@ export default function GalleryPage({ _onNavigate, _onOpenModal }) {
       img: gallery1,
     },
     {
-      id: 2,
+      id: 6,
       title: "Phantom Head Simulation Station",
       category: "simulation",
       categoryLabel: "Simulation Lab",
@@ -27,7 +67,7 @@ export default function GalleryPage({ _onNavigate, _onOpenModal }) {
       img: gallery2,
     },
     {
-      id: 3,
+      id: 7,
       title: "Digital Radiography & Treatment Planning",
       category: "equipment",
       categoryLabel: "Clinical Equipment",
@@ -35,15 +75,15 @@ export default function GalleryPage({ _onNavigate, _onOpenModal }) {
       img: gallery3,
     },
     {
-      id: 4,
+      id: 8,
       title: "Clinical Instrumentation & Handpieces",
       category: "equipment",
       categoryLabel: "Clinical Equipment",
-      desc: "ADC-compliant high-speed electric handpieces, burs, rubber dam kits, and restorative restorative armamentarium.",
+      desc: "ADC-compliant high-speed electric handpieces, burs, rubber dam kits, and restorative armamentarium.",
       img: gallery4,
     },
     {
-      id: 5,
+      id: 9,
       title: "Dedicated Hands-On Training Suite",
       category: "chairs",
       categoryLabel: "Dental Chairs & Operatory",
@@ -57,7 +97,7 @@ export default function GalleryPage({ _onNavigate, _onOpenModal }) {
     { id: "chairs", label: "Dental Chairs" },
     { id: "simulation", label: "Simulation Lab" },
     { id: "equipment", label: "Equipment & Tools" },
-    { id: "study", label: "Study & OSCE Suites" },
+    { id: "team", label: "ADC Experts Team" },
   ];
 
   const filteredItems =
@@ -142,6 +182,11 @@ export default function GalleryPage({ _onNavigate, _onOpenModal }) {
                     src={item.img}
                     alt={item.title}
                     className="gallery-card-img"
+                    style={
+                      item.objectPosition
+                        ? { objectPosition: item.objectPosition }
+                        : undefined
+                    }
                     loading="lazy"
                   />
                   <div className="gallery-card-overlay">

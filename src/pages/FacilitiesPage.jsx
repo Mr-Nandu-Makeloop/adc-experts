@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import facilitiesHeroImg from '../assets/facilities-hero.png';
 import guidedBadgeImg from '../assets/guided-by-experience.png';
-import mentorJigneshImg from '../assets/mentor-jignesh.png';
-import mentorDeepikaImg from '../assets/mentor-deepika.png';
-import mentorHareeshImg from '../assets/mentor-hareesh.png';
+import mentorJigneshImg from '../assets/ADCVicPark-14.jpg';
+import mentorDeepikaImg from '../assets/ADCVicPark-20.jpg';
+import mentorHareeshImg from '../assets/ADCVicPark-17.jpg';
+import coordMonikaImg from '../assets/ADCVicPark-23.jpg';
+import receptAshmeenImg from '../assets/ADCVicPark-27.jpg';
 import facilitiesPromiseImg from '../assets/facilities-promise.png';
 
 export default function FacilitiesPage({ onOpenModal }) {
@@ -16,6 +18,7 @@ export default function FacilitiesPage({ onOpenModal }) {
       shortName: 'Dr Jignesh Vania ("Jack")',
       role: 'General and Implant Dentist & Founder of ADC Experts',
       img: mentorJigneshImg,
+      objectPosition: 'center 15%',
       summary: 'Dr Jignesh Vania ("Jack") is a Western Australia-based General and Implant Dentist and founder of ADC Experts. After successfully clearing the ADC exams in 2015, he has been mentoring international dentists since 2016 with a structured, results-driven approach.',
       fullBio: [
         'Dr Jignesh Vania ("Jack") is a Western Australia-based General and Implant Dentist and founder of ADC Experts.',
@@ -31,6 +34,7 @@ export default function FacilitiesPage({ onOpenModal }) {
       shortName: 'Dr Deepika',
       role: 'Practising Dentist & Dental Practice Manager',
       img: mentorDeepikaImg,
+      objectPosition: 'center 22%',
       summary: 'Dr Deepika graduated in 2011 and is a practising dentist in Australia after successfully completing the Australian Dental Council (ADC) pathway. She brings more than five years of experience as a Dental Practice Manager in Australia.',
       fullBio: [
         'Dr Deepika graduated in 2011 and is a practising dentist in Australia after successfully completing the Australian Dental Council (ADC) pathway.',
@@ -45,10 +49,41 @@ export default function FacilitiesPage({ onOpenModal }) {
       shortName: 'Dr. Hareesh Thippeswamy',
       role: 'Clinical Instructor & Mentor ADC Expert',
       img: mentorHareeshImg,
+      objectPosition: '46% center',
       summary: 'Clinical Instructor & Mentor ADC Expert. Dr. Hareesh brings extensive clinical and educational expertise across Australian dental practice and candidate mentoring.',
       fullBio: [
         'Clinical Instructor & Mentor ADC Expert',
         'Dr. Hareesh brings extensive clinical and educational expertise. His detailed background and mentoring approach will be added soon.'
+      ]
+    },
+    {
+      id: 'monika',
+      name: 'Monika Malik, Centre Coordinator – ADC Experts',
+      shortName: 'Monika Malik',
+      role: 'Centre Coordinator – ADC Experts',
+      img: coordMonikaImg,
+      objectPosition: '95% center',
+      ctaText: 'Contact Centre Team',
+      modalTitle: 'Enquire with Monika Malik (Centre Coordinator)',
+      summary: 'Monika Malik is the Centre Coordinator at ADC Experts, overseeing daily training centre operations, candidate scheduling, and on-site support in Victoria Park.',
+      fullBio: [
+        'Monika Malik serves as Centre Coordinator at ADC Experts, ensuring smooth day-to-day operations across our Perth training centre.',
+        'She supports candidates with session scheduling, orientation, and ongoing coordination so every dentist can focus on their ADC examination preparation.'
+      ]
+    },
+    {
+      id: 'ashmeen',
+      name: 'Ashmeen Kaur, Receptionist',
+      shortName: 'Ashmeen Kaur',
+      role: 'Receptionist – ADC Experts',
+      img: receptAshmeenImg,
+      objectPosition: '85% center',
+      ctaText: 'Book a Facility Tour',
+      modalTitle: 'Book a Facility Tour',
+      summary: 'Ashmeen Kaur is the Receptionist at ADC Experts, welcoming candidates and visitors and assisting with front-desk enquiries and daily centre support.',
+      fullBio: [
+        'Ashmeen Kaur is the welcoming face at the front desk of ADC Experts, supporting candidates and visitors at our Victoria Park centre.',
+        'She assists with reception enquiries, candidate check-ins, and day-to-day administrative support throughout your training.'
       ]
     }
   ];
@@ -140,7 +175,8 @@ export default function FacilitiesPage({ onOpenModal }) {
                   <img 
                     src={mentor.img} 
                     alt={mentor.name} 
-                    className="fac-mentor-img" 
+                    className="fac-mentor-img"
+                    style={mentor.objectPosition ? { objectPosition: mentor.objectPosition } : undefined}
                   />
                 </div>
 
@@ -223,7 +259,7 @@ export default function FacilitiesPage({ onOpenModal }) {
               <img 
                 src={selectedMentor.img} 
                 alt={selectedMentor.name} 
-                style={{ width: '90px', height: '90px', borderRadius: '16px', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 14px rgba(0,0,0,0.1)' }} 
+                style={{ width: '90px', height: '90px', borderRadius: '16px', objectFit: 'cover', objectPosition: selectedMentor.objectPosition || 'center', flexShrink: 0, boxShadow: '0 4px 14px rgba(0,0,0,0.1)' }} 
               />
               <div>
                 <h3 id="mentor-modal-title" style={{ fontSize: '22px', fontWeight: 800, color: 'var(--color-primary)', margin: '0 0 6px', lineHeight: 1.25 }}>
@@ -257,12 +293,12 @@ export default function FacilitiesPage({ onOpenModal }) {
                 className="btn btn-primary"
                 style={{ minHeight: '42px', padding: '10px 20px', fontSize: '14px' }}
                 onClick={() => {
-                  const mName = selectedMentor.shortName;
+                  const modalActionTitle = selectedMentor.modalTitle || `Book Mentorship with ${selectedMentor.shortName}`;
                   setSelectedMentor(null);
-                  onOpenModal(`Book Mentorship with ${mName}`);
+                  onOpenModal(modalActionTitle);
                 }}
               >
-                Book Mentorship
+                {selectedMentor.ctaText || 'Book Mentorship'}
               </button>
             </div>
           </div>
